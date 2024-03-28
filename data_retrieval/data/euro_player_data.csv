@@ -1,0 +1,605 @@
+No.,Pos.,Player,Age,Caps,Goals,Club,Team
+12,GK,Bernd Leno,32,9,0,Fulham,Germany
+22,GK,Marc-André ter Stegen,31,40,0,Barcelona,Germany
+24,GK,Oliver Baumann,33,0,0,TSG Hoffenheim,Germany
+2,DF,Antonio Rüdiger,31,68,3,Real Madrid,Germany
+3,DF,David Raum,25,20,0,RB Leipzig,Germany
+4,DF,Jonathan Tah,28,23,0,Bayer Leverkusen,Germany
+6,DF,Joshua Kimmich,29,84,6,Bayern Munich,Germany
+15,DF,Robin Koch,27,8,0,Eintracht Frankfurt,Germany
+16,DF,Waldemar Anton,27,1,0,VfB Stuttgart,Germany
+18,DF,Maximilian Mittelstädt,27,2,1,VfB Stuttgart,Germany
+20,DF,Benjamin Henrichs,27,14,0,RB Leipzig,Germany
+5,MF,Pascal Groß,32,5,0,Brighton & Hove Albion,Germany
+8,MF,Toni Kroos,34,108,17,Real Madrid,Germany
+10,MF,Jamal Musiala,21,27,2,Bayern Munich,Germany
+11,MF,Chris Führich,26,3,0,VfB Stuttgart,Germany
+17,MF,Florian Wirtz,20,16,1,Bayer Leverkusen,Germany
+21,MF,İlkay Gündoğan (captain),33,75,18,Barcelona,Germany
+23,MF,Robert Andrich,29,3,0,Bayer Leverkusen,Germany
+7,FW,Kai Havertz,24,44,15,Arsenal,Germany
+9,FW,Niclas Füllkrug,31,15,11,Borussia Dortmund,Germany
+13,FW,Thomas Müller,34,128,45,Bayern Munich,Germany
+14,FW,Maximilian Beier,21,0,0,TSG Hoffenheim,Germany
+26,FW,Deniz Undav,27,1,0,VfB Stuttgart,Germany
+1,GK,Koen Casteels,31,8,0,VfL Wolfsburg,Belgium
+12,GK,Thomas Kaminski,31,1,0,Luton Town,Belgium
+13,GK,Matz Sels,32,7,0,Nottingham Forest,Belgium
+25,GK,Arnaud Bodart,26,0,0,Standard Liège,Belgium
+2,DF,Zeno Debast,20,5,0,Anderlecht,Belgium
+3,DF,Arthur Theate,23,14,0,Rennes,Belgium
+4,DF,Wout Faes,25,12,0,Leicester City,Belgium
+5,DF,Jan Vertonghen,36,153,10,Anderlecht,Belgium
+15,DF,Thomas Meunier,32,63,8,Trabzonspor,Belgium
+16,DF,Olivier Deman,23,3,0,Werder Bremen,Belgium
+21,DF,Timothy Castagne,28,40,2,Fulham,Belgium
+24,DF,Koni De Winter,21,1,0,Genoa,Belgium
+6,MF,Amadou Onana,22,10,0,Everton,Belgium
+8,MF,Youri Tielemans,26,66,5,Aston Villa,Belgium
+17,MF,Charles De Ketelaere,23,14,2,Atalanta,Belgium
+18,MF,Orel Mangala,26,12,0,Lyon,Belgium
+20,MF,Arthur Vermeeren,19,3,0,Atlético Madrid,Belgium
+22,MF,Aster Vranckx,21,5,0,VfL Wolfsburg,Belgium
+7,FW,Jérémy Doku,21,19,2,Manchester City,Belgium
+9,FW,Loïs Openda,24,15,2,RB Leipzig,Belgium
+10,FW,Romelu Lukaku (vice-captain),30,113,83,Roma,Belgium
+11,FW,Leandro Trossard,29,31,7,Arsenal,Belgium
+14,FW,Dodi Lukebakio,26,13,2,Sevilla,Belgium
+19,FW,Johan Bakayoko,20,10,1,PSV Eindhoven,Belgium
+23,FW,Michy Batshuayi,30,54,27,Fenerbahçe,Belgium
+1,GK,Brice Samba,29,3,0,Lens,France
+16,GK,Mike Maignan,28,14,0,AC Milan,France
+23,GK,Alphonse Areola,31,5,0,West Ham United,France
+2,DF,Benjamin Pavard,27,53,5,Inter Milan,France
+3,DF,Jonathan Clauss,31,12,1,Marseille,France
+4,DF,Dayot Upamecano,25,18,2,Bayern Munich,France
+5,DF,Jules Koundé,25,26,0,Barcelona,France
+13,DF,Ibrahima Konaté,24,14,0,Liverpool,France
+17,DF,William Saliba,23,13,0,Arsenal,France
+21,DF,Lucas Hernandez,28,37,0,Paris Saint-Germain,France
+22,DF,Théo Hernandez,26,25,2,AC Milan,France
+6,MF,Eduardo Camavinga,21,15,1,Real Madrid,France
+7,MF,Matteo Guendouzi,24,8,1,Lazio,France
+8,MF,Aurélien Tchouaméni,24,31,3,Real Madrid,France
+14,MF,Adrien Rabiot,28,43,4,Juventus,France
+18,MF,Warren Zaïre-Emery,18,2,1,Paris Saint-Germain,France
+19,MF,Youssouf Fofana,25,17,3,Monaco[a],France
+9,FW,Olivier Giroud,37,131,57,AC Milan,France
+10,FW,Kylian Mbappé (captain),25,77,46,Paris Saint-Germain,France
+11,FW,Ousmane Dembélé,26,43,5,Paris Saint-Germain,France
+12,FW,Randal Kolo Muani,25,15,3,Paris Saint-Germain,France
+15,FW,Marcus Thuram,26,18,2,Inter Milan,France
+20,FW,Moussa Diaby,24,11,0,Aston Villa,France
+1,GK,Rui Patrício (3rd captain),36,108,0,Roma,Portugal
+12,GK,José Sá,31,1,0,Wolverhampton Wanderers,Portugal
+22,GK,Diogo Costa,24,20,0,Porto,Portugal
+-1,GK,Samuel Soares,21,0,0,Benfica,Portugal
+2,DF,Diogo Dalot,25,17,2,Manchester United,Portugal
+3,DF,Pepe (vice-captain),41,136,8,Porto,Portugal
+4,DF,António Silva,20,9,0,Benfica,Portugal
+5,DF,Diogo Leite,25,0,0,Union Berlin,Portugal
+13,DF,Danilo Pereira,32,71,2,Paris Saint-Germain,Portugal
+14,DF,Gonçalo Inácio,22,6,2,Sporting CP,Portugal
+15,DF,João Mário,24,3,0,Porto,Portugal
+19,DF,Nuno Mendes,21,20,0,Paris Saint-Germain,Portugal
+20,DF,João Cancelo,29,51,10,Barcelona,Portugal
+-1,DF,Rúben Dias,26,54,2,Manchester City,Portugal
+-1,DF,Nélson Semedo,30,28,0,Wolverhampton Wanderers,Portugal
+-1,DF,Toti Gomes,25,2,0,Wolverhampton Wanderers,Portugal
+6,MF,João Neves,19,5,0,Benfica,Portugal
+8,MF,Matheus Nunes,25,12,2,Manchester City,Portugal
+16,MF,Otávio,29,20,3,Al Nassr,Portugal
+18,MF,Rúben Neves,27,46,0,Al Hilal,Portugal
+23,MF,Vitinha,24,15,0,Paris Saint-Germain,Portugal
+-1,MF,Bernardo Silva,29,88,11,Manchester City,Portugal
+-1,MF,Bruno Fernandes,29,64,20,Manchester United,Portugal
+-1,MF,João Palhinha,28,25,2,Fulham,Portugal
+7,FW,Cristiano Ronaldo (captain),39,206,128,Al Nassr,Portugal
+9,FW,Dany Mota,25,0,0,Monza,Portugal
+10,FW,João Félix,24,37,7,Barcelona,Portugal
+11,FW,Jota Silva,24,2,0,Vitória de Guimarães,Portugal
+17,FW,Bruma,29,12,2,Braga,Portugal
+21,FW,Francisco Conceição,21,1,0,Porto,Portugal
+-1,FW,Rafael Leão,24,24,4,AC Milan,Portugal
+-1,FW,Gonçalo Ramos,22,11,8,Paris Saint-Germain,Portugal
+1,GK,Angus Gunn,28,9,0,Norwich City,Scotland
+12,GK,Liam Kelly,28,1,0,Motherwell,Scotland
+21,GK,Zander Clark,31,3,0,Heart of Midlothian,Scotland
+24,GK,Craig Gordon,41,74,0,Heart of Midlothian,Scotland
+2,DF,Anthony Ralston,25,8,1,Celtic,Scotland
+3,DF,Andrew Robertson (captain),30,69,3,Liverpool,Scotland
+5,DF,Liam Cooper,32,18,0,Leeds United,Scotland
+6,DF,Kieran Tierney,26,43,1,Real Sociedad,Scotland
+13,DF,Jack Hendry,28,30,3,Al-Ettifaq,Scotland
+15,DF,Ryan Porteous,25,10,1,Watford,Scotland
+16,DF,John Souttar,27,9,1,Rangers,Scotland
+20,DF,Greg Taylor,26,13,0,Celtic,Scotland
+22,DF,Nathan Patterson,22,21,1,Everton,Scotland
+4,MF,Scott McTominay,27,49,8,Manchester United,Scotland
+7,MF,John McGinn,29,64,18,Aston Villa,Scotland
+11,MF,Ryan Christie,29,47,5,Bournemouth,Scotland
+14,MF,Billy Gilmour,22,25,1,Brighton & Hove Albion,Scotland
+17,MF,Stuart Armstrong,31,50,5,Southampton,Scotland
+19,MF,Lewis Ferguson,24,12,0,Bologna,Scotland
+23,MF,Kenny McLean,32,38,2,Norwich City,Scotland
+9,FW,Lyndon Dykes,28,36,9,Queens Park Rangers,Scotland
+10,FW,Ché Adams,27,29,5,Southampton,Scotland
+18,FW,Lawrence Shankland,28,9,2,Heart of Midlothian,Scotland
+1,GK,David Raya,28,4,0,Arsenal,Spain
+13,GK,Álex Remiro,29,1,0,Real Sociedad,Spain
+23,GK,Unai Simón,26,39,0,Athletic Bilbao,Spain
+2,DF,Marc Cucurella,25,2,0,Chelsea,Spain
+3,DF,Álex Grimaldo,28,2,0,Bayer Leverkusen,Spain
+5,DF,Robin Le Normand,27,9,1,Real Sociedad,Spain
+14,DF,Aymeric Laporte,29,28,1,Al Nassr,Spain
+20,DF,Dani Carvajal,32,43,0,Real Madrid,Spain
+22,DF,Jesús Navas,38,51,5,Sevilla,Spain
+24,DF,Pedro Porro,24,3,0,Tottenham Hotspur,Spain
+25,DF,Daniel Vivian,24,1,0,Athletic Bilbao,Spain
+26,DF,Pau Cubarsí,17,2,0,Barcelona,Spain
+4,MF,Martín Zubimendi,25,5,0,Real Sociedad,Spain
+6,MF,Mikel Merino,27,20,1,Real Sociedad,Spain
+8,MF,Fabián Ruiz,27,22,1,Paris Saint-Germain,Spain
+15,MF,Álex Baena,22,2,1,Villarreal,Spain
+16,MF,Rodri,27,49,3,Manchester City,Spain
+18,MF,Oihan Sancet,23,4,1,Athletic Bilbao,Spain
+7,FW,Álvaro Morata (captain),31,71,34,Atlético Madrid,Spain
+9,FW,Gerard Moreno,31,18,5,Villarreal,Spain
+10,FW,Dani Olmo,25,33,8,RB Leipzig,Spain
+11,FW,Nico Williams,21,13,2,Athletic Bilbao,Spain
+12,FW,Joselu,34,10,5,Real Madrid,Spain
+17,FW,Pablo Sarabia,31,27,9,Wolverhampton Wanderers,Spain
+19,FW,Lamine Yamal,16,6,2,Barcelona,Spain
+21,FW,Mikel Oyarzabal,26,28,7,Real Sociedad,Spain
+1,GK,Mert Günok,35,28,0,Beşiktaş,Turkey
+12,GK,Okan Kocuk,28,0,0,Samsunspor,Turkey
+23,GK,Uğurcan Çakır,27,26,0,Trabzonspor,Turkey
+-1,GK,Muhammed Şengezer,27,0,0,İstanbul Başakşehir,Turkey
+2,DF,Zeki Çelik,27,43,2,Roma,Turkey
+3,DF,Merih Demiral,26,41,2,Al-Ahli,Turkey
+4,DF,Samet Akaydin,30,5,0,Panathinaikos,Turkey
+13,DF,Rıdvan Yılmaz,22,7,0,Rangers,Turkey
+15,DF,Ozan Kabak,24,25,2,1899 Hoffenheim,Turkey
+18,DF,Mert Müldür,24,21,1,Fenerbahçe,Turkey
+24,DF,Cenk Özkacar,23,7,0,Valencia,Turkey
+-1,DF,Abdülkerim Bardakcı,29,6,1,Galatasaray,Turkey
+5,MF,Salih Özcan,26,16,0,Borussia Dortmund,Turkey
+6,MF,Orkun Kökçü,23,25,2,Benfica,Turkey
+10,MF,Hakan Çalhanoğlu (captain),30,83,17,Inter Milan,Turkey
+16,MF,İsmail Yüksek,25,13,1,Fenerbahçe,Turkey
+17,MF,Arda Güler,19,5,1,Real Madrid,Turkey
+20,MF,Abdülkadir Ömür,24,12,0,Hull City,Turkey
+22,MF,Kaan Ayhan (vice-captain),29,55,5,Galatasaray,Turkey
+25,MF,Can Uzun,18,1,0,Nürnberg,Turkey
+7,FW,Kerem Aktürkoğlu,25,27,5,Galatasaray,Turkey
+8,FW,İrfan Kahveci,28,30,2,Fenerbahçe,Turkey
+9,FW,Enes Ünal,26,33,3,Bournemouth,Turkey
+11,FW,Yusuf Yazıcı,27,42,3,Lille,Turkey
+14,FW,Yunus Akgün,23,8,2,Leicester City,Turkey
+19,FW,Kenan Yıldız,18,4,1,Juventus,Turkey
+21,FW,Barış Alper Yılmaz,23,12,1,Galatasaray,Turkey
+26,FW,Oğuz Aydın,23,0,0,Alanyaspor,Turkey
+1,GK,Alexander Schlager,28,15,0,Red Bull Salzburg,Austria
+12,GK,Tobias Lawal,23,0,0,LASK,Austria
+13,GK,Patrick Pentz,27,5,0,Brøndby,Austria
+2,DF,Maximilian Wöber,26,23,0,Borussia Mönchengladbach,Austria
+3,DF,Kevin Danso,25,18,0,Lens,Austria
+5,DF,Stefan Posch,26,30,1,Bologna,Austria
+14,DF,Leopold Querfeld,20,1,0,Rapid Wien,Austria
+16,DF,Phillipp Mwene,30,11,0,Mainz 05,Austria
+21,DF,Stefan Lainer,31,39,2,Borussia Mönchengladbach,Austria
+24,DF,Flavius Daniliuc,22,2,0,Red Bull Salzburg,Austria
+4,MF,Xaver Schlager,26,43,4,RB Leipzig,Austria
+6,MF,Nicolas Seiwald,22,22,0,RB Leipzig,Austria
+8,MF,Alexander Prass,22,4,0,Sturm Graz,Austria
+9,MF,Marcel Sabitzer,30,78,17,Borussia Dortmund,Austria
+10,MF,Florian Grillitsch,28,41,1,1899 Hoffenheim,Austria
+17,MF,Patrick Wimmer,22,10,0,VfL Wolfsburg,Austria
+18,MF,Romano Schmid,24,9,0,Werder Bremen,Austria
+19,MF,Christoph Baumgartner,24,36,13,RB Leipzig,Austria
+20,MF,Konrad Laimer,26,34,4,Bayern Munich,Austria
+22,MF,Matthias Seidl,23,3,0,Rapid Wien,Austria
+26,MF,Christoph Lang,22,0,0,Rapid Wien,Austria
+7,FW,Andreas Weimann,32,23,2,West Bromwich Albion,Austria
+11,FW,Michael Gregoritsch,29,53,15,SC Freiburg,Austria
+23,FW,Maximilian Entrup,26,2,1,TSV Hartberg,Austria
+25,FW,Muhammed Cham,23,3,0,Clermont,Austria
+1,GK,Jordan Pickford,30,60,0,Everton,England
+13,GK,Aaron Ramsdale,25,4,0,Arsenal,England
+22,GK,James Trafford,21,0,0,Burnley,England
+2,DF,Ezri Konsa,26,2,0,Aston Villa,England
+3,DF,Ben Chilwell,27,21,1,Chelsea,England
+5,DF,John Stones,29,71,3,Manchester City,England
+6,DF,Lewis Dunk,32,5,0,Brighton & Hove Albion,England
+12,DF,Joe Gomez,26,13,0,Liverpool,England
+15,DF,Jarrad Branthwaite,21,0,0,Everton,England
+16,DF,Rico Lewis,19,1,0,Manchester City,England
+4,MF,Declan Rice,25,50,3,Arsenal,England
+8,MF,Conor Gallagher,24,12,0,Chelsea,England
+10,MF,Jude Bellingham,20,29,3,Real Madrid,England
+14,MF,Jordan Henderson (vice-captain),33,81,3,Ajax,England
+20,MF,James Maddison,27,6,0,Tottenham Hotspur,England
+21,MF,Kobbie Mainoo,18,2,0,Manchester United,England
+7,FW,Phil Foden,23,33,4,Manchester City,England
+9,FW,Ollie Watkins,28,11,3,Aston Villa,England
+11,FW,Anthony Gordon,23,2,0,Newcastle United,England
+17,FW,Ivan Toney,28,2,1,Brentford,England
+18,FW,Jarrod Bowen,27,7,0,West Ham United,England
+19,FW,Marcus Rashford,26,60,17,Manchester United,England
+23,FW,Cole Palmer,21,2,0,Chelsea,England
+1,GK,Péter Gulácsi (vice-captain),33,52,0,RB Leipzig,Hungary
+12,GK,Dénes Dibusz,33,35,0,Ferencváros,Hungary
+22,GK,Balázs Tóth,26,0,0,Fehérvár,Hungary
+2,DF,Ádám Lang,31,67,1,Omonia,Hungary
+3,DF,Attila Mocsi,23,1,0,Çaykur Rizespor,Hungary
+4,DF,Attila Szalai (vice-captain),26,43,1,SC Freiburg,Hungary
+5,DF,Botond Balogh,21,3,0,Parma,Hungary
+23,DF,Márton Dárdai,22,2,0,Hertha BSC,Hungary
+25,DF,Gábor Szalai,23,0,0,Lausanne-Sport,Hungary
+-1,DF,Willi Orbán,31,43,6,RB Leipzig,Hungary
+7,MF,Loïc Négo,33,35,2,Le Havre,Hungary
+8,MF,Ádám Nagy,28,79,2,Spezia,Hungary
+10,MF,Dominik Szoboszlai (captain),23,40,12,Liverpool,Hungary
+11,MF,Milos Kerkez,20,14,0,Bournemouth,Hungary
+13,MF,András Schäfer,24,24,3,Union Berlin,Hungary
+14,MF,Bendegúz Bolla,24,16,0,Servette,Hungary
+15,MF,László Kleinheisler,29,49,3,Hajduk Split,Hungary
+16,MF,Dániel Gazdag,28,24,4,Philadelphia Union,Hungary
+17,MF,Callum Styles,23,20,0,Sunderland,Hungary
+18,MF,Zsolt Nagy,30,18,3,Puskás Akadémia,Hungary
+9,FW,Martin Ádám,29,21,3,Ulsan HD,Hungary
+19,FW,Barnabás Varga,29,9,4,Ferencváros,Hungary
+20,FW,Roland Sallai,26,47,12,SC Freiburg,Hungary
+21,FW,Krisztofer Horváth,22,2,0,Kecskemét,Hungary
+24,FW,Zalán Vancsa,19,2,0,Lommel,Hungary
+-1,GK,Martin Dúbravka,35,41,0,Newcastle United,Slovakia
+-1,GK,Marek Rodák,27,20,0,Fulham,Slovakia
+-1,GK,Henrich Ravas,26,0,0,New England Revolution,Slovakia
+-1,DF,Peter Pekarík,37,124,2,Hertha BSC,Slovakia
+-1,DF,Milan Škriniar (captain),29,66,3,Paris Saint-Germain,Slovakia
+-1,DF,Norbert Gyömbér,31,36,0,Salernitana,Slovakia
+-1,DF,Dávid Hancko,26,35,4,Feyenoord,Slovakia
+-1,DF,Ľubomír Šatka,28,33,1,Samsunspor,Slovakia
+-1,DF,Denis Vavro,27,19,2,Copenhagen,Slovakia
+-1,DF,Vernon De Marco,31,7,1,Hatta,Slovakia
+-1,DF,Michal Tomič,24,3,0,Slavia Prague,Slovakia
+-1,DF,Matúš Kmeť,23,0,0,AS Trenčín,Slovakia
+-1,MF,Juraj Kucka,37,104,13,Slovan Bratislava,Slovakia
+-1,MF,Ondrej Duda,29,69,12,Hellas Verona,Slovakia
+-1,MF,Patrik Hrošovský,31,53,0,Genk,Slovakia
+-1,MF,Stanislav Lobotka,29,52,4,Napoli,Slovakia
+-1,MF,László Bénes,26,18,1,Hamburger SV,Slovakia
+-1,MF,Erik Jirka,26,10,2,Viktoria Plzeň,Slovakia
+-1,MF,Jakub Kadák,23,1,0,Luzern,Slovakia
+-1,MF,Dominik Hollý,20,0,0,AS Trenčín,Slovakia
+-1,FW,Róbert Mak,33,80,16,Sydney FC,Slovakia
+-1,FW,Róbert Boženík,24,37,6,Boavista,Slovakia
+-1,FW,Lukáš Haraslín,27,32,5,Sparta Prague,Slovakia
+-1,FW,Tomáš Suslov,21,25,2,Hellas Verona,Slovakia
+-1,FW,Ivan Schranz,30,21,3,Slavia Prague,Slovakia
+-1,FW,David Strelec,22,17,2,Slovan Bratislava,Slovakia
+-1,FW,Dávid Ďuriš,25,9,1,Ascoli,Slovakia
+-1,FW,Róbert Polievka,27,9,0,Dukla Banská Bystrica,Slovakia
+-1,FW,Ľubomír Tupta,26,2,0,Slovan Liberec,Slovakia
+-1,FW,Leo Sauer,18,0,0,Feyenoord,Slovakia
+1,GK,Alen Sherri,26,1,0,Egnatia,Albania
+12,GK,Elhan Kastrati,27,2,0,Cittadella,Albania
+23,GK,Thomas Strakosha (3rd captain),29,27,0,Brentford,Albania
+2,DF,Iván Balliu,32,12,0,Rayo Vallecano,Albania
+3,DF,Mario Mitaj,20,12,0,Lokomotiv Moscow,Albania
+4,DF,Elseid Hysaj (vice-captain),30,83,2,Lazio,Albania
+5,DF,Frédéric Veseli,31,45,0,Fatih Karagümrük,Albania
+6,DF,Berat Gjimshiti (captain),31,57,1,Atalanta,Albania
+13,DF,Enea Mihaj,25,17,0,Famalicão,Albania
+18,DF,Jon Mersinaj,25,1,0,Lokomotiva,Albania
+24,DF,Marash Kumbulla,24,18,0,Sassuolo,Albania
+25,DF,Naser Aliji,30,13,0,Voluntari,Albania
+7,MF,Keidi Bare,26,29,2,Espanyol,Albania
+10,MF,Nedim Bajrami,25,21,3,Sassuolo,Albania
+14,MF,Qazim Laçi,28,25,2,Sparta Prague,Albania
+20,MF,Ylber Ramadani,27,34,1,Lecce,Albania
+21,MF,Kristjan Asllani,22,18,2,Inter Milan,Albania
+8,FW,Rey Manaj,27,32,7,Sivasspor,Albania
+9,FW,Jasir Asani,28,11,3,Gwangju FC,Albania
+15,FW,Taulant Seferi,27,18,3,Baniyas,Albania
+16,FW,Sokol Cikalleshi,33,60,13,Konyaspor,Albania
+17,FW,Ernest Muçi,23,9,2,Beşiktaş,Albania
+19,FW,Arbnor Muçolli,24,6,0,IFK Göteborg,Albania
+22,FW,Armando Broja,22,19,4,Fulham,Albania
+26,FW,Arbër Hoxha,25,2,0,Dinamo Zagreb,Albania
+1,GK,Andreas Hansen,28,0,0,Nordsjælland,Denmark
+16,GK,Mads Hermansen,23,0,0,Leicester City,Denmark
+22,GK,Frederik Rønnow,31,9,0,Union Berlin,Denmark
+2,DF,Joachim Andersen,27,30,0,Crystal Palace,Denmark
+3,DF,Jannik Vestergaard,31,39,2,Leicester City,Denmark
+5,DF,Joakim Mæhle,26,43,11,VfL Wolfsburg,Denmark
+6,DF,Jacob Rasmussen,26,0,0,Brøndby,Denmark
+13,DF,Victor Nelsson,25,12,0,Galatasaray,Denmark
+17,DF,Victor Kristiansen,21,6,0,Bologna,Denmark
+18,DF,Mads Roerslev,24,0,0,Brentford,Denmark
+26,DF,Elias Jelert,20,3,0,Copenhagen,Denmark
+7,MF,Mathias Jensen,28,30,1,Brentford,Denmark
+10,MF,Christian Eriksen,32,128,40,Manchester United,Denmark
+14,MF,Mikkel Damsgaard,23,26,4,Brentford,Denmark
+15,MF,Matt O'Riley,23,2,0,Celtic,Denmark
+21,MF,Morten Hjulmand,24,5,0,Sporting CP,Denmark
+23,MF,Pierre-Emile Højbjerg,28,75,8,Tottenham Hotspur,Denmark
+25,MF,Gustav Isaksen,22,1,0,Lazio,Denmark
+9,FW,Rasmus Højlund,21,12,7,Manchester United,Denmark
+11,FW,Mohamed Daramy,22,10,1,Reims,Denmark
+12,FW,Kasper Dolberg,26,45,11,Anderlecht,Denmark
+20,FW,Yussuf Poulsen,29,77,12,RB Leipzig,Denmark
+24,FW,Anders Dreyer,25,3,0,Anderlecht,Denmark
+1,GK,Bart Verbruggen,21,4,0,Brighton & Hove Albion,Netherlands
+13,GK,Marco Bizot,33,1,0,Brest,Netherlands
+23,GK,Mark Flekken,30,7,0,Brentford,Netherlands
+2,DF,Lutsharel Geertruida,23,7,0,Feyenoord,Netherlands
+3,DF,Matthijs de Ligt,24,43,2,Bayern Munich,Netherlands
+4,DF,Virgil van Dijk (captain),32,65,7,Liverpool,Netherlands
+5,DF,Nathan Aké,29,43,5,Manchester City,Netherlands
+17,DF,Daley Blind,34,105,3,Girona,Netherlands
+21,DF,Jeremie Frimpong,23,2,0,Bayer Leverkusen,Netherlands
+22,DF,Denzel Dumfries,27,51,6,Internazionale,Netherlands
+6,MF,Jerdy Schouten,27,2,0,PSV,Netherlands
+7,MF,Xavi Simons,20,12,0,RB Leipzig,Netherlands
+8,MF,Georginio Wijnaldum,33,91,28,Al-Ettifaq,Netherlands
+12,MF,Quinten Timber,22,0,0,Feyenoord,Netherlands
+14,MF,Tijjani Reijnders,25,7,1,Milan,Netherlands
+15,MF,Marten de Roon,32,41,1,Atalanta,Netherlands
+16,MF,Joey Veerman,25,7,0,PSV,Netherlands
+19,MF,Mats Wieffer,24,8,1,Feyenoord,Netherlands
+20,MF,Teun Koopmeiners,26,21,2,Atalanta,Netherlands
+9,FW,Wout Weghorst,31,30,9,1899 Hoffenheim,Netherlands
+10,FW,Memphis Depay,30,89,44,Atlético Madrid,Netherlands
+11,FW,Cody Gakpo,24,22,9,Liverpool,Netherlands
+18,FW,Donyell Malen,25,29,6,Borussia Dortmund,Netherlands
+1,GK,Florin Niță,36,20,0,Gaziantep,Romania
+12,GK,Horațiu Moldovan,26,10,0,Atlético Madrid,Romania
+-1,GK,Ștefan Târnovanu,23,1,0,FCSB,Romania
+16,GK,Mihai Aioani,24,0,0,Rapid București,Romania
+15,DF,Andrei Burcă,30,27,1,Al-Okhdood,Romania
+5,DF,Ionuț Nedelcearu,27,26,2,Palermo,Romania
+4,DF,Cristian Manea,26,25,2,CFR Cluj,Romania
+17,DF,Adrian Rus,28,19,1,Pafos,Romania
+2,DF,Andrei Rațiu,25,16,1,Rayo Vallecano,Romania
+23,DF,Deian Sorescu,26,16,0,Gaziantep,Romania
+3,DF,Radu Drăgușin,22,15,0,Tottenham Hotspur,Romania
+-1,DF,Vasile Mogoș,31,5,0,CFR Cluj,Romania
+11,DF,Raul Opruț,26,4,0,Hermannstadt,Romania
+22,DF,Bogdan Racovițan,23,1,0,Raków Częstochowa,Romania
+10,MF,Nicolae Stanciu (captain),30,68,14,Damac,Romania
+18,MF,Răzvan Marin,27,54,3,Empoli,Romania
+8,MF,Alexandru Cicâldău,26,36,4,Konyaspor,Romania
+14,MF,Ianis Hagi,25,33,5,Alavés,Romania
+20,MF,Dennis Man,25,22,7,Parma,Romania
+13,MF,Valentin Mihăilă,24,19,4,Parma,Romania
+24,MF,Darius Olaru,26,16,0,FCSB,Romania
+6,MF,Marius Marin,25,16,0,Pisa,Romania
+21,MF,Olimpiu Moruțan,24,15,1,Ankaragücü,Romania
+25,MF,Florinel Coman,25,13,1,FCSB,Romania
+19,MF,Denis Drăguș,24,9,2,Gaziantep,Romania
+26,MF,Adrian Șut,24,1,0,FCSB,Romania
+9,FW,George Pușcaș,27,41,11,Bari,Romania
+7,FW,Denis Alibec,33,37,5,Muaither,Romania
+27,FW,Florin Tănase,29,18,3,Al-Okhdood,Romania
+1,GK,Yann Sommer (3rd captain),35,91,0,Internazionale,Switzerland
+12,GK,Yvon Mvogo,29,7,0,Lorient,Switzerland
+21,GK,David von Ballmoos,29,0,0,Young Boys,Switzerland
+2,DF,Kevin Mbabu,28,23,0,FC Augsburg,Switzerland
+3,DF,Silvan Widmer,31,40,3,Mainz 05,Switzerland
+4,DF,Nico Elvedi,27,50,1,Borussia Mönchengladbach,Switzerland
+5,DF,Manuel Akanji,28,58,3,Manchester City,Switzerland
+13,DF,Ricardo Rodriguez,31,114,9,Torino,Switzerland
+14,DF,Ulisses Garcia,28,7,0,Marseille,Switzerland
+15,DF,Cédric Zesiger,25,3,0,VfL Wolfsburg,Switzerland
+18,DF,Eray Cömert,26,14,0,Nantes,Switzerland
+22,DF,Fabian Schär,32,79,8,Newcastle United,Switzerland
+24,DF,Bećir Omeragić,22,4,0,Montpellier,Switzerland
+6,MF,Denis Zakaria,27,53,3,Monaco,Switzerland
+8,MF,Remo Freuler (4th captain),31,64,8,Bologna,Switzerland
+10,MF,Granit Xhaka (captain),31,122,14,Bayer Leverkusen,Switzerland
+16,MF,Uran Bislimi,24,1,0,Lugano,Switzerland
+20,MF,Michel Aebischer,27,17,0,Bologna,Switzerland
+23,MF,Xherdan Shaqiri (vice-captain),32,120,29,Chicago Fire,Switzerland
+25,MF,Vincent Sierro,28,0,0,Toulouse,Switzerland
+26,MF,Dereck Kutesa,26,0,0,Servette,Switzerland
+7,FW,Zeki Amdouni,23,12,6,Burnley,Switzerland
+9,FW,Noah Okafor,23,20,2,Milan,Switzerland
+11,FW,Renato Steffen,32,39,4,Lugano,Switzerland
+17,FW,Ruben Vargas,25,41,7,FC Augsburg,Switzerland
+19,FW,Dan Ndoye,23,8,0,Bologna,Switzerland
+1,GK,Predrag Rajković,28,31,0,Mallorca,Serbia
+23,GK,Vanja Milinković-Savić,27,18,0,Torino,Serbia
+12,GK,Đorđe Petrović,24,3,0,Chelsea,Serbia
+4,DF,Nikola Milenković,26,51,3,Fiorentina,Serbia
+2,DF,Strahinja Pavlović,22,33,3,Red Bull Salzburg,Serbia
+3,DF,Filip Mladenović,32,30,1,Panathinaikos,Serbia
+15,DF,Srđan Babić,27,8,1,Spartak Moscow,Serbia
+16,DF,Strahinja Eraković,23,8,1,Zenit Saint Petersburg,Serbia
+13,DF,Erhan Mašović,25,5,0,VfL Bochum,Serbia
+6,DF,Milan Gajić,28,2,0,CSKA Moscow,Serbia
+10,MF,Dušan Tadić (captain),35,106,22,Fenerbahçe,Serbia
+11,MF,Filip Kostić,31,62,3,Juventus,Serbia
+20,MF,Sergej Milinković-Savić,29,49,8,Al Hilal,Serbia
+22,MF,Saša Lukić,27,44,2,Fulham,Serbia
+14,MF,Andrija Živković,27,44,1,PAOK,Serbia
+7,MF,Mijat Gaćinović,29,26,2,AEK Athens,Serbia
+17,MF,Srđan Mijailović,30,7,0,Red Star Belgrade,Serbia
+19,MF,Lazar Samardžić,22,7,0,Udinese,Serbia
+5,MF,Saša Zdjelar,29,5,0,CSKA Moscow,Serbia
+9,FW,Aleksandar Mitrović (vice-captain),29,89,57,Al Hilal,Serbia
+8,FW,Luka Jović,26,33,10,Milan,Serbia
+21,FW,Samed Baždar,20,1,0,Partizan,Serbia
+-1,GK,Jindřich Staněk,27,9,0,Slavia Prague,Czech Republic
+-1,GK,Vítězslav Jaroš,22,0,0,Sturm Graz,Czech Republic
+-1,GK,Matěj Kovář,23,1,0,Bayer Leverkusen,Czech Republic
+-1,DF,Tomáš Holeš,30,27,2,Slavia Prague,Czech Republic
+-1,DF,David Zima,23,20,1,Slavia Prague,Czech Republic
+-1,DF,Jaroslav Zelený,31,10,0,Sparta Prague,Czech Republic
+-1,DF,Ladislav Krejčí,24,9,3,Sparta Prague,Czech Republic
+-1,DF,David Douděra,25,8,1,Slavia Prague,Czech Republic
+-1,DF,David Jurásek,23,7,0,Hoffenheim,Czech Republic
+-1,DF,Adam Gabriel,22,1,0,Midtjylland,Czech Republic
+-1,DF,Robin Hranáč,24,1,0,Viktoria Plzeň,Czech Republic
+-1,DF,Tomáš Vlček,23,1,0,Slavia Prague,Czech Republic
+-1,MF,Tomáš Souček (captain),29,68,12,West Ham United,Czech Republic
+-1,MF,Antonín Barák,29,39,9,Fiorentina,Czech Republic
+-1,MF,Michal Sadílek,24,23,1,Twente,Czech Republic
+-1,MF,Lukáš Provod,27,18,2,Slavia Prague,Czech Republic
+-1,MF,Ondřej Lingr,25,13,0,Feyenoord,Czech Republic
+-1,MF,Matěj Jurásek,20,1,0,Slavia Prague,Czech Republic
+-1,MF,Pavel Šulc,23,1,0,Viktoria Plzeň,Czech Republic
+-1,FW,Patrik Schick,28,37,18,Bayer Leverkusen,Czech Republic
+-1,FW,Adam Hložek,21,31,2,Bayer Leverkusen,Czech Republic
+-1,FW,Mojmír Chytil,24,12,4,Slavia Prague,Czech Republic
+-1,FW,Tomáš Chorý,29,3,2,Viktoria Plzeň,Czech Republic
+1,GK,Gianluigi Donnarumma (captain),25,61,0,Paris Saint-Germain,Italy
+12,GK,Guglielmo Vicario,27,1,0,Tottenham Hotspur,Italy
+21,GK,Alex Meret,27,3,0,Napoli,Italy
+-1,GK,Marco Carnesecchi,23,0,0,Atalanta,Italy
+2,DF,Giovanni Di Lorenzo,30,34,3,Napoli,Italy
+3,DF,Federico Dimarco,26,17,2,Inter Milan,Italy
+4,DF,Alessandro Buongiorno,24,3,0,Torino,Italy
+6,DF,Destiny Udogie,21,3,0,Tottenham Hotspur,Italy
+13,DF,Matteo Darmian,34,42,2,Inter Milan,Italy
+15,DF,Giorgio Scalvini,20,8,0,Atalanta,Italy
+16,DF,Gianluca Mancini,27,12,0,Roma,Italy
+23,DF,Alessandro Bastoni,24,22,1,Inter Milan,Italy
+24,DF,Andrea Cambiaso,24,2,0,Juventus,Italy
+25,DF,Raoul Bellanova,23,1,0,Torino,Italy
+5,MF,Manuel Locatelli,26,28,3,Juventus,Italy
+7,MF,Giacomo Bonaventura,34,18,1,Fiorentina,Italy
+8,MF,Jorginho,32,52,5,Arsenal,Italy
+10,MF,Lorenzo Pellegrini,27,28,6,Roma,Italy
+18,MF,Nicolò Barella,27,53,9,Inter Milan,Italy
+19,MF,Davide Frattesi,24,13,4,Inter Milan,Italy
+26,MF,Michael Folorunsho,26,0,0,Hellas Verona,Italy
+9,FW,Mateo Retegui,24,6,4,Genoa,Italy
+11,FW,Giacomo Raspadori,24,26,6,Napoli,Italy
+14,FW,Federico Chiesa,26,45,7,Juventus,Italy
+17,FW,Riccardo Orsolini,27,6,2,Bologna,Italy
+20,FW,Mattia Zaccagni,28,4,0,Lazio,Italy
+22,FW,Nicolò Zaniolo,24,19,2,Aston Villa,Italy
+-1,FW,Lorenzo Lucca,23,0,0,Udinese,Italy
+1,GK,Jan Oblak (captain),31,64,0,Atlético Madrid,Slovenia
+12,GK,Vid Belec,33,20,0,APOEL,Slovenia
+16,GK,Igor Vekić,25,1,0,Vejle,Slovenia
+2,DF,Žan Karničnik,29,26,1,Celje,Slovenia
+3,DF,Jure Balkovec,29,32,0,Alanyaspor,Slovenia
+4,DF,Miha Blažič,30,32,0,Lech Poznań,Slovenia
+6,DF,Jaka Bijol,25,47,1,Udinese,Slovenia
+13,DF,Erik Janža,30,8,2,Górnik Zabrze,Slovenia
+20,DF,Petar Stojanović,28,52,2,Sampdoria,Slovenia
+21,DF,Vanja Drkušić,24,6,0,Sochi,Slovenia
+23,DF,David Brekalo,25,12,1,Orlando City SC,Slovenia
+5,MF,Jon Gorenc Stanković,28,22,1,Sturm Graz,Slovenia
+7,MF,Benjamin Verbič,30,58,6,Panathinaikos,Slovenia
+8,MF,Sandi Lovrić,25,33,4,Udinese,Slovenia
+10,MF,Timi Max Elšnik,25,13,1,Olimpija Ljubljana,Slovenia
+14,MF,Jasmin Kurtić,35,90,2,Südtirol,Slovenia
+15,MF,Tomi Horvat,25,5,0,Sturm Graz,Slovenia
+22,MF,Adam Gnezda Čerin,24,29,4,Panathinaikos,Slovenia
+9,FW,Andraž Šporar,30,51,11,Panathinaikos,Slovenia
+11,FW,Benjamin Šeško,20,28,11,RB Leipzig,Slovenia
+17,FW,Jan Mlakar,25,15,2,Pisa,Slovenia
+18,FW,Žan Vipotnik,22,8,2,Bordeaux,Slovenia
+19,FW,Žan Celar,25,9,0,Lugano,Slovenia
+24,FW,Nino Žugelj,23,0,0,Bodø/Glimt,Slovenia
+1,GK,Dominik Livaković,29,52,0,Fenerbahçe,Croatia
+12,GK,Nediljko Labrović,24,1,0,Rijeka,Croatia
+23,GK,Ivica Ivušić,29,6,0,Pafos,Croatia
+25,GK,Dominik Kotarski,24,1,0,PAOK,Croatia
+2,DF,Josip Stanišić,23,17,0,Bayer Leverkusen,Croatia
+3,DF,Marin Pongračić,26,6,0,Lecce,Croatia
+4,DF,Joško Gvardiol,22,29,2,Manchester City,Croatia
+5,DF,Martin Erlić,26,8,0,Sassuolo,Croatia
+6,DF,Duje Ćaleta-Car,27,24,1,Lyon,Croatia
+19,DF,Borna Sosa,26,19,1,Ajax,Croatia
+21,DF,Domagoj Vida (vice-captain),34,104,4,AEK Athens,Croatia
+22,DF,Josip Juranović,28,36,0,Union Berlin,Croatia
+7,MF,Lovro Majer,26,29,6,VfL Wolfsburg,Croatia
+8,MF,Mateo Kovačić,29,99,5,Manchester City,Croatia
+10,MF,Luka Modrić (captain),38,174,24,Real Madrid,Croatia
+11,MF,Marcelo Brozović,31,94,7,Al Nassr,Croatia
+13,MF,Nikola Vlašić,26,55,8,Torino,Croatia
+15,MF,Mario Pašalić,29,62,10,Atalanta,Croatia
+18,MF,Luka Ivanušec,25,19,2,Feyenoord,Croatia
+9,FW,Andrej Kramarić,32,91,29,1899 Hoffenheim,Croatia
+17,FW,Bruno Petković,29,36,11,Dinamo Zagreb,Croatia
+20,FW,Marko Pjaca,28,25,1,Rijeka,Croatia
+24,FW,Marco Pašalić,23,4,0,Rijeka,Croatia
+1,GK,Giorgi Loria,38,78,0,Dinamo Tbilisi,Georgia
+12,GK,Giorgi Mamardashvili,23,16,0,Valencia,Georgia
+23,GK,Luka Gugeshashvili,24,1,0,Qarabağ,Georgia
+2,DF,Otar Kakabadze,28,60,0,Cracovia,Georgia
+3,DF,Lasha Dvali,28,31,1,APOEL,Georgia
+4,DF,Guram Kashia (captain),36,112,3,Slovan Bratislava,Georgia
+5,DF,Solomon Kvirkvelia,32,58,0,Al-Okhdood,Georgia
+13,DF,Giorgi Gocholeishvili,23,8,0,Shakhtar Donetsk,Georgia
+14,DF,Luka Lochoshvili,25,10,1,Cremonese,Georgia
+15,DF,Giorgi Gvelesiani,32,0,0,Persepolis,Georgia
+-1,DF,Vladimer Mamuchashvili,26,10,0,Dinamo Batumi,Georgia
+-1,DF,Saba Sazonov,22,3,0,Torino,Georgia
+6,MF,Giorgi Kochorashvili,24,7,0,Levante,Georgia
+9,MF,Zuriko Davitashvili,23,34,6,Bordeaux,Georgia
+10,MF,Giorgi Chakvetadze,24,24,8,Watford,Georgia
+16,MF,Nika Kvekveskiri,31,59,0,Lech Poznań,Georgia
+17,MF,Otar Kiteishvili,28,36,2,Sturm Graz,Georgia
+18,MF,Sandro Altunashvili,26,4,0,Wolfsberger AC,Georgia
+19,MF,Levan Shengelia,28,16,1,Panetolikos,Georgia
+20,MF,Jaba Kankava,38,101,10,Slovan Bratislava,Georgia
+21,MF,Giorgi Tsitaishvili,23,16,1,Dinamo Batumi,Georgia
+-1,MF,Anzor Mekvabishvili,22,13,0,Universitatea Craiova,Georgia
+7,FW,Khvicha Kvaratskhelia,23,29,15,Napoli,Georgia
+8,FW,Budu Zivzivadze,30,26,7,Karlsruher SC,Georgia
+11,FW,Giorgi Kvilitaia,30,37,6,APOEL,Georgia
+22,FW,Georges Mikautadze,23,24,9,Metz,Georgia
+1,GK,Heorhiy Bushchan,29,17,0,Dynamo Kyiv,Ukraine
+23,GK,Andriy Lunin,25,11,0,Real Madrid,Ukraine
+12,GK,Anatoliy Trubin,22,10,0,Benfica,Ukraine
+22,DF,Mykola Matviyenko,27,63,0,Shakhtar Donetsk,Ukraine
+16,DF,Vitaliy Mykolenko,24,39,1,Everton,Ukraine
+13,DF,Illya Zabarnyi,21,34,1,Bournemouth,Ukraine
+21,DF,Oleksandr Tymchyk,27,15,1,Dynamo Kyiv,Ukraine
+2,DF,Yukhym Konoplya,24,12,1,Shakhtar Donetsk,Ukraine
+3,DF,Bohdan Mykhaylichenko,27,7,0,Polissya Zhytomyr,Ukraine
+19,DF,Valeriy Bondar,25,3,0,Shakhtar Donetsk,Ukraine
+4,DF,Maksym Talovyerov,23,2,0,LASK,Ukraine
+17,MF,Oleksandr Zinchenko (3rd captain),27,60,9,Arsenal,Ukraine
+5,MF,Serhiy Sydorchuk,32,60,3,Westerlo,Ukraine
+8,MF,Ruslan Malinovskyi,30,59,7,Genoa,Ukraine
+15,MF,Viktor Tsyhankov,26,51,12,Girona,Ukraine
+20,MF,Oleksandr Zubkov,27,30,2,Shakhtar Donetsk,Ukraine
+6,MF,Mykola Shaparenko,25,28,1,Dynamo Kyiv,Ukraine
+10,MF,Mykhailo Mudryk,23,18,2,Chelsea,Ukraine
+7,MF,Heorhiy Sudakov,21,14,1,Shakhtar Donetsk,Ukraine
+14,MF,Volodymyr Brazhko,22,2,0,Dynamo Kyiv,Ukraine
+9,FW,Roman Yaremchuk,28,48,14,Valencia,Ukraine
+11,FW,Artem Dovbyk,26,25,8,Girona,Ukraine
+18,FW,Vladyslav Vanat,22,5,0,Dynamo Kyiv,Ukraine
+1,GK,Wojciech Szczęsny,33,81,0,Juventus,Poland
+12,GK,Łukasz Skorupski,32,9,0,Bologna,Poland
+22,GK,Marcin Bułka,24,1,0,Nice,Poland
+2,DF,Sebastian Walukiewicz,23,3,0,Empoli,Poland
+3,DF,Paweł Dawidowicz,28,10,0,Hellas Verona,Poland
+4,DF,Tymoteusz Puchacz,25,13,0,1. FC Kaiserslautern,Poland
+5,DF,Jan Bednarek,27,56,1,Southampton,Poland
+14,DF,Jakub Kiwior,24,21,1,Arsenal,Poland
+17,DF,Bartosz Salamon,32,12,0,Lech Poznań,Poland
+18,DF,Bartosz Bereszyński,31,54,0,Empoli,Poland
+-1,DF,Paweł Bochniewicz,28,3,0,Heerenveen,Poland
+6,MF,Jakub Piotrowski,26,5,2,Ludogorets Razgrad,Poland
+8,MF,Bartosz Slisz,24,8,0,Atlanta United,Poland
+10,MF,Piotr Zieliński,29,88,11,Napoli,Poland
+11,MF,Kamil Grosicki,35,93,17,Pogoń Szczecin,Poland
+13,MF,Taras Romanczuk,32,2,0,Jagiellonia Białystok,Poland
+16,MF,Damian Szymański,28,17,2,AEK Athens,Poland
+19,MF,Przemysław Frankowski,28,40,3,Lens,Poland
+20,MF,Sebastian Szymański,24,32,3,Fenerbahçe,Poland
+21,MF,Nicola Zalewski,22,16,0,Roma,Poland
+-1,MF,Jakub Moder,24,21,2,Brighton & Hove Albion,Poland
+-1,MF,Paweł Wszołek,31,14,2,Legia Warsaw,Poland
+7,FW,Karol Świderski,27,30,10,Hellas Verona,Poland
+9,FW,Robert Lewandowski (captain),35,148,82,Barcelona,Poland
+15,FW,Adam Buksa,27,14,6,Antalyaspor,Poland
+23,FW,Krzysztof Piątek,28,28,11,İstanbul Başakşehir,Poland
