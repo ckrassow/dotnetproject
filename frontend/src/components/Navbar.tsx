@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import '../styles/Navbar.css';
 import { Link, NavLink } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
@@ -8,7 +8,7 @@ interface NavbarProps {
     isLoggedIn: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
+const Navbar: FC<NavbarProps> = ({ isLoggedIn }) => {
 
     const [input, setInput] = useState("");
 

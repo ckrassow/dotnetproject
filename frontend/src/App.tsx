@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate, Routes, Route, BrowserRouter } from 'react-router-dom';
 import { HomePage } from './pages/Home';
 import { LeaderboardPage } from './pages/Leaderboard';
@@ -8,7 +7,7 @@ import Navbar from './components/Navbar';
 
 function App() {
 
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <div className='mainDiv'>

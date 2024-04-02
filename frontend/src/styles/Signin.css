@@ -1,0 +1,24 @@
+/* Signin.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.signin-container {
+    @apply flex items-center justify-center h-screen;
+}
+
+.signin-form {
+    @apply space-y-4;
+}
+
+.signin-label {
+    @apply block;
+}
+
+.signin-input {
+    @apply border-2 mt-1 block w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm;
+}
+
+.signin-submit {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+}
