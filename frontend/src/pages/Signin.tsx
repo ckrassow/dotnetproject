@@ -1,20 +1,23 @@
-import "../styles/Signin.css"
-import Card from "../components/Card"
+import "../styles/Signin.css";
+import Card from "../components/Card";
+import { useNavigate } from "react-router-dom";
 
 export function SigninPage() {
 
+    const navigate = useNavigate();
+
     const headerSignin = <h2>Sign in</h2>;
     const contentSignin = (
-        <form className="signin-form">
-            <label className="signin-label">
+        <form className="form-container">
+            <label className="form-label">
                 Username:
-                <input className="signin-input" type="text" name="username" />
+                <input className="form-input" type="text" name="username" />
             </label>
-            <label className="signin-label">
+            <label className="form-label">
                 Password:
-                <input className="signin-input" type="password" name="password" />
+                <input className="form-input" type="password" name="password" />
             </label>
-            <input className="signin-submit" type="submit" value="Sign in" />
+            <input className="form-button" type="submit" value="Sign in" />
         </form>
     );
 
@@ -27,7 +30,7 @@ export function SigninPage() {
                - Create leagues and compare your predictions to your friends and family. <br />
                - Perhaps do some quizzes or whatever I add if this stuff isn't enough stuff.
             </p>
-            <button className="signup-redirect-button">
+            <button className="form-button" onClick={() => navigate("/signup")}>
                 Sign up now!
             </button>
         </div>

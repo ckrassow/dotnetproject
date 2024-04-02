@@ -4,6 +4,7 @@ import { LeaderboardPage } from './pages/Leaderboard';
 import { ProfilePage } from './pages/Profile';
 import { SigninPage } from './pages/Signin';
 import Navbar from './components/Navbar';
+import { SignupPage } from './pages/Signup';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/leaderboard" element={<LeaderboardPage/>} />
           <Route path="/signin" element={isLoggedIn ? <Navigate to="/profile" />: <SigninPage/>} />
           <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
+          <Route path="/signup" element={<SignupPage/>} />
         </Routes>
       </BrowserRouter>
     </div>
