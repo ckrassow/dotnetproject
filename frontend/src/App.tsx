@@ -1,14 +1,14 @@
 import { Navigate, Routes, Route, BrowserRouter } from 'react-router-dom';
 import { HomePage } from './pages/Home';
 import { LeaderboardPage } from './pages/Leaderboard';
-import { ProfilePage } from './pages/Profile';
+import { ProfilePage } from './pages/Profile/Profile';
 import { SigninPage } from './pages/Signin';
 import Navbar from './components/Navbar';
 import { SignupPage } from './pages/Signup';
 
 function App() {
 
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <div className='mainDiv'>

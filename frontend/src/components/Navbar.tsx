@@ -3,12 +3,12 @@ import '../styles/Navbar.css';
 import { Link, NavLink } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
-interface NavbarProps {
+interface INavbarProps {
 
     isLoggedIn: boolean;
 }
 
-const Navbar: FC<NavbarProps> = ({ isLoggedIn }) => {
+const Navbar: FC<INavbarProps> = ({ isLoggedIn }) => {
 
     const [input, setInput] = useState("");
 

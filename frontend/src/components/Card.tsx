@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import "../styles/Card.css"
 
 
-interface CardProps {
+interface ICardProps {
     header: React.ReactNode;
     content: React.ReactNode;
     height?: number | string;
@@ -10,7 +10,7 @@ interface CardProps {
     maxWidth?: number | string;
 };
 
-const Card: FC<CardProps> = props => {
+const Card: FC<ICardProps> = props => {
 
     return (
         <div className="card-container" style={{

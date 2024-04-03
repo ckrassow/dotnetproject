@@ -1,0 +1,18 @@
+.profile-container {
+}
+
+.tabs, .sub-tabs {
+    @apply flex justify-start space-x-4 mb-4;
+}
+
+.card-container {
+    @apply w-full sm:w-1/2 md:w-1/4 p-4;
+}
+
+.predictions-container {
+    @apply grid grid-cols-4 gap-4;
+}
+
+.sub-tabs-container {
+    @apply flex justify-center;
+}
