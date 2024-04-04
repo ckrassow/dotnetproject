@@ -1,6 +1,6 @@
-.profile-container {
+/*.profile-container {
     @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
-}
+}*/
 
 .tabs, .sub-tabs {
     @apply flex justify-start space-x-4 mb-4;

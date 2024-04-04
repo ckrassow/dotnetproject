@@ -5,15 +5,16 @@ import { ProfilePage } from './pages/Profile/Profile';
 import { SigninPage } from './pages/Signin';
 import Navbar from './components/Navbar';
 import { SignupPage } from './pages/Signup';
+import "./styles/App.css";
 
 function App() {
 
   const isLoggedIn = true;
 
   return (
-    <div className='mainDiv'>
       <BrowserRouter>
       <Navbar isLoggedIn={ isLoggedIn }/>
+      <div className='main-div'>
         <Routes>
           <Route path="/" element={<HomePage/>} />
           <Route path="/leaderboard" element={<LeaderboardPage/>} />
@@ -21,8 +22,8 @@ function App() {
           <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
           <Route path="/signup" element={<SignupPage/>} />
         </Routes>
+      </div>
       </BrowserRouter>
-    </div>
   );
 }
 

@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 .navbar-container {
-    @apply w-full;
+    @apply w-full bg-gray-800 px-4 sm:px-6 lg:px-8;
 }
 
 .navbar {
 
-    @apply bg-gray-800 text-white py-2 px-4 flex items-center w-full;
+    @apply  text-white py-2 px-4 flex items-center w-full;
 }
 
 .nav-div {

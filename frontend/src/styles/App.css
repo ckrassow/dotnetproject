@@ -1,0 +1,4 @@
+.main-div {
+
+    @apply px-10 sm:px-20 lg:px-28;
+}
