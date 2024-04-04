@@ -2,6 +2,7 @@ import { useState } from "react";
 import Tab from "../../components/Tab";
 import "../../styles/Profile.css";
 import { Predictions } from "./Predictions";
+import { ProfileInfo } from "./ProfileInfo";
 
 
 const parentTabs = ["Profile", "Predictions", "Something"];
@@ -26,7 +27,7 @@ export function ProfilePage() {
             </div>
 
             {activeParentTab === "Predictions" && <Predictions />}        
-            
+            {activeParentTab === "Profile" && <ProfileInfo />}
         </div>
     );
 }
