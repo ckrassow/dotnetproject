@@ -5,7 +5,7 @@ import { Predictions } from "./Predictions";
 import { ProfileInfo } from "./ProfileInfo";
 
 
-const parentTabs = ["Profile", "Predictions", "Something"];
+const parentTabs = ["Profile", "Predictions", "League"];
 
 
 export function ProfilePage() {

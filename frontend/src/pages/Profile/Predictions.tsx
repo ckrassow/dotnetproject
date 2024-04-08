@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Tab from "../../components/Tab";
 import Card from "../../components/Card";
+import Modal from "../../components/Modal";
+import Dropdown from "../../components/Dropdown";
 
 const childTabs = ["Players", "Teams", "Tournament"];
 const predictionsPlayers = [
@@ -38,7 +40,24 @@ const predictionsTournament = [
 
 export function Predictions() {
     const [activeTab, setActiveTab] = useState(childTabs[0]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTeam, setSelectedTeam] = useState("");
+    const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+    type Team = "France" | "England";
 
+    const teams: Team[] = ["France", "England"];
+    const players: Record<Team, string[]> = {
+        "France": ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6",
+                   "Player 7", "Player 8", "Player 9", "Player 10", "Player 11", "Player 12",
+                   "Player 13", "Player 14", "Player 15", "Player 16", "Player 17", "Player 18",
+                   "Player 19", "Player 20", "Player 21", "Player 22", "Player 23"],
+        "England": ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6",
+                    "Player 7", "Player 8", "Player 9", "Player 10", "Player 11", "Player 12",
+                    "Player 13", "Player 14", "Player 15", "Player 16", "Player 17", "Player 18",
+                    "Player 19", "Player 20", "Player 21", "Player 22", "Player 23"],
+    };
+    const height= "300px";
+    const width = "400px";
     return (
         <div>
             <div className="tabs">
@@ -59,9 +78,9 @@ export function Predictions() {
                         <Card
                             key={prediction}
                             header={<h2>{prediction}</h2>}
-                            content={<button>Make Prediction</button>}
-                            height="300px"
-                            width="350px"
+                            content={<button onClick={() => setIsModalOpen(true)}>Make Prediction</button>}
+                            height={height}
+                            width={width}
                         />
                     ))}
                 </div>
@@ -74,8 +93,8 @@ export function Predictions() {
                             key={prediction}
                             header={<h2>{prediction}</h2>}
                             content={<button>Make Prediction</button>}
-                            height="300px"
-                            width="350px"
+                            height={height}
+                            width={width}
                         />
                     ))}
                 </div>
@@ -88,12 +107,35 @@ export function Predictions() {
                             key={prediction}
                             header={<h2>{prediction}</h2>}
                             content={<button>Make Prediction</button>}
-                            height="300px"
-                            width="350px"
+                            height={height}
+                            width={width}
                         />
                     ))}
                 </div>
             )}
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <Dropdown 
+                    options={teams} 
+                    selectedOption={selectedTeam} 
+                    setSelectedOption={(team) => {
+                        setSelectedTeam(team);
+                        setSelectedPlayers(players[team as Team]);
+                    }} 
+                />
+                <div className="player-cards-container">
+                    {selectedPlayers.map(player => (
+                        <div className="player-card-container">
+                            <Card
+                                key={player}
+                                header={<h2>{player}</h2>}
+                                content={<button>Select</button>}
+                                height={"300px"}
+                                width={"200px"}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </Modal>
 
         </div>
     );
