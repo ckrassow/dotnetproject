@@ -18,10 +18,10 @@
     @apply flex justify-center;
 }
 
-.player-cards-container {
+.cards-container {
     @apply grid grid-cols-4 gap-4 overflow-auto max-h-[500px];
 }
 
-.player-card-container {
+.modal-card-container {
     @apply flex flex-col items-center m-2;
 }

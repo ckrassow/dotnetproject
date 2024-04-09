@@ -56,6 +56,12 @@ export function Predictions() {
                     "Player 13", "Player 14", "Player 15", "Player 16", "Player 17", "Player 18",
                     "Player 19", "Player 20", "Player 21", "Player 22", "Player 23"],
     };
+    const tourPredOptions = [
+        "Option A",
+        "Option B",
+        "Option C",
+        "Option D",
+      ];
     const height= "300px";
     const width = "400px";
     return (
@@ -92,7 +98,7 @@ export function Predictions() {
                         <Card
                             key={prediction}
                             header={<h2>{prediction}</h2>}
-                            content={<button>Make Prediction</button>}
+                            content={<button onClick={() => setIsModalOpen(true)}>Make Prediction</button>}
                             height={height}
                             width={width}
                         />
@@ -106,7 +112,7 @@ export function Predictions() {
                         <Card
                             key={prediction}
                             header={<h2>{prediction}</h2>}
-                            content={<button>Make Prediction</button>}
+                            content={<button onClick={() => setIsModalOpen(true)}>Make Prediction</button>}
                             height={height}
                             width={width}
                         />
@@ -114,27 +120,61 @@ export function Predictions() {
                 </div>
             )}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <Dropdown 
-                    options={teams} 
-                    selectedOption={selectedTeam} 
-                    setSelectedOption={(team) => {
-                        setSelectedTeam(team);
-                        setSelectedPlayers(players[team as Team]);
-                    }} 
-                />
-                <div className="player-cards-container">
-                    {selectedPlayers.map(player => (
-                        <div className="player-card-container">
+                {activeTab === "Players" && (
+                    <>
+                        <Dropdown 
+                            options={teams} 
+                            selectedOption={selectedTeam} 
+                            setSelectedOption={(team) => {
+                            setSelectedTeam(team);
+                            setSelectedPlayers(players[team as Team]);
+                        }} 
+                        />
+                        <div className="cards-container">
+                        {selectedPlayers.map((player) => (
+                            <div className="modal-card-container" key={player}>
                             <Card
-                                key={player}
                                 header={<h2>{player}</h2>}
                                 content={<button>Select</button>}
                                 height={"300px"}
                                 width={"200px"}
                             />
+                            </div>
+                        ))}
                         </div>
-                    ))}
-                </div>
+                    </>
+                )}
+
+                {activeTab === "Teams" && (
+                    <div className="cards-container">
+                        {teams.map((team) => (
+                            <div className="modal-card-container" key={team}>
+                                <Card
+                                    header={<h2>{team}</h2>}
+                                    content={<button>Select</button>}
+                                    height={"300px"}
+                                    width={"200px"}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {activeTab === "Tournament" && (
+                    <div className="cards-container">
+                        {tourPredOptions.map((tourPred) => (
+                            <div className="modal-card-container" key={tourPred}>
+                                <Card
+                                    header={<h2>{tourPred}</h2>}
+                                    content={<button>Select</button>}
+                                    height={"300px"}
+                                    width={"200px"}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+                
             </Modal>
 
         </div>
