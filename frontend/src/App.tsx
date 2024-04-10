@@ -5,6 +5,7 @@ import { ProfilePage } from './pages/Profile/Profile';
 import { SigninPage } from './pages/Signin';
 import Navbar from './components/Navbar';
 import { SignupPage } from './pages/Signup';
+import { QuizPage } from './pages/Quiz';
 import "./styles/App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/signin" element={isLoggedIn ? <Navigate to="/profile" />: <SigninPage/>} />
           <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
           <Route path="/signup" element={<SignupPage/>} />
+          <Route path="/quiz" element={<QuizPage/>} />
         </Routes>
       </div>
       </BrowserRouter>

@@ -28,7 +28,10 @@ const Navbar: FC<INavbarProps> = ({ isLoggedIn }) => {
                             onChange={(e) => setInput(e.target.value)} />
                     </div>
                     {isLoggedIn ? (
-                        <NavLink className="nav-link" to="/profile">Profile</NavLink>
+                        <>
+                            <NavLink className="nav-link" to="/profile">Profile</NavLink>
+                            <NavLink className="nav-link" to="/quiz">Quiz</NavLink>
+                        </>
                     ) : (
                         <NavLink className="nav-link" to="/signin">Sign in</NavLink>
                     )}
