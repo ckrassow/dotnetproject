@@ -6,11 +6,13 @@ import { SigninPage } from './pages/Signin';
 import Navbar from './components/Navbar';
 import { SignupPage } from './pages/Signup';
 import { QuizPage } from './pages/Quiz';
+import SearchResultPage from './pages/SearchResult';
 import "./styles/App.css";
 
 function App() {
 
   const isLoggedIn = true;
+  const username = "Someone";
 
   return (
       <BrowserRouter>
@@ -22,6 +24,7 @@ function App() {
           <Route path="/signin" element={isLoggedIn ? <Navigate to="/profile" />: <SigninPage/>} />
           <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
           <Route path="/signup" element={<SignupPage/>} />
+          <Route path="/search/:query" element={<SearchResultPage/>} />
           <Route path="/quiz" element={<QuizPage/>} />
         </Routes>
       </div>

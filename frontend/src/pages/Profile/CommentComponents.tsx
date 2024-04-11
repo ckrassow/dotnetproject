@@ -1,12 +1,12 @@
 import { FC, useEffect, useState, FormEvent } from "react";
 
-interface CommentProps {
+interface ICommentProps {
     author: string;
     text: string;
     timestamp: Date;
 }
 
-const Comment: FC<CommentProps> = ({ author, text, timestamp }) => (
+const Comment: FC<ICommentProps> = ({ author, text, timestamp }) => (
     <div className="comment">
         <h4 className="comment-author">{author}</h4>
         <p className="comment-text">{text}</p>
@@ -14,12 +14,12 @@ const Comment: FC<CommentProps> = ({ author, text, timestamp }) => (
     </div>
 );
 
-interface CommentListProps {
+interface ICommentListProps {
     username: string;
 }
 
-export const CommentList: FC<CommentListProps> = ({ username }) => {
-    const [comments, setComments] = useState<CommentProps[]>([]);
+export const CommentList: FC<ICommentListProps> = ({ username }) => {
+    const [comments, setComments] = useState<ICommentProps[]>([]);
     const [text, setText] = useState("");
 
     const handleSubmit = (event: FormEvent) => {
