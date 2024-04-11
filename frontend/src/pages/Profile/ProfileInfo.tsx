@@ -5,7 +5,7 @@ import { CommentList } from "./CommentComponents";
 
 const childTabs = ["Username", "Settings"];
 
-export function ProfileInfo() {
+export function ProfileInfo({ isPublicProfile }: { isPublicProfile: boolean}) {
 
     const username = "Some User";
     const [activeTab, setActiveTab] = useState(childTabs[0]);
@@ -48,7 +48,7 @@ export function ProfileInfo() {
                         header="Comment wall"
                         content={
                             <div className="comment-wall">
-                                <CommentList username={username} />
+                                <CommentList username={username} isPublicProfile={isPublicProfile} />
                             </div>
                         }
                     />

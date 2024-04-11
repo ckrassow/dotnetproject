@@ -12,7 +12,6 @@ import "./styles/App.css";
 function App() {
 
   const isLoggedIn = true;
-  const username = "Someone";
 
   return (
       <BrowserRouter>

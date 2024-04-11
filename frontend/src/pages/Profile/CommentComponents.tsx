@@ -16,9 +16,10 @@ const Comment: FC<ICommentProps> = ({ author, text, timestamp }) => (
 
 interface ICommentListProps {
     username: string;
+    isPublicProfile: boolean;
 }
 
-export const CommentList: FC<ICommentListProps> = ({ username }) => {
+export const CommentList: FC<ICommentListProps> = ({ username, isPublicProfile }) => {
     const [comments, setComments] = useState<ICommentProps[]>([]);
     const [text, setText] = useState("");
 
@@ -38,10 +39,12 @@ export const CommentList: FC<ICommentListProps> = ({ username }) => {
                     <Comment key={index} {...comment} />
                 ))}
             </div>
-            <form className="comment-form" onSubmit={handleSubmit}>
+            {!isPublicProfile && ( 
+                <form className="comment-form" onSubmit={handleSubmit}>
                 <textarea className="comment-form-textarea resize-none" maxLength={150} value={text} onChange={e => setText(e.target.value)} />
                 <button className="comment-form-button" type="submit">Post Comment</button>
-            </form>
+                </form>
+            )}
         </div>
     );
 };

@@ -38,7 +38,7 @@ const predictionsTournament = [
     "TournamentPrediction 8"
 ];
 
-export function Predictions() {
+export function Predictions({ isPublicProfile }: { isPublicProfile: boolean }) {
     const [activeTab, setActiveTab] = useState(childTabs[0]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState("");
@@ -84,7 +84,13 @@ export function Predictions() {
                         <Card
                             key={prediction}
                             header={<h2>{prediction}</h2>}
-                            content={<button onClick={() => setIsModalOpen(true)}>Make Prediction</button>}
+                            content={
+                                isPublicProfile ? (
+                                  <p>Public profile</p> 
+                                ) : (
+                                  <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+                                )
+                              }
                             height={height}
                             width={width}
                         />
@@ -98,7 +104,13 @@ export function Predictions() {
                         <Card
                             key={prediction}
                             header={<h2>{prediction}</h2>}
-                            content={<button onClick={() => setIsModalOpen(true)}>Make Prediction</button>}
+                            content={
+                                isPublicProfile ? (
+                                  <p>Public profile</p> 
+                                ) : (
+                                  <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+                                )
+                              }
                             height={height}
                             width={width}
                         />
@@ -112,7 +124,13 @@ export function Predictions() {
                         <Card
                             key={prediction}
                             header={<h2>{prediction}</h2>}
-                            content={<button onClick={() => setIsModalOpen(true)}>Make Prediction</button>}
+                            content={
+                                isPublicProfile ? (
+                                  <p>Public profile</p> 
+                                ) : (
+                                  <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+                                )
+                              }
                             height={height}
                             width={width}
                         />
