@@ -1,11 +1,13 @@
 import { useState } from "react";
 import Tab from "../../components/Tab";
 import Card from "../../components/Card";
+import { CommentList } from "./CommentComponents";
 
 const childTabs = ["Username", "Settings"];
 
 export function ProfileInfo() {
 
+    const username = "Some User";
     const [activeTab, setActiveTab] = useState(childTabs[0]);
     const dummyData = {
         username: "User",
@@ -17,7 +19,7 @@ export function ProfileInfo() {
     return (
         
         <div>
-            <div className="tabs">
+            <div className="sub-tabs">
                 {childTabs.map(tab => (
                     <Tab
                         key={tab}
@@ -39,6 +41,14 @@ export function ProfileInfo() {
                                 <p><strong>Email:</strong> {dummyData.email}</p>
                                 <p><strong>Favourite team:</strong> {dummyData.favouriteTeam}</p>
                                 <p><strong>Points:</strong> {dummyData.predPoints}</p>
+                            </div>
+                        }
+                    />
+                    <Card
+                        header="Comment wall"
+                        content={
+                            <div className="comment-wall">
+                                <CommentList username={username} />
                             </div>
                         }
                     />

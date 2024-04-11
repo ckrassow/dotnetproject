@@ -66,7 +66,7 @@ export function Predictions() {
     const width = "400px";
     return (
         <div>
-            <div className="tabs">
+            <div className="sub-tabs">
                 {childTabs.map(tab => (
                     <Tab
                         key={tab}
