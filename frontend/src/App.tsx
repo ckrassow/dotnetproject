@@ -24,7 +24,7 @@ function App() {
           <Route path="/signin" element={isLoggedIn ? <Navigate to="/profile" />: <SigninPage/>} />
           <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
           <Route path="/signup" element={<SignupPage/>} />
-          <Route path="/search/:query" element={<SearchResultPage/>} />
+          <Route path="/search/" element={<SearchResultPage/>} />
           <Route path="/quiz" element={<QuizPage/>} />
         </Routes>
       </div>

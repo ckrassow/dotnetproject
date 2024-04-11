@@ -15,7 +15,7 @@ const Navbar: FC<INavbarProps> = ({ isLoggedIn }) => {
 
     const handleSearch = (event: React.FormEvent) => {
         event.preventDefault();
-        navigate(`search/${input}`);
+        navigate(`/search?query=${input}`);
     };
 
     return (
