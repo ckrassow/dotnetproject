@@ -8,6 +8,7 @@ import { SignupPage } from './pages/Signup';
 import { QuizPage } from './pages/Quiz';
 import SearchResultPage from './pages/SearchResult';
 import "./styles/App.css";
+import { TeamPage } from './pages/Team/Team';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
           <Route path="/signup" element={<SignupPage/>} />
           <Route path="/search/" element={<SearchResultPage/>} />
+          <Route path="/team" element={<TeamPage /> } />
           <Route path="/quiz" element={<QuizPage/>} />
         </Routes>
       </div>

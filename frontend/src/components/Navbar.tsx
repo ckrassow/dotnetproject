@@ -38,7 +38,8 @@ const Navbar: FC<INavbarProps> = ({ isLoggedIn }) => {
                     {isLoggedIn ? (
                         <>
                             <NavLink className="nav-link" to="/profile">Profile</NavLink>
-                            <NavLink className="nav-link" to="/quiz">Quiz</NavLink>
+                            {/*<NavLink className="nav-link" to="/quiz">Quiz</NavLink>*/}
+                            <NavLink className="nav-link" to="/team">Team</NavLink>
                         </>
                     ) : (
                         <NavLink className="nav-link" to="/signin">Sign in</NavLink>

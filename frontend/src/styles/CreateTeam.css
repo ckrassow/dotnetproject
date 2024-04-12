@@ -1,0 +1,43 @@
+.create-team-wrapper {
+    @apply bg-gray-100 p-4;
+}
+
+.create-team-form {
+    @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
+}
+
+.input-create-team {
+    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-md;
+}
+
+.label-create-team {
+    @apply block text-gray-700 text-sm font-bold mb-2;
+}
+
+.search-user-button {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+}
+
+.ul-create-team {
+    @apply mb-4;
+}
+
+.li-create-team {
+    @apply mb-2;
+}
+
+.p-create-team {
+    @apply block text-gray-700 text-sm font-bold mb-2;
+}
+
+.add-member-button {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-md;
+}
+
+.delete-member-button {
+    @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-md;
+}
+
+.submit-form-button {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-md;
+}

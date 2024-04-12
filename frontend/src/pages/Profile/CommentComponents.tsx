@@ -25,11 +25,9 @@ export const CommentList: FC<ICommentListProps> = ({ username, isPublicProfile }
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
-        // Post the comment to your backend
     };
 
     useEffect(() => {
-        // Fetch the comments from your backend
     }, [username]);
 
     return (
