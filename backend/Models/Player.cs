@@ -12,4 +12,5 @@ public class Player {
     public string? Club { get; set; }
     public int NationalTeamId { get; set; }
     public NationalTeam NationalTeam { get; set; }
+    public string? ImagePath { get; set; }
 }
