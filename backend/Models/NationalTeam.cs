@@ -7,6 +7,6 @@ public class NationalTeam {
     public int PlayoffAppearences { get; set; }
     public int FifaRanking { get; set; }
     public string? Group { get; set; }
-    public ICollection<Player> Players { get; set; }
+    public ICollection<Player>? Players { get; set; }
     public string? ImagePath { get; set; }
 }
