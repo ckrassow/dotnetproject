@@ -33,11 +33,22 @@ builder.Services.AddAuthentication(options => {
     };
 });
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAll",
+        builder => {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddScoped<PasswordHasher>();
+builder.Services.AddScoped<TokenService>();
 
 var app = builder.Build();
 
@@ -48,8 +59,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();

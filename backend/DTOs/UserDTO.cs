@@ -6,7 +6,7 @@ public class UserDTO {
 
     public int Id { get; set;}
     public string Username { get; set;}
-    public string Email {get; set;}
+    public NationalTeam? FavouriteTeam { get; set;}
     public ICollection<PlayerPrediction>? PlayerPredictions { get; set;}
     public ICollection<TeamPrediction>? TeamPredictions { get; set;}
     public ICollection<TournamentPrediction>? TournamentPredictions { get; set;}

@@ -12,7 +12,7 @@ import { TeamPage } from './pages/Team/Team';
 
 function App() {
 
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
       <BrowserRouter>

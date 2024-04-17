@@ -3,6 +3,7 @@ using System;
 using EuroPredApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EuroPredApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240417171022_JwtAuth")]
+    partial class JwtAuth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,8 +214,8 @@ namespace EuroPredApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("NationalTeamId")
-                        .HasColumnType("integer");
+                    b.Property<string>("FavouriteTeam")
+                        .HasColumnType("text");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -229,8 +232,6 @@ namespace EuroPredApi.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NationalTeamId");
 
                     b.HasIndex("TeamId");
 
@@ -311,15 +312,9 @@ namespace EuroPredApi.Migrations
 
             modelBuilder.Entity("EuroPredApi.Models.User", b =>
                 {
-                    b.HasOne("EuroPredApi.Models.NationalTeam", "FavouriteTeam")
-                        .WithMany()
-                        .HasForeignKey("NationalTeamId");
-
                     b.HasOne("EuroPredApi.Models.Team", "Team")
                         .WithMany("Members")
                         .HasForeignKey("TeamId");
-
-                    b.Navigation("FavouriteTeam");
 
                     b.Navigation("Team");
                 });
