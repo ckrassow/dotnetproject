@@ -103,7 +103,7 @@ namespace EuroPredApi.Migrations
                     b.Property<int>("PlayerId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PredictionNumber")
+                    b.Property<int>("PredictionType")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TeamId")
@@ -151,7 +151,7 @@ namespace EuroPredApi.Migrations
                     b.Property<int>("NationalTeamId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PredictionNumber")
+                    b.Property<int>("PredictionType")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TeamId")
@@ -179,13 +179,10 @@ namespace EuroPredApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Prediction")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PredictionNumber")
+                    b.Property<int>("PredictionType")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PredictionType")
+                    b.Property<string>("PredictionValue")
                         .HasColumnType("text");
 
                     b.Property<int?>("TeamId")

@@ -1,11 +1,21 @@
 namespace EuroPredApi.Models;
-
+public enum TournamentPredictionType {
+    TotalGoals,
+    TotalYellows,
+    TotalReds,
+    TotalCorners,
+    TotalFirstHalfGoals,
+    TotalSecondHalfGoals,
+    TotalPenalties,
+    TotalOvertime,
+    AverageGoalsGroup,
+    AverageGoalsBracket
+}
 public class TournamentPrediction {
 
     public int Id { get; set;}
     public int UserId {get; set;}
     public User? User { get; set;}
-    public int PredictionNumber {get; set;}
-    public string? Prediction {get; set;}
-    public string? PredictionType {get; set;}
+    public TournamentPredictionType PredictionType {get; set;}
+    public string? PredictionValue {get; set;}
 }

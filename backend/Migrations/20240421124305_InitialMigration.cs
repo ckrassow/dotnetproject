@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EuroPredApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -75,14 +75,21 @@ namespace EuroPredApi.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Username = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false),
-                    TeamId = table.Column<int>(type: "integer", nullable: true)
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    NationalTeamId = table.Column<int>(type: "integer", nullable: true),
+                    TeamId = table.Column<int>(type: "integer", nullable: true),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_NationalTeams_NationalTeamId",
+                        column: x => x.NationalTeamId,
+                        principalTable: "NationalTeams",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Users_Teams_TeamId",
                         column: x => x.TeamId,
@@ -97,7 +104,7 @@ namespace EuroPredApi.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    PredictionNumber = table.Column<int>(type: "integer", nullable: false),
+                    PredictionType = table.Column<int>(type: "integer", nullable: false),
                     PlayerId = table.Column<int>(type: "integer", nullable: false),
                     TeamId = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -130,7 +137,7 @@ namespace EuroPredApi.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    PredictionNumber = table.Column<int>(type: "integer", nullable: false),
+                    PredictionType = table.Column<int>(type: "integer", nullable: false),
                     NationalTeamId = table.Column<int>(type: "integer", nullable: false),
                     TeamId = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -163,9 +170,8 @@ namespace EuroPredApi.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    PredictionNumber = table.Column<int>(type: "integer", nullable: false),
-                    Prediction = table.Column<string>(type: "text", nullable: true),
-                    PredictionType = table.Column<string>(type: "text", nullable: true),
+                    PredictionType = table.Column<int>(type: "integer", nullable: false),
+                    PredictionValue = table.Column<string>(type: "text", nullable: true),
                     TeamId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -228,6 +234,11 @@ namespace EuroPredApi.Migrations
                 name: "IX_TournamentPredictions_UserId",
                 table: "TournamentPredictions",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_NationalTeamId",
+                table: "Users",
+                column: "NationalTeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_TeamId",

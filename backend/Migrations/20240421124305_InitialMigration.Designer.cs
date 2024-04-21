@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EuroPredApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240417171022_JwtAuth")]
-    partial class JwtAuth
+    [Migration("20240421124305_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,7 +106,7 @@ namespace EuroPredApi.Migrations
                     b.Property<int>("PlayerId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PredictionNumber")
+                    b.Property<int>("PredictionType")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TeamId")
@@ -154,7 +154,7 @@ namespace EuroPredApi.Migrations
                     b.Property<int>("NationalTeamId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PredictionNumber")
+                    b.Property<int>("PredictionType")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TeamId")
@@ -182,13 +182,10 @@ namespace EuroPredApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Prediction")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PredictionNumber")
+                    b.Property<int>("PredictionType")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PredictionType")
+                    b.Property<string>("PredictionValue")
                         .HasColumnType("text");
 
                     b.Property<int?>("TeamId")
@@ -214,8 +211,14 @@ namespace EuroPredApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FavouriteTeam")
+                    b.Property<string>("FirstName")
                         .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("NationalTeamId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -232,6 +235,8 @@ namespace EuroPredApi.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NationalTeamId");
 
                     b.HasIndex("TeamId");
 
@@ -312,9 +317,15 @@ namespace EuroPredApi.Migrations
 
             modelBuilder.Entity("EuroPredApi.Models.User", b =>
                 {
+                    b.HasOne("EuroPredApi.Models.NationalTeam", "FavouriteTeam")
+                        .WithMany()
+                        .HasForeignKey("NationalTeamId");
+
                     b.HasOne("EuroPredApi.Models.Team", "Team")
                         .WithMany("Members")
                         .HasForeignKey("TeamId");
+
+                    b.Navigation("FavouriteTeam");
 
                     b.Navigation("Team");
                 });

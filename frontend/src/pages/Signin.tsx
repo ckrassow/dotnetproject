@@ -3,7 +3,7 @@ import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 export function SigninPage() {
 
@@ -12,7 +12,6 @@ export function SigninPage() {
     const { setIsLoggedIn } = useContext(AuthContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
     const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
