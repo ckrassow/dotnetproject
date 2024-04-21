@@ -15,7 +15,7 @@ const Comment: FC<ICommentProps> = ({ author, text, timestamp }) => (
 );
 
 interface ICommentListProps {
-    username: string;
+    username: string | null;
     isPublicProfile: boolean;
 }
 

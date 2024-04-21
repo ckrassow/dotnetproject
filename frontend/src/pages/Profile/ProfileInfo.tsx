@@ -1,21 +1,37 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Tab from "../../components/Tab";
 import Card from "../../components/Card";
 import { CommentList } from "./CommentComponents";
+import { AuthContext } from "../../context/AuthContext";
 
 const childTabs = ["Username", "Settings"];
 
-export function ProfileInfo({ isPublicProfile }: { isPublicProfile: boolean}) {
+export type UserData = {
+    Id: number;
+    Username: string;
+    FirstName: string | null;
+    LastName: string | null;
+    FavouriteTeam: string | null;
+    PlayerPredictions: any[] | null;
+    TeamPredictions: any[] | null;
+    TournamentPredictions: any[] | null;
+    TeamId: number | null;
+    Team: any | null;
+    Token: string | null;
+};
 
-    const username = "Some User";
+type ProfileInfoProps = {
+    isPublicProfile: boolean;
+    userData: UserData;
+};
+
+
+export function ProfileInfo({ isPublicProfile, userData }: ProfileInfoProps) {
+
+    
+    const { isLoggedIn } = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState(childTabs[0]);
-    const dummyData = {
-        username: "User",
-        email: "email",
-        favouriteTeam: "Germany",
-        predPoints: 1000,
-    };
-
+    
     return (
         
         <div>
@@ -37,10 +53,10 @@ export function ProfileInfo({ isPublicProfile }: { isPublicProfile: boolean}) {
                         header="Profile information"
                         content={
                             <div className="profile-p-div">
-                                <p><strong>Username:</strong> {dummyData.username}</p>
-                                <p><strong>Email:</strong> {dummyData.email}</p>
-                                <p><strong>Favourite team:</strong> {dummyData.favouriteTeam}</p>
-                                <p><strong>Points:</strong> {dummyData.predPoints}</p>
+                                <p><strong>Username:</strong> {userData?.Username}</p>
+                                <p><strong>First name:</strong> {userData?.FirstName}</p>
+                                <p><strong>Last name:</strong> {userData?.LastName}</p>
+                                <p><strong>Favourite team:</strong> {userData?.FavouriteTeam}</p>
                             </div>
                         }
                     />
@@ -48,7 +64,7 @@ export function ProfileInfo({ isPublicProfile }: { isPublicProfile: boolean}) {
                         header="Comment wall"
                         content={
                             <div className="comment-wall">
-                                <CommentList username={username} isPublicProfile={isPublicProfile} />
+                                <CommentList username={userData?.Username} isPublicProfile={isPublicProfile} />
                             </div>
                         }
                     />

@@ -1,18 +1,17 @@
-import { FC, useState } from 'react';
+import { FC, useState, useContext } from 'react';
 import '../styles/Navbar.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
+import { AuthContext } from '../context/AuthContext';
 
-interface INavbarProps {
 
-    isLoggedIn: boolean;
-}
 
-const Navbar: FC<INavbarProps> = ({ isLoggedIn }) => {
+const Navbar: FC = () => {
 
     const [input, setInput] = useState("");
     const navigate = useNavigate();
 
+    const { isLoggedIn } = useContext(AuthContext);
     const handleSearch = (event: React.FormEvent) => {
         event.preventDefault();
         navigate(`/search?query=${input}`);

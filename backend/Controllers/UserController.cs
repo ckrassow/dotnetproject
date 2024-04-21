@@ -42,6 +42,28 @@ namespace EuroPredApi.Controllers
             return Ok(userDTOs);
         }
 
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<ActionResult<UserDTO>> GetUser(int id) {
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) {
+                return NotFound();
+            }
+
+            var userDTO = new UserDTO {
+                Id = user.Id,
+                Username = user.Username,
+                FavouriteTeam = user.FavouriteTeam,
+                PlayerPredictions = user.PlayerPredictions,
+                TeamPredictions = user.TeamPredictions,
+                TournamentPredictions = user.TournamentPredictions,
+                TeamId = user.TeamId,
+            };
+
+            return Ok(userDTO);
+        }
+
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(RegisterDTO registerDTO)
         {   
@@ -83,19 +105,20 @@ namespace EuroPredApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(string username, string password)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+        public async Task<ActionResult<User>> Login(RegisterDTO registerDTO)
+        {   
+            Console.WriteLine($"Received username: {registerDTO.Username}");
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == registerDTO.Username);
             if (user == null)
                 return NotFound();
-            if (!_passwordHasher.VerifyPassword(password, user.PasswordHash))
+            if (!_passwordHasher.VerifyPassword(registerDTO.Password, user.PasswordHash))
                 return Unauthorized();
-            
+            Console.WriteLine($"Username: {user.Id}");
             var token = _tokenService.GenerateToken(user);
             user.RefreshToken = GenerateRefreshToken();
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
-            return Ok(new { token, refreshToken = user.RefreshToken });
+            return Ok(new { token, refreshToken = user.RefreshToken, userId = user.Id });
         }
 
         [HttpPost("refresh-token")]

@@ -4,6 +4,8 @@ public class User {
     public int Id { get; set;}
     public string Username { get; set;}
     public string PasswordHash { get; set;}
+    public string? FirstName { get; set;}
+    public string? LastName { get; set;}
     public int? NationalTeamId { get; set;}
     public NationalTeam? FavouriteTeam { get; set;}
     public ICollection<PlayerPrediction>? PlayerPredictions { get; set;}
