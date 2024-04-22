@@ -3,42 +3,18 @@ import Tab from "../../components/Tab";
 import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import Dropdown from "../../components/Dropdown";
+import { PredictionData } from "./Profile";
+
 
 const childTabs = ["Players", "Teams", "Tournament"];
-const predictionsPlayers = [
-    "PlayerPrediction 1",
-    "PlayerPrediction 2",
-    "PlayerPrediction 3",
-    "PlayerPrediction 4",
-    "PlayerPrediction 5",
-    "PlayerPrediction 6",
-    "PlayerPrediction 7",
-    "PlayerPrediction 8"
-];
 
-const predictionsTeams = [
-    "TeamPrediction 1",
-    "TeamPrediction 2",
-    "TeamPrediction 3",
-    "TeamPrediction 4",
-    "TeamPrediction 5",
-    "TeamPrediction 6",
-    "TeamPrediction 7",
-    "TeamPrediction 8"
-];
+type PredictionProps = {
+    isPublicProfile: boolean;
+    predictionData: PredictionData;
+};
 
-const predictionsTournament = [
-    "TournamentPrediction 1",
-    "TournamentPrediction 2",
-    "TournamentPrediction 3",
-    "TournamentPrediction 4",
-    "TournamentPrediction 5",
-    "TournamentPrediction 6",
-    "TournamentPrediction 7",
-    "TournamentPrediction 8"
-];
+export function Predictions({ isPublicProfile, predictionData }: PredictionProps) {
 
-export function Predictions({ isPublicProfile }: { isPublicProfile: boolean }) {
     const [activeTab, setActiveTab] = useState(childTabs[0]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState("");
@@ -80,15 +56,29 @@ export function Predictions({ isPublicProfile }: { isPublicProfile: boolean }) {
 
             {activeTab === "Players" && (
                 <div className="predictions-container">
-                    {predictionsPlayers.map(prediction => (
+                    {predictionData.PlayerPredictions?.map(prediction => (
                         <Card
-                            key={prediction}
-                            header={<h2>{prediction}</h2>}
+                            key={prediction.predictionType}
+                            header={<h2>{prediction.predictionType}</h2>}
                             content={
                                 isPublicProfile ? (
                                   <p>Public profile</p> 
                                 ) : (
-                                  <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+                                    <>
+                                    {prediction.player ? (
+                                      <>
+                                          <h3>{prediction.player.name}</h3>
+                                          <img src={prediction.player.imagePath} alt={prediction.player.name} />
+                                      </>
+                                    ) : (
+                                      <>
+                                          <h3>Player name</h3>
+                                          <img src="default.jpg" alt="Player name" />
+                                      </>
+                                    )}
+                                    <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+  
+                                    </>
                                 )
                               }
                             height={height}
@@ -100,15 +90,29 @@ export function Predictions({ isPublicProfile }: { isPublicProfile: boolean }) {
 
             {activeTab === "Teams" && (
                 <div className="predictions-container">
-                    {predictionsTeams.map(prediction => (
+                    {predictionData.TeamPredictions?.map(prediction => (
                         <Card
-                            key={prediction}
-                            header={<h2>{prediction}</h2>}
+                            key={prediction.predictionType}
+                            header={<h2>{prediction.predictionType}</h2>}
                             content={
                                 isPublicProfile ? (
                                   <p>Public profile</p> 
                                 ) : (
+                                  <>
+                                  {prediction.nationalTeam ? (
+                                    <>
+                                        <h3>{prediction.nationalTeam.name}</h3>
+                                        <img src={prediction.nationalTeam.imagePath} alt={prediction.nationalTeam.name} />
+                                    </>
+                                  ) : (
+                                    <>
+                                        <h3>Team name</h3>
+                                        <img src="default.jpg" alt="Team name" />
+                                    </>
+                                  )}
                                   <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+
+                                  </>
                                 )
                               }
                             height={height}
@@ -120,15 +124,27 @@ export function Predictions({ isPublicProfile }: { isPublicProfile: boolean }) {
 
             {activeTab === "Tournament" && (
                 <div className="predictions-container">
-                    {predictionsTournament.map(prediction => (
+                    {predictionData.TournamentPredictions?.map(prediction => (
                         <Card
-                            key={prediction}
-                            header={<h2>{prediction}</h2>}
+                            key={prediction.predictionType}
+                            header={<h2>{prediction.predictionType}</h2>}
                             content={
                                 isPublicProfile ? (
                                   <p>Public profile</p> 
                                 ) : (
-                                  <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+                                    <>
+                                    {prediction.predictionValue ? (
+                                      <>
+                                          <h3>{prediction.predictionValue}</h3>
+                                      </>
+                                    ) : (
+                                      <>
+                                          <h3>Tournament prediction</h3>
+                                      </>
+                                    )}
+                                    <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
+  
+                                    </>
                                 )
                               }
                             height={height}
@@ -142,24 +158,27 @@ export function Predictions({ isPublicProfile }: { isPublicProfile: boolean }) {
                     <>
                         <Dropdown 
                             options={teams} 
-                            selectedOption={selectedTeam} 
+                            selectedOption={selectedTeam}
+                            defaultOptionLabel="Select team.." 
                             setSelectedOption={(team) => {
                             setSelectedTeam(team);
                             setSelectedPlayers(players[team as Team]);
                         }} 
                         />
-                        <div className="cards-container">
-                        {selectedPlayers.map((player) => (
-                            <div className="modal-card-container" key={player}>
-                            <Card
-                                header={<h2>{player}</h2>}
-                                content={<button>Select</button>}
-                                height={"300px"}
-                                width={"200px"}
-                            />
+                        {selectedTeam && (
+                            <div className="cards-container">
+                                {selectedPlayers.map((player) => (
+                                    <div className="modal-card-container" key={player}>
+                                        <Card
+                                            header={<h2>{player}</h2>}
+                                            content={<button>Select</button>}
+                                            height={"300px"}
+                                            width={"200px"}
+                                        />
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                        </div>
+                        )}      
                     </>
                 )}
 

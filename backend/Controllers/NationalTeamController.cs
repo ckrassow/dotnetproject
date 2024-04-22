@@ -24,6 +24,21 @@ namespace EuroPredApi.Controllers
             return await _context.NationalTeams.ToListAsync();
         }
 
+        [HttpGet("{id}/players")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetPlayersByTeam(int id)
+        {
+            var nationalTeam = await _context.NationalTeams
+                .Include(nt => nt.Players)
+                .FirstOrDefaultAsync(nt => nt.Id == id);
+
+            if (nationalTeam == null)
+            {
+                return NotFound(); 
+            }
+
+            return Ok(nationalTeam.Players); 
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<NationalTeam>> GetNationalTeam(int id)
         {

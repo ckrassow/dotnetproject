@@ -3,22 +3,9 @@ import Tab from "../../components/Tab";
 import Card from "../../components/Card";
 import { CommentList } from "./CommentComponents";
 import { AuthContext } from "../../context/AuthContext";
+import { UserData } from "./Profile";
 
 const childTabs = ["Username", "Settings"];
-
-export type UserData = {
-    Id: number;
-    Username: string;
-    FirstName: string | null;
-    LastName: string | null;
-    FavouriteTeam: string | null;
-    PlayerPredictions: any[] | null;
-    TeamPredictions: any[] | null;
-    TournamentPredictions: any[] | null;
-    TeamId: number | null;
-    Team: any | null;
-    Token: string | null;
-};
 
 type ProfileInfoProps = {
     isPublicProfile: boolean;

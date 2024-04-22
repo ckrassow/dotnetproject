@@ -3,6 +3,7 @@ using System;
 using EuroPredApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EuroPredApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240422165822_PredictionChanges")]
+    partial class PredictionChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +112,7 @@ namespace EuroPredApi.Migrations
                     b.Property<int?>("TeamId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -157,7 +160,7 @@ namespace EuroPredApi.Migrations
                     b.Property<int?>("TeamId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -188,7 +191,7 @@ namespace EuroPredApi.Migrations
                     b.Property<int?>("TeamId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -261,11 +264,15 @@ namespace EuroPredApi.Migrations
                         .WithMany("PlayerPredictions")
                         .HasForeignKey("TeamId");
 
-                    b.HasOne("EuroPredApi.Models.User", null)
+                    b.HasOne("EuroPredApi.Models.User", "User")
                         .WithMany("PlayerPredictions")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Player");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EuroPredApi.Models.TeamPrediction", b =>
@@ -278,11 +285,15 @@ namespace EuroPredApi.Migrations
                         .WithMany("TeamPredictions")
                         .HasForeignKey("TeamId");
 
-                    b.HasOne("EuroPredApi.Models.User", null)
+                    b.HasOne("EuroPredApi.Models.User", "User")
                         .WithMany("TeamPredictions")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("NationalTeam");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EuroPredApi.Models.TournamentPrediction", b =>
@@ -291,9 +302,13 @@ namespace EuroPredApi.Migrations
                         .WithMany("TournamentPredictions")
                         .HasForeignKey("TeamId");
 
-                    b.HasOne("EuroPredApi.Models.User", null)
+                    b.HasOne("EuroPredApi.Models.User", "User")
                         .WithMany("TournamentPredictions")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EuroPredApi.Models.User", b =>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using EuroPredApi.Data;
 using EuroPredApi.Services;
 using EuroPredApi.DTOs;
+using EuroPredApi.Types;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
 
@@ -46,7 +47,12 @@ namespace EuroPredApi.Controllers
         [Authorize]
         public async Task<ActionResult<UserDTO>> GetUser(int id) {
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(u => u.PlayerPredictions)
+                .Include(u => u.TeamPredictions)
+                .Include(u => u.TournamentPredictions)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
             if (user == null) {
                 return NotFound();
             }
@@ -88,7 +94,41 @@ namespace EuroPredApi.Controllers
 
                 Username = registerDTO.Username,
                 PasswordHash = _passwordHasher.HashPassword(registerDTO.Password),
+                PlayerPredictions = new List<PlayerPrediction>(),
+                TeamPredictions = new List<TeamPrediction>(),
+                TournamentPredictions = new List<TournamentPrediction>()
             };
+
+            foreach (PlayerPredictionType predictionType in Enum.GetValues(typeof(PlayerPredictionType))) {
+                
+                var playerPrediction = new PlayerPrediction {
+                    PredictionType = predictionType,
+                    PlayerId = null,
+                };
+
+                user.PlayerPredictions.Add(playerPrediction);
+            }
+
+            foreach (TeamPredictionType predictionType in Enum.GetValues(typeof(TeamPredictionType))) {
+
+                var teamPrediction = new TeamPrediction {
+                    PredictionType = predictionType,
+                    NationalTeamId = null,
+                };
+
+                user.TeamPredictions.Add(teamPrediction);
+            }
+            
+            foreach (TournamentPredictionType predictionType in Enum.GetValues(typeof(TournamentPredictionType))) {
+
+                var tournamentPrediction = new TournamentPrediction {
+                    PredictionType = predictionType,
+                    PredictionValue = "",
+                };
+
+                user.TournamentPredictions.Add(tournamentPrediction);
+            }
+
 
             try {
 

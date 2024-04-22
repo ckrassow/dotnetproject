@@ -20,21 +20,13 @@ const Quiz = () => {
 
   const teams = ['Germany', 'France', 'Spain'];
   const categories = ['Most caps', 'Most goals'];
-  const imagesFolder = require.context("../assets/images", true);
 
   const handleStartQuiz = () => {
     if (selectedTeam && quizCategory) {
       setStartQuiz(true);
       // dummy data
       setPlayers([
-        { name: "Thomas Müller", caps: 120, goals: 40, imageUrl: imagesFolder("./Thomas_Müller_Werner100359_CC_BY-SA_4.0.jpg")},
-        { name: "Toni Kroos", caps: 110, goals: 8, imageUrl: imagesFolder("./Toni_Kroos_Unknown_CC_BY-SA_4.0.jpg")},
-        { name: "Antonio Rüdiger", caps: 50, goals: 1, imageUrl: imagesFolder("./Antonio_Rüdiger_Granada_CC_BY-SA_4.0.jpg")},
-        { name: "Pascal Gros", caps: 5, goals: 0, imageUrl: imagesFolder("./Pascal_Groß_FlickreviewR_2_CC_BY-SA_4.0.jpg")},
-        { name: "Florian Wirtz", caps: 11, goals: 4, imageUrl: imagesFolder("./Florian_Wirtz_Pyaet_CC_BY-SA_4.0.jpg")},
-        { name: "Oliver Baumann", caps: 2, goals: 0, imageUrl: imagesFolder("./Oliver_Baumann_Silesia711_CC_BY-SA_4.0.jpg")},
-        { name: "Niclas Füllkrug", caps: 16, goals: 3, imageUrl: imagesFolder("./Niclas_Füllkrug_Silesia711_CC_BY-SA_4.0.jpg")},
-        { name: "Christoph Baumgartner", caps: 2, goals: 0, imageUrl: imagesFolder("./Christoph_Baumgartner_Steindy_CC_BY-SA_4.0.jpg")},
+        
 
       ]);
     }
@@ -76,11 +68,13 @@ const Quiz = () => {
         <>
           <Dropdown
             options={teams}
+            defaultOptionLabel="Select team.."
             selectedOption={selectedTeam}
             setSelectedOption={setSelectedTeam}
           />
           <Dropdown
             options={categories}
+            defaultOptionLabel="Select category.."
             selectedOption={quizCategory}
             setSelectedOption={setQuizCategory}
           />
