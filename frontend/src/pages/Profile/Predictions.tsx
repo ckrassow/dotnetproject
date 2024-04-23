@@ -3,9 +3,10 @@ import Tab from "../../components/Tab";
 import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import Dropdown from "../../components/Dropdown";
-import { PredictionData } from "./Profile";
+import axios from "axios";
+import { PredictionData, TeamData, PlayerData } from "./Profile";
 
-
+const DATA_PATH = process.env.REACT_APP_DATA_PATH;
 const childTabs = ["Players", "Teams", "Tournament"];
 
 type PredictionProps = {
@@ -18,20 +19,12 @@ export function Predictions({ isPublicProfile, predictionData }: PredictionProps
     const [activeTab, setActiveTab] = useState(childTabs[0]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState("");
-    const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+    const [selectedPlayers, setSelectedPlayers] = useState<PlayerData[]>([]);
+    
     type Team = "France" | "England";
+    console.log(DATA_PATH);
 
     const teams: Team[] = ["France", "England"];
-    const players: Record<Team, string[]> = {
-        "France": ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6",
-                   "Player 7", "Player 8", "Player 9", "Player 10", "Player 11", "Player 12",
-                   "Player 13", "Player 14", "Player 15", "Player 16", "Player 17", "Player 18",
-                   "Player 19", "Player 20", "Player 21", "Player 22", "Player 23"],
-        "England": ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6",
-                    "Player 7", "Player 8", "Player 9", "Player 10", "Player 11", "Player 12",
-                    "Player 13", "Player 14", "Player 15", "Player 16", "Player 17", "Player 18",
-                    "Player 19", "Player 20", "Player 21", "Player 22", "Player 23"],
-    };
     const tourPredOptions = [
         "Option A",
         "Option B",
@@ -40,6 +33,43 @@ export function Predictions({ isPublicProfile, predictionData }: PredictionProps
       ];
     const height= "300px";
     const width = "400px";
+    
+    const handleShowPlayers = async (teamName: string) => {
+        try {
+            const token = localStorage.getItem("token");
+            
+            const response = await axios.get(
+                `http://localhost:5175/api/nationalteam/${teamName}/players`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+            const data = response.data;
+            const playerData: PlayerData[] = data.map((player: any) => {
+                console.log(player.imagePath);
+                return {
+                    id: player.id,
+                    no: player.no,
+                    pos: player.pos,
+                    name: player.name,
+                    age: player.age,
+                    caps: player.caps,
+                    goals: player.goals,
+                    club: player.club,
+                    nationalTeamId: player.nationalTeamId,
+                    imagePath: player.imagePath
+                };
+            });
+
+            setSelectedTeam(teamName);
+            setSelectedPlayers(playerData);            
+
+        } catch (error) {
+            console.error("Error when trying to show players", error);
+        }
+    };
+
     return (
         <div>
             <div className="sub-tabs">
@@ -68,12 +98,12 @@ export function Predictions({ isPublicProfile, predictionData }: PredictionProps
                                     {prediction.player ? (
                                       <>
                                           <h3>{prediction.player.name}</h3>
-                                          <img src={prediction.player.imagePath} alt={prediction.player.name} />
+                                          <img src={require(`../../assets/${prediction.player.imagePath}`)} alt={prediction.player.name} style={{height: "125px", width: "75px"}} />
                                       </>
                                     ) : (
                                       <>
                                           <h3>Player name</h3>
-                                          <img src="default.jpg" alt="Player name" />
+                                          <img src={require("../../assets/default.jpg")} alt="Player name" style={{height: "125px", width: "75px"}}/>
                                       </>
                                     )}
                                     <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
@@ -102,12 +132,12 @@ export function Predictions({ isPublicProfile, predictionData }: PredictionProps
                                   {prediction.nationalTeam ? (
                                     <>
                                         <h3>{prediction.nationalTeam.name}</h3>
-                                        <img src={prediction.nationalTeam.imagePath} alt={prediction.nationalTeam.name} />
+                                        <img src={`../assets/${prediction.nationalTeam.imagePath}`} alt={prediction.nationalTeam.name} style={{height: "125px", width: "75px"}} />
                                     </>
                                   ) : (
                                     <>
                                         <h3>Team name</h3>
-                                        <img src="default.jpg" alt="Team name" />
+                                        <img src={"../../assets/default.jpg"} alt="Team name" style={{height: "125px", width: "75px"}} />
                                     </>
                                   )}
                                   <button onClick={() => setIsModalOpen(true)}>Make Prediction</button>
@@ -160,18 +190,24 @@ export function Predictions({ isPublicProfile, predictionData }: PredictionProps
                             options={teams} 
                             selectedOption={selectedTeam}
                             defaultOptionLabel="Select team.." 
-                            setSelectedOption={(team) => {
-                            setSelectedTeam(team);
-                            setSelectedPlayers(players[team as Team]);
-                        }} 
+                            setSelectedOption={handleShowPlayers} 
                         />
                         {selectedTeam && (
                             <div className="cards-container">
                                 {selectedPlayers.map((player) => (
-                                    <div className="modal-card-container" key={player}>
+                                    <div className="modal-card-container" key={player.id}>
                                         <Card
-                                            header={<h2>{player}</h2>}
-                                            content={<button>Select</button>}
+                                            header={<h2>{player.name}</h2>}
+                                            content={
+                                            <>
+                                                <p>Position: {player.pos}</p>
+                                                <p>Age: {player.age}</p>
+                                                <p>Club: {player.club}</p>
+                                                <p>Total NT goals: {player.goals}</p>
+                                                <img src={require(`../../assets/${player.imagePath}`)} alt={player.name} style={{height: "125px", width: "75px"}} />
+                                                <button>Select</button>
+                                            </>
+                                            }
                                             height={"300px"}
                                             width={"200px"}
                                         />

@@ -26,6 +26,27 @@ export type PredictionData = {
     TournamentPredictions: TournamentPrediction[] | null;
 };
 
+export type PlayerData = {
+  id: number;
+  no: number;
+  pos: string;
+  name: string;
+  age: number;
+  caps: number;
+  goals: number;
+  club: string;
+  nationalTeamId: number;
+  imagePath: string;
+};
+
+export type TeamData = {
+  id: number;
+  name: string;
+  players: PlayerData[];
+  imagePath: string;
+};
+
+
 export type PlayerPrediction = {
     id: number;
     predictionType: string;
@@ -46,16 +67,6 @@ export type TournamentPrediction = {
     predictionValue?: string;
 };
   
- 
-export type PlayerData = {
-    name: string;
-    imagePath: string;
-};
-  
-export type TeamData = {
-    name: string;
-    imagePath: string;
-};
 
 export function ProfilePage() {
     const { username: viewedUsername } = useParams();
@@ -97,7 +108,7 @@ export function ProfilePage() {
           }
         };
       
-        const fetchPlayerData = async () => {
+        const fetchPlayerPredData = async () => {
           if (predictions.PlayerPredictions) {
             const updatedPredictions = await Promise.all(
               predictions.PlayerPredictions.map(async (prediction) => {
@@ -120,7 +131,7 @@ export function ProfilePage() {
           }
         };
 
-        const fetchTeamData = async () => {
+        const fetchTeamPredData = async () => {
             if (predictions.TeamPredictions) {
                 const updatedPredictions = await Promise.all(
                     predictions.TeamPredictions.map(async (prediction) => {
@@ -143,28 +154,10 @@ export function ProfilePage() {
             }
         };
 
-        /*
-        const fetchTournamentData = async () => {
-            if (predictions.TournamentPredictions) {
-                const updatedPredictions = await Promise.all(
-                    predictions.TournamentPredictions.map(async (prediction) => {
-                        if (prediction.predictionValue) {
-                            try {
-                                const tournamentResponse = await axios.get(
-                                    `http://localhost:5175/api/tournamentprediction/${prediction.id}`
-                                );
-                                return { ...prediction, tou}
-                            }
-                        }
-                    })
-                )
-            }
-        }
-        */
         fetchUserData().then(() => {
           
-          fetchPlayerData();
-          fetchTeamData(); 
+          fetchPlayerPredData();
+          fetchTeamPredData();
         });
       }, []);
 

@@ -4,16 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 using EuroPredApi.Models;
 using Microsoft.EntityFrameworkCore;
 using EuroPredApi.Data;
+using Microsoft.AspNetCore.Authorization;
+using EuroPredApi.DTOs;
 
 namespace EuroPredApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NationalTeamsController : ControllerBase
+    public class NationalTeamController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public NationalTeamsController(AppDbContext context)
+        public NationalTeamController(AppDbContext context)
         {
             _context = context;
         }
@@ -24,32 +26,50 @@ namespace EuroPredApi.Controllers
             return await _context.NationalTeams.ToListAsync();
         }
 
-        [HttpGet("{id}/players")]
-        public async Task<ActionResult<IEnumerable<Player>>> GetPlayersByTeam(int id)
-        {
+        [HttpGet("{teamName}")]
+        public async Task<ActionResult<NationalTeam>> GetTeamByName(string teamName)
+        {   
+            Console.WriteLine(teamName);
             var nationalTeam = await _context.NationalTeams
                 .Include(nt => nt.Players)
-                .FirstOrDefaultAsync(nt => nt.Id == id);
-
-            if (nationalTeam == null)
-            {
-                return NotFound(); 
-            }
-
-            return Ok(nationalTeam.Players); 
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<NationalTeam>> GetNationalTeam(int id)
-        {
-            var nationalTeam = await _context.NationalTeams.FindAsync(id);
+                .FirstOrDefaultAsync(nt => nt.Name == teamName);
 
             if (nationalTeam == null)
             {
                 return NotFound();
             }
 
-            return nationalTeam;
+            return Ok(nationalTeam);
+        }
+
+        [HttpGet("{teamName}/players")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<PlayerDTO>>> GetPlayersByTeam(string teamName)
+        {   
+            Console.WriteLine(teamName);
+            var nationalTeam = await _context.NationalTeams
+                .Include(nt => nt.Players)
+                .FirstOrDefaultAsync(nt => nt.Name == teamName);
+
+            if (nationalTeam == null)
+            {
+                return NotFound(); 
+            }
+
+            var playerDtos = nationalTeam.Players.Select(player => new PlayerDTO {
+                Id = player.Id,
+                No = player.No,
+                Pos = player.Pos,
+                Name = player.Name,
+                Age = player.Age,
+                Caps = player.Caps,
+                Goals = player.Goals,
+                Club = player.Club,
+                NationalTeamId = player.NationalTeamId,
+                ImagePath = player.ImagePath
+            });
+
+            return Ok(playerDtos); 
         }
 
         [HttpPut("{id}")]
