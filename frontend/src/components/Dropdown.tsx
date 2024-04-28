@@ -15,6 +15,7 @@ const Dropdown: FC<IDropdownProps> = props => {
                 console.log("Hello");
                 return;
             }
+            console.log(props.selectedOption);
             props.setSelectedOption(e.target.value)}}>
             <option value="">{props.defaultOptionLabel}</option>
             {props.options.map((option, index) => (

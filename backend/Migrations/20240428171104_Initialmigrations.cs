@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EuroPredApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initialmigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,6 +69,51 @@ namespace EuroPredApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TeamPredictions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PredictionType = table.Column<int>(type: "integer", nullable: false),
+                    NationalTeamId = table.Column<int>(type: "integer", nullable: true),
+                    TeamId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamPredictions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TeamPredictions_NationalTeams_NationalTeamId",
+                        column: x => x.NationalTeamId,
+                        principalTable: "NationalTeams",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TeamPredictions_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TournamentPredictions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PredictionType = table.Column<int>(type: "integer", nullable: false),
+                    PredictionValue = table.Column<string>(type: "text", nullable: true),
+                    TeamId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TournamentPredictions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TournamentPredictions_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -103,9 +148,8 @@ namespace EuroPredApi.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
                     PredictionType = table.Column<int>(type: "integer", nullable: false),
-                    PlayerId = table.Column<int>(type: "integer", nullable: false),
+                    PlayerId = table.Column<int>(type: "integer", nullable: true),
                     TeamId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -115,15 +159,35 @@ namespace EuroPredApi.Migrations
                         name: "FK_PlayerPredictions_Players_PlayerId",
                         column: x => x.PlayerId,
                         principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PlayerPredictions_Teams_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserTeamPredictions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    PredictionId = table.Column<int>(type: "integer", nullable: false),
+                    PredictionTypeString = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserTeamPredictions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PlayerPredictions_Users_UserId",
+                        name: "FK_UserTeamPredictions_TeamPredictions_PredictionId",
+                        column: x => x.PredictionId,
+                        principalTable: "TeamPredictions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserTeamPredictions_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -131,32 +195,26 @@ namespace EuroPredApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TeamPredictions",
+                name: "UserTournamentPredictions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    PredictionType = table.Column<int>(type: "integer", nullable: false),
-                    NationalTeamId = table.Column<int>(type: "integer", nullable: false),
-                    TeamId = table.Column<int>(type: "integer", nullable: true)
+                    PredictionId = table.Column<int>(type: "integer", nullable: false),
+                    PredictionTypeString = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeamPredictions", x => x.Id);
+                    table.PrimaryKey("PK_UserTournamentPredictions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TeamPredictions_NationalTeams_NationalTeamId",
-                        column: x => x.NationalTeamId,
-                        principalTable: "NationalTeams",
+                        name: "FK_UserTournamentPredictions_TournamentPredictions_PredictionId",
+                        column: x => x.PredictionId,
+                        principalTable: "TournamentPredictions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TeamPredictions_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_TeamPredictions_Users_UserId",
+                        name: "FK_UserTournamentPredictions_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -164,26 +222,26 @@ namespace EuroPredApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TournamentPredictions",
+                name: "UserPlayerPredictions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    PredictionType = table.Column<int>(type: "integer", nullable: false),
-                    PredictionValue = table.Column<string>(type: "text", nullable: true),
-                    TeamId = table.Column<int>(type: "integer", nullable: true)
+                    PredictionId = table.Column<int>(type: "integer", nullable: false),
+                    PredictionTypeString = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TournamentPredictions", x => x.Id);
+                    table.PrimaryKey("PK_UserPlayerPredictions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TournamentPredictions_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id");
+                        name: "FK_UserPlayerPredictions_PlayerPredictions_PredictionId",
+                        column: x => x.PredictionId,
+                        principalTable: "PlayerPredictions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TournamentPredictions_Users_UserId",
+                        name: "FK_UserPlayerPredictions_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -201,11 +259,6 @@ namespace EuroPredApi.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerPredictions_UserId",
-                table: "PlayerPredictions",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Players_NationalTeamId",
                 table: "Players",
                 column: "NationalTeamId");
@@ -221,18 +274,18 @@ namespace EuroPredApi.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeamPredictions_UserId",
-                table: "TeamPredictions",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TournamentPredictions_TeamId",
                 table: "TournamentPredictions",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TournamentPredictions_UserId",
-                table: "TournamentPredictions",
+                name: "IX_UserPlayerPredictions_PredictionId",
+                table: "UserPlayerPredictions",
+                column: "PredictionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPlayerPredictions_UserId",
+                table: "UserPlayerPredictions",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -244,11 +297,40 @@ namespace EuroPredApi.Migrations
                 name: "IX_Users_TeamId",
                 table: "Users",
                 column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTeamPredictions_PredictionId",
+                table: "UserTeamPredictions",
+                column: "PredictionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTeamPredictions_UserId",
+                table: "UserTeamPredictions",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTournamentPredictions_PredictionId",
+                table: "UserTournamentPredictions",
+                column: "PredictionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTournamentPredictions_UserId",
+                table: "UserTournamentPredictions",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "UserPlayerPredictions");
+
+            migrationBuilder.DropTable(
+                name: "UserTeamPredictions");
+
+            migrationBuilder.DropTable(
+                name: "UserTournamentPredictions");
+
             migrationBuilder.DropTable(
                 name: "PlayerPredictions");
 
@@ -259,16 +341,16 @@ namespace EuroPredApi.Migrations
                 name: "TournamentPredictions");
 
             migrationBuilder.DropTable(
-                name: "Players");
-
-            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "NationalTeams");
+                name: "Players");
 
             migrationBuilder.DropTable(
                 name: "Teams");
+
+            migrationBuilder.DropTable(
+                name: "NationalTeams");
         }
     }
 }

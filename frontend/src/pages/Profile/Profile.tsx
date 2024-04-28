@@ -1,186 +1,145 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import Tab from "../../components/Tab";
 import "../../styles/Profile.css";
 import { Predictions } from "./Predictions";
 import { ProfileInfo } from "./ProfileInfo";
+import { UserData, PlayerPrediction, TeamPrediction, TournamentPrediction } from "../../utils/Types";
 
 
 const parentTabs = ["Profile", "Predictions", "League"];
-
-export type UserData = {
-    Id: number;
-    Username: string;
-    FirstName: string | null;
-    LastName: string | null;
-    FavouriteTeam: string | null;
-    TeamId: number | null;
-    Team: any | null;
-    Token: string | null;
-};
-
-export type PredictionData = {
-    PlayerPredictions: PlayerPrediction[] | null;
-    TeamPredictions: TeamPrediction[] | null;
-    TournamentPredictions: TournamentPrediction[] | null;
-};
-
-export type PlayerData = {
-  id: number;
-  no: number;
-  pos: string;
-  name: string;
-  age: number;
-  caps: number;
-  goals: number;
-  club: string;
-  nationalTeamId: number;
-  imagePath: string;
-};
-
-export type TeamData = {
-  id: number;
-  name: string;
-  players: PlayerData[];
-  imagePath: string;
-};
-
-
-export type PlayerPrediction = {
-    id: number;
-    predictionType: string;
-    playerId?: number;
-    player?: PlayerData; 
-};
-  
-export type TeamPrediction = {
-    id: number;
-    predictionType: string;
-    nationalTeamId?: number;
-    nationalTeam?: TeamData;
-};
-  
-export type TournamentPrediction = {
-    id: number;
-    predictionType: string;
-    predictionValue?: string;
-};
   
 
 export function ProfilePage() {
-    const { username: viewedUsername } = useParams();
-    const [activeParentTab, setActiveParentTab] = useState(parentTabs[0]);
-    const isPublicProfile = viewedUsername !== undefined;
+  
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeParentTab, setActiveParentTab] = useState(parentTabs[0]);
+  const [userData, setUserData] = useState<UserData>({} as UserData);
+  const [playerPredictions, setPlayerPredictions] = useState<PlayerPrediction[]>([]);
+  const [teamPredictions, setTeamPredictions] = useState<TeamPrediction[]>([]);
+  const [tournamentPredictions, setTournamentPredictions] = useState<TournamentPrediction[]>([]);
+  
+  const fetchUserData = async () => {
 
-    const [userData, setUserData] = useState<UserData>({} as UserData);
-    const [predictions, setPredictions] = useState<PredictionData>({} as PredictionData);
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
+    try {
         const userId = localStorage.getItem("userId");
-      
-        const fetchUserData = async () => {
-          try {
-            const response = await axios.get(`http://localhost:5175/api/user/${userId}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-            const data = response.data;
-            setUserData({
-              Id: data.id,
-              Username: data.username,
-              FirstName: data.firstName,
-              LastName: data.lastName,
-              FavouriteTeam: data.favouriteTeam,
-              TeamId: data.teamId,
-              Team: data.team,
-              Token: token,
-            });
-            setPredictions({
-                PlayerPredictions: data.playerPredictions,
-                TeamPredictions: data.teamPredictions,
-                TournamentPredictions: data.tournamentPredictions
-            });
-          } catch (error) {
-            console.error("Error fetching user data", error);
-          }
-        };
-      
-        const fetchPlayerPredData = async () => {
-          if (predictions.PlayerPredictions) {
-            const updatedPredictions = await Promise.all(
-              predictions.PlayerPredictions.map(async (prediction) => {
-                if (prediction.playerId) {
-                  try {
-                    const playerResponse = await axios.get(
-                      `http://localhost:5175/api/player/${prediction.playerId}`
-                    );
-                    return { ...prediction, player: playerResponse.data };
-                  } catch (error) {
-                    console.error("Error fetching player data", error);
-                    return prediction; 
-                  }
-                } else {
-                  return prediction; 
-                }
-              })
-            );
-            setPredictions({ ...predictions, PlayerPredictions: updatedPredictions });
-          }
-        };
-
-        const fetchTeamPredData = async () => {
-            if (predictions.TeamPredictions) {
-                const updatedPredictions = await Promise.all(
-                    predictions.TeamPredictions.map(async (prediction) => {
-                        if (prediction.nationalTeamId) {
-                            try {
-                                const teamResponse = await axios.get(
-                                    `http://localhost:5175/api/nationalteam/${prediction.nationalTeamId}`
-                                );
-                                return { ...prediction, nationalTeam: teamResponse.data};
-                            } catch (error) {
-                                console.error("Error fetching team data", error);
-                                return prediction;
-                            }
-                        } else {
-                            return prediction;
-                        }
-                    })
-                );
-                setPredictions({ ...predictions, TeamPredictions: updatedPredictions})
-            }
-        };
-
-        fetchUserData().then(() => {
-          
-          fetchPlayerPredData();
-          fetchTeamPredData();
+        const response = await axios.get(
+            `http://localhost:5175/api/user/${userId}`
+        );
+        const data = response.data;
+        setUserData({
+            Id: data.id,
+            Username: data.username,
+            FirstName: data.firstname,
+            LastName: data.lastname,
+            FavouriteTeam: data.favouriteteam,
+            Team: data.team
         });
-      }, []);
 
-    return (
+    } catch (error) {
+        console.error("Error fetching user", error);
+    }
+  };
 
-        <div className={`profile-container ${isPublicProfile ? "public-profile-container" : ""}`}>
-            <div className="tabs">
-                {parentTabs.map(tab => (
-                    <Tab
-                        key={tab}
-                        title={tab}
-                        isActive={activeParentTab === tab}
-                        onClick={() => setActiveParentTab(tab)}
+  const fetchPlayerPredictions = async () => {
+
+    try {
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get(
+            `http://localhost:5175/api/user/${userId}/playerpredictions`
+        );
+        const data = response.data;
+        console.log(data);
+        setPlayerPredictions([...data]);
+
+    } catch (error) {
+        console.error("Error fetching player predictions", error);
+    }
+  };
+
+  const fetchTeamPredictions = async () => {
+    
+    try {
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get(
+            `http://localhost:5175/api/user/${userId}/teampredictions`
+        );
+        const data = response.data;
+        setTeamPredictions([...data]);
+
+    } catch (error) {
+        console.error("Error fetching team predictions", error);
+    }
+  };
+
+  const fetchTournamentPredictions = async () => {
+
+    try {
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get(
+            `http://localhost:5175/api/user/${userId}/tournamentpredictions`
+        );
+        const data = response.data;
+        setTournamentPredictions([...data]);
+
+    } catch (error) {
+        console.error("Error fetching tournament predictions", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            await Promise.all([
+                fetchUserData(),
+                fetchPlayerPredictions(),
+                fetchTeamPredictions(),
+                fetchTournamentPredictions()
+            ]);
+        } catch (error) {
+            console.error("Error fetching data", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
+    fetchData();
+  }, []);
+
+  return (
+
+      <div className="parent-container">
+          <div className="tabs">
+              {parentTabs.map(tab => (
+                  <Tab
+                      key={tab}
+                      title={tab}
+                      isActive={activeParentTab === tab}
+                      onClick={() => setActiveParentTab(tab)}
+                  />
+              ))}
+          </div>
+          {isLoading ? (
+            <div>Loading...</div> 
+          ) : (
+            <>
+                {activeParentTab === "Predictions" && (
+                    <Predictions
+                    playerPredictions={playerPredictions}
+                    setPlayerPredictions={setPlayerPredictions}
+                    teamPredictions={teamPredictions}
+                    setTeamPredictions={setTeamPredictions}
+                    tournamentPredictions={tournamentPredictions}
+                    setTournamentPredictions={setTournamentPredictions}  
                     />
-                ))}
-            </div>
+                )}
 
-            {activeParentTab === "Predictions" && (
-            <Predictions isPublicProfile={isPublicProfile} predictionData={predictions} />
-            )}        
-            {activeParentTab === "Profile" && (
-            <ProfileInfo isPublicProfile={isPublicProfile} userData={userData} /> 
+                {activeParentTab === "Profile" && (
+                    <ProfileInfo userData={userData} /> 
+                )}
+            </>
             )}
         </div>
-    );
+          
+  );
 }

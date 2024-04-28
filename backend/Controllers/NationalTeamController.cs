@@ -19,11 +19,19 @@ namespace EuroPredApi.Controllers
         {
             _context = context;
         }
-
+        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NationalTeam>>> GetNationalTeams()
-        {
-            return await _context.NationalTeams.ToListAsync();
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<NationalTeamDTO>>> GetNationalTeams()
+        {   
+            return await _context.NationalTeams.Select(nt => new NationalTeamDTO {
+                Id = nt.Id,
+                Name = nt.Name,
+                PlayoffAppearences = nt.PlayoffAppearences,
+                FifaRanking = nt.FifaRanking,
+                Group = nt.Group,
+                ImagePath = nt.ImagePath,
+            }).ToListAsync();
         }
 
         [HttpGet("{teamName}")]

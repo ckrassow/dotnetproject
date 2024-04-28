@@ -2,18 +2,12 @@ import { useState, useContext } from "react";
 import Tab from "../../components/Tab";
 import Card from "../../components/Card";
 import { CommentList } from "./CommentComponents";
+import { UserData } from "../../utils/Types";
 import { AuthContext } from "../../context/AuthContext";
-import { UserData } from "./Profile";
 
 const childTabs = ["Username", "Settings"];
 
-type ProfileInfoProps = {
-    isPublicProfile: boolean;
-    userData: UserData;
-};
-
-
-export function ProfileInfo({ isPublicProfile, userData }: ProfileInfoProps) {
+export function ProfileInfo({ userData }: { userData: UserData }) {
 
     
     const { isLoggedIn } = useContext(AuthContext);
@@ -51,7 +45,7 @@ export function ProfileInfo({ isPublicProfile, userData }: ProfileInfoProps) {
                         header="Comment wall"
                         content={
                             <div className="comment-wall">
-                                <CommentList username={userData?.Username} isPublicProfile={isPublicProfile} />
+                                <CommentList username={userData?.Username} />
                             </div>
                         }
                     />
