@@ -29,6 +29,7 @@ namespace EuroPredApi.Controllers
         public async Task<ActionResult<UserProfileDTO>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
+            Console.WriteLine(user.Id);
             if (user == null) {
 
                 return NotFound();
@@ -36,9 +37,11 @@ namespace EuroPredApi.Controllers
 
             var FavouriteTeam = await _context.NationalTeams.FirstOrDefaultAsync(team => team.Id == user.NationalTeamId);
             string FavouriteTeamName = "";
+            int FavouriteTeamId = 0;
             if (FavouriteTeam != null) {
 
                 FavouriteTeamName = FavouriteTeam.Name;
+                FavouriteTeamId = FavouriteTeam.Id;
             } 
 
             var team = await _context.Teams.FirstOrDefaultAsync(team => team.Id == user.TeamId);
@@ -48,6 +51,8 @@ namespace EuroPredApi.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 FavouriteTeam = FavouriteTeamName,
+                FavouriteTeamId = FavouriteTeamId,
+                ProfilePicRef = user.ProfilePicRef,
                 Team = team
             };
 
@@ -292,6 +297,67 @@ namespace EuroPredApi.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { token = newJwtToken, refreshToken = user.RefreshToken});
+        }
+
+        [HttpPut("{id}/profile-picture")]
+        [Authorize]
+        public async Task<IActionResult> UpdateProfilePicture(int id, UpdateProfilePictureDTO updateData)
+        {   
+            Console.WriteLine(updateData.ProfilePicRef);
+            if (updateData == null || string.IsNullOrEmpty(updateData.ProfilePicRef)) 
+            {
+                return BadRequest("Invalid profile picture data.");
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.ProfilePicRef = updateData.ProfilePicRef;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}/profile")]
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile(int id, [FromBody] UpdateUserProfileDTO updateData)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.FirstName = updateData.FirstName;
+            user.LastName = updateData.LastName;
+            user.FavouriteTeam = updateData.FavouriteTeam;
+
+            if (updateData.FavouriteTeam != null) {
+                user.NationalTeamId = updateData.FavouriteTeam.Id;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/profile-picture")]
+        [Authorize]
+        public async Task<IActionResult> RemoveProfilePicture(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.ProfilePicRef = null;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         private string GenerateRefreshToken() {

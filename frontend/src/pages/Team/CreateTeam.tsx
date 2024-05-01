@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import "../../styles/CreateTeam.css";
 
 interface ICreateTeamForm {
     name: string;
@@ -70,17 +69,17 @@ const CreateTeam: FC = () => {
     };
     
     return (
-        <div className="create-team-wrapper">
-            <form className="create-team-form">
-                <label className="label-create-team">
+        <div className="bg-gray-100 p-4">
+            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
                     Team name:
-                    <input className="input-create-team" type="text" name="name" value={formState.name} onChange={handleInputChange} />
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-md" type="text" name="name" value={formState.name} onChange={handleInputChange} />
                 </label>
-                <label className="label-create-team">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
                     Search for user to add as member:
-                    <input className="input-create-team" type="text" value={searchTerm} onChange={handleSearchChange}
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-md" type="text" value={searchTerm} onChange={handleSearchChange}
                     onKeyDown={e => e.key === "Enter" && handleSearchSubmit(e)} />
-                    <button className="search-user-button" onClick={handleSearchSubmit}>Search</button>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleSearchSubmit}>Search</button>
                     {showDropdown && (
                         <div className="dropdown">
                             {searchResults.map(user => (
@@ -91,22 +90,22 @@ const CreateTeam: FC = () => {
                         </div>
                     )}
                 </label>
-                <ul className="ul-create-team">
+                <ul className="mb-4">
                     {searchResults.map(user => (
-                        <li className="li-create-team" key={user.id}>
-                            {user.name} <button className="add-member-button" type="button" onClick={() => handleAddMember(user)}>Add member</button>
+                        <li className="mb-2" key={user.id}>
+                            {user.name} <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-md" type="button" onClick={() => handleAddMember(user)}>Add member</button>
                         </li>
                     ))}
                 </ul>
-                <p className="p-create-team">Members:</p>
-                <ul className="ul-create-team">
+                <p className="block text-gray-700 text-sm font-bold mb-2">Members:</p>
+                <ul className="mb-4">
                     {formState.members.map((member, index) => (
-                        <li className="li-create-team" key={index}>
-                            {member} <button className="delete-member-button" type="button" onClick={() => handleDeleteMember(member)}>Delete member</button>
+                        <li className="mb-2" key={index}>
+                            {member} <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-md" type="button" onClick={() => handleDeleteMember(member)}>Delete member</button>
                         </li>
                     ))}
                 </ul>
-                <button className="submit-form-button" type="submit">Submit</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-md" type="submit">Submit</button>
             </form>
         </div>
     );

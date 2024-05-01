@@ -8,7 +8,6 @@ import Navbar from './components/Navbar';
 import { SignupPage } from './pages/Signup';
 import { QuizPage } from './pages/Quiz';
 import SearchResultPage from './pages/SearchResult';
-import "./styles/App.css";
 import { TeamPage } from './pages/Team/Team';
 import { AuthContext } from './context/AuthContext';
 
@@ -26,12 +25,12 @@ function App() {
       <BrowserRouter>
         <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
           <Navbar />
-          <div className='main-div'>
+          <div className="px-10 sm:px-20 lg:px-28">
             <Routes>
               <Route path="/" element={<HomePage/>} />
               <Route path="/leaderboard" element={<LeaderboardPage/>} />
-              <Route path="/signin" element={isLoggedIn ? <Navigate to="/profile" />: <SigninPage/>} />
-              <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
+              <Route path="/signin" element={isLoggedIn ? <Navigate to="/account" />: <SigninPage/>} />
+              <Route path="/account" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
               <Route path="/signup" element={<SignupPage/>} />
               <Route path="/search/" element={<SearchResultPage/>} />
               <Route path="/team" element={<TeamPage /> } />

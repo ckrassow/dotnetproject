@@ -1,5 +1,4 @@
 import { FC, ReactNode } from "react";
-import "../styles/Modal.css";
 
 interface IModalProps {
     isOpen: boolean;
@@ -11,8 +10,8 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-backdrop">
-            <div className="modal-content">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-5 rounded-lg w-11/12 max-w-6xl h-3/4 overflow-auto">
                 <button onClick={onClose}>X</button>
                 {children}
             </div>

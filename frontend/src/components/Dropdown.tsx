@@ -1,5 +1,4 @@
 import { FC } from "react";
-import "../styles/Dropdown.css";
 
 interface IDropdownProps {
     options: string[];

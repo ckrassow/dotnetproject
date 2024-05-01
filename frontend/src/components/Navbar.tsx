@@ -1,10 +1,7 @@
 import { FC, useState, useContext } from 'react';
-import '../styles/Navbar.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
-
-
 
 const Navbar: FC = () => {
 
@@ -18,30 +15,30 @@ const Navbar: FC = () => {
     };
 
     return (
-        <div className="navbar-container">
-            <nav className="navbar">
+        <div className="w-full bg-gray-800 px-4 sm:px-6 lg:px-8">
+            <nav className="text-white py-2 px-4 flex items-center w-full">
                 
                 <Link to="/" className="logo">
                     Some name
                 </Link>
-                <div className="nav-div">
-                    <NavLink className="nav-link" to="/leaderboard">Leaderboard</NavLink>
+                <div className="flex flex-grow items-center justify-between">
+                    <NavLink className="mx-2" to="/leaderboard">Leaderboard</NavLink>
                     <form onSubmit={handleSearch}>
-                        <div className="search-field">
+                        <div className="flex items-center bg-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2">
                             <FaSearch id="search-icon" />
-                            <input placeholder="Find user..."
+                            <input className="flex-grow ml-2" placeholder="Find user..."
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)} />
                         </div>
                     </form>
                     {isLoggedIn ? (
                         <>
-                            <NavLink className="nav-link" to="/profile">Profile</NavLink>
-                            {/*<NavLink className="nav-link" to="/quiz">Quiz</NavLink>*/}
-                            <NavLink className="nav-link" to="/team">Team</NavLink>
+                            <NavLink className="mx-2" to="/account">Account</NavLink>
+                            {/*<NavLink className="mx-2" to="/quiz">Quiz</NavLink>*/}
+                            <NavLink className="mx-2" to="/team">Team</NavLink>
                         </>
                     ) : (
-                        <NavLink className="nav-link" to="/signin">Sign in</NavLink>
+                        <NavLink className="mx-2" to="/signin">Sign in</NavLink>
                     )}
                 </div>
             </nav>

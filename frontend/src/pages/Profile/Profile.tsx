@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Tab from "../../components/Tab";
-import "../../styles/Profile.css";
 import { Predictions } from "./Predictions";
-import { ProfileInfo } from "./ProfileInfo";
-import { UserData, PlayerPrediction, TeamPrediction, TournamentPrediction } from "../../utils/Types";
+import { UserProfile } from "../../components/UserProfile";
+import { UserData, NationalTeamData, PlayerPrediction, TeamPrediction, TournamentPrediction } from "../../utils/Types";
+import { UserSettings } from "./UserSettings";
 
 
-const parentTabs = ["Profile", "Predictions", "League"];
+const parentTabs = ["Profile", "Predictions", "Settings"];
   
 
 export function ProfilePage() {
@@ -15,6 +15,7 @@ export function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeParentTab, setActiveParentTab] = useState(parentTabs[0]);
   const [userData, setUserData] = useState<UserData>({} as UserData);
+  const [teamData, setTeamData] = useState<NationalTeamData[]>([]);
   const [playerPredictions, setPlayerPredictions] = useState<PlayerPrediction[]>([]);
   const [teamPredictions, setTeamPredictions] = useState<TeamPrediction[]>([]);
   const [tournamentPredictions, setTournamentPredictions] = useState<TournamentPrediction[]>([]);
@@ -28,18 +29,48 @@ export function ProfilePage() {
         );
         const data = response.data;
         setUserData({
-            Id: data.id,
-            Username: data.username,
-            FirstName: data.firstname,
-            LastName: data.lastname,
-            FavouriteTeam: data.favouriteteam,
-            Team: data.team
+            id: data.id,
+            username: data.username,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            favouriteTeam: data.favouriteTeam,
+            favouriteTeamId: data.favouriteTeamid,
+            profilePicRef: data.profilePicRef,
+            team: data.team
         });
 
     } catch (error) {
         console.error("Error fetching user", error);
     }
   };
+
+  const fetchTeamData = async () => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+            `http://localhost:5175/api/nationalteam`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        const data = response.data;
+        const teamData: NationalTeamData[] = data.map((team: any) => {
+            return {
+                id: team.id,
+                name: team.name,
+                playoffAppearences: team.playoffAppearences,
+                fifaRanking: team.fifaRanking,
+                group: team.group,
+                imagePath: team.imagePath,
+            };
+        });
+
+        setTeamData(teamData);
+
+    } catch (error) {
+        console.error("Error when trying to fetch teams", error);
+    }
+};
 
   const fetchPlayerPredictions = async () => {
 
@@ -49,7 +80,6 @@ export function ProfilePage() {
             `http://localhost:5175/api/user/${userId}/playerpredictions`
         );
         const data = response.data;
-        console.log(data);
         setPlayerPredictions([...data]);
 
     } catch (error) {
@@ -92,6 +122,7 @@ export function ProfilePage() {
         try {
             await Promise.all([
                 fetchUserData(),
+                fetchTeamData(),
                 fetchPlayerPredictions(),
                 fetchTeamPredictions(),
                 fetchTournamentPredictions()
@@ -109,7 +140,7 @@ export function ProfilePage() {
   return (
 
       <div className="parent-container">
-          <div className="tabs">
+          <div className="flex justify-center space-x-4 mb-4">
               {parentTabs.map(tab => (
                   <Tab
                       key={tab}
@@ -127,6 +158,7 @@ export function ProfilePage() {
                     <Predictions
                     playerPredictions={playerPredictions}
                     setPlayerPredictions={setPlayerPredictions}
+                    teamData={teamData}
                     teamPredictions={teamPredictions}
                     setTeamPredictions={setTeamPredictions}
                     tournamentPredictions={tournamentPredictions}
@@ -135,7 +167,15 @@ export function ProfilePage() {
                 )}
 
                 {activeParentTab === "Profile" && (
-                    <ProfileInfo userData={userData} /> 
+                    <UserProfile userData={userData} /> 
+                )}
+
+                {activeParentTab === "Settings" && (
+                    <UserSettings 
+                    teamData={teamData}
+                    userData={userData}
+                    setUserData={setUserData}
+                    />
                 )}
             </>
             )}

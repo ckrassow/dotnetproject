@@ -9,6 +9,7 @@ import { PlayerData, TournamentPrediction, PlayerPrediction, TeamPrediction, Nat
 const childTabs = ["Players", "Teams", "Tournament"];
 
 type PredictionProps = {
+    teamData: NationalTeamData[],
     playerPredictions: PlayerPrediction[],
     setPlayerPredictions: React.Dispatch<React.SetStateAction<PlayerPrediction[]>>,
     teamPredictions: TeamPrediction[],
@@ -26,7 +27,6 @@ export function Predictions(props: PredictionProps) {
 
     const [activeTab, setActiveTab] = useState(childTabs[0]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [teamData, setTeamData] = useState<NationalTeamData[]>([]);
     const [dropDownTeam, setDropDownTeam] = useState("");
     const [currentPrediction, setCurrentPrediction] = useState<PlayerPrediction | TeamPrediction | TournamentPrediction>({} as PlayerPrediction);
     const [selectedPlayers, setSelectedPlayers] = useState<PlayerData[]>([]);
@@ -48,34 +48,6 @@ export function Predictions(props: PredictionProps) {
       
     const height= "300px";
     const width = "400px";
-    
-    const getTeamData = async () => {
-        try {
-            const token = localStorage.getItem("token");
-            const response = await axios.get(
-                `http://localhost:5175/api/nationalteam`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-            const data = response.data;
-            const teamData: NationalTeamData[] = data.map((team: any) => {
-                return {
-                    id: team.id,
-                    name: team.name,
-                    playoffAppearences: team.playoffAppearences,
-                    fifaRanking: team.fifaRanking,
-                    group: team.group,
-                    imagePath: team.imagePath,
-                };
-            });
-
-            setTeamData(teamData);
-
-        } catch (error) {
-            console.error("Error when trying to fetch teams", error);
-        }
-    };
     
     const handleShowPlayers = async (teamName: string) => {
         try {
@@ -129,7 +101,6 @@ export function Predictions(props: PredictionProps) {
         });
 
         props.setPlayerPredictions(updatedPlayerPreds);
-        console.log(props.playerPredictions);
 
         try {
             const token = localStorage.getItem("token");
@@ -167,7 +138,7 @@ export function Predictions(props: PredictionProps) {
             }
             return prediction;
         });
-        console.log(updatedTeamPreds);
+        
         props.setTeamPredictions(updatedTeamPreds);
 
         try {
@@ -247,7 +218,7 @@ export function Predictions(props: PredictionProps) {
 
     return (
         <div>
-            <div className="sub-tabs">
+            <div className="flex justify-start space-x-4 mb-4">
                 {childTabs.map(tab => (
                     <Tab
                         key={tab}
@@ -260,7 +231,7 @@ export function Predictions(props: PredictionProps) {
             </div>
 
             {activeTab === "Players" && (
-                <div className="predictions-container">
+                <div className="flex flex-wrap">
                     {props.playerPredictions?.map(prediction  => (
                         <Card
                             key={prediction.predictionType}
@@ -296,7 +267,7 @@ export function Predictions(props: PredictionProps) {
             )}
 
             {activeTab === "Teams" && (
-                <div className="predictions-container">
+                <div className="flex flex-wrap">
                     {props.teamPredictions?.map(prediction => (
                         <Card
                             key={prediction.predictionType}
@@ -318,7 +289,6 @@ export function Predictions(props: PredictionProps) {
                                   )}
                                   <button onClick={() => {
                                     setIsModalOpen(true);
-                                    getTeamData();
                                     setCurrentPrediction(prediction);
                                   }}>Make Prediction</button>
 
@@ -333,7 +303,7 @@ export function Predictions(props: PredictionProps) {
             )}
 
             {activeTab === "Tournament" && (
-                <div className="predictions-container">
+                <div className="flex flex-wrap">
                     {props.tournamentPredictions?.map(prediction => (
                         <Card
                             key={prediction.predictionType}
@@ -374,9 +344,9 @@ export function Predictions(props: PredictionProps) {
                             setSelectedOption={handleShowPlayers} 
                         />
                         {dropDownTeam && (
-                            <div className="cards-container">
+                            <div className="grid grid-cols-4 gap-4 overflow-auto max-h-[500px]">
                                 {selectedPlayers.map((player) => (
-                                    <div className="modal-card-container" key={player.id}>
+                                    <div className="flex flex-col items-center m-2" key={player.id}>
                                         <Card
                                             header={<h2>{player.name}</h2>}
                                             content={
@@ -402,16 +372,16 @@ export function Predictions(props: PredictionProps) {
                 )}
 
                 {activeTab === "Teams" && (
-                    <div className="cards-container">
-                        {teamData.map((team) => (
-                            <div className="modal-card-container" key={team.name}>
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-4">
+                        {props.teamData.map((team) => (
+                            <div className="flex flex-col items-center m-2" key={team.name}>
                                 <Card
                                     header={<h2>{team.name}</h2>}
                                     content={
                                     <>  
                                         <p>Group: {team.group}</p>
                                         <p>Fifa ranking: {team.fifaRanking}</p>
-                                        <p>Playoff appearences: {team.playoffAppearences}</p>
+                                        <p>Playoff appearences: {team.playoffAppearances}</p>
                                         <img src={require(`../../assets/${team.imagePath}`)} alt={team.name} style={{height: "125px", width: "75px"}} />
                                         <button onClick={() => {
                                             handleNewTeamPrediction(team);
@@ -426,9 +396,9 @@ export function Predictions(props: PredictionProps) {
                 )}
 
                 {activeTab === "Tournament" && (
-                    <div className="cards-container">
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-4">
                         {tourPredOptions.map((tourPred) => (
-                            <div className="modal-card-container" key={tourPred}>
+                            <div className="flex flex-col items-center m-2" key={tourPred}>
                                 <Card
                                     header={<h2>{tourPred}</h2>}
                                     content={<button onClick={() => {

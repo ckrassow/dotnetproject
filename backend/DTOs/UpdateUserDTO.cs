@@ -1,4 +1,5 @@
 using EuroPredApi.DTOs;
+using EuroPredApi.Models;
 
 public class UpdateUserDTO
 {
@@ -9,9 +10,17 @@ public class UpdateUserDTO
     public TournamentPredictionUpdateDTO? TeamPredictions { get; set; }
 }
 
+public class UpdateUserProfileDTO
+{
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public NationalTeam? FavouriteTeam { get; set; } // Assuming team is represented by an integer ID
+}
 
-
-
+public class UpdateProfilePictureDTO
+{
+    public string ProfilePicRef { get; set; }
+}
 /*
 {
     "username": "new_username",

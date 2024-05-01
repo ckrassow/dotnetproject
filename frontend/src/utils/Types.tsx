@@ -1,46 +1,47 @@
 export type UserData = {
-    Id: number;
-    Username: string;
-    FirstName: string | null;
-    LastName: string | null;
-    FavouriteTeam: string | null;
-    Team: TeamData | null;
+    id: number;
+    username: string;
+    firstName: string | null;
+    lastName: string | null;
+    favouriteTeam: string | null;
+    favouriteTeamId: number | null;
+    team: TeamData | null;
+    profilePicRef: string | null;
 };
 
 export type TeamData = {
-    Id: number;
-    Name: string;
-    Predictions: PredictionData | null;
+    id: number;
+    name: string;
+    predictions: PredictionData | null;
 };
 
 export type PredictionData = {
-    PlayerPredictions: PlayerPrediction[];
-    TeamPredictions: TeamPrediction[];
-    TournamentPredictions: TournamentPrediction[];
+    playerPredictions: PlayerPrediction[];
+    teamPredictions: TeamPrediction[];
+    tournamentPredictions: TournamentPrediction[];
 };
 
 export type PlayerData = {
-  id: number;
-  no: number;
-  pos: string;
-  name: string;
-  age: number;
-  caps: number;
-  goals: number;
-  club: string;
-  nationalTeamId: number;
-  imagePath: string;
+    id: number;
+    no: number;
+    pos: string;
+    name: string;
+    age: number;
+    caps: number;
+    goals: number;
+    club: string;
+    nationalTeamId: number;
+    imagePath: string;
 };
 
 export type NationalTeamData = {
-  id: number;
-  name: string;
-  playoffAppearences: string;
-  fifaRanking: string;
-  group: string;
-  imagePath: string;
+    id: number;
+    name: string;
+    playoffAppearances: string;
+    fifaRanking: string;
+    group: string;
+    imagePath: string;
 };
-
 
 export type PlayerPrediction = {
     id: number;
@@ -64,4 +65,3 @@ export type TournamentPrediction = {
     predictionTypeString: string;
     predictionValue?: string;
 };
-

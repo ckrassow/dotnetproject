@@ -1,4 +1,3 @@
-import "../styles/Signin.css";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -36,22 +35,22 @@ export function SigninPage() {
 
     const headerSignin = <h2>Sign in</h2>;
     const contentSignin = (
-        <form className="form-container-signin" onSubmit={handleSignIn}>
-            <label className="form-label-signin">
+        <form className="space-y-4" onSubmit={handleSignIn}>
+            <label className="block">
                 Username:
-                <input className="form-input-signin" type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                <input className="border-2 mt-1 block w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
             </label>
-            <label className="form-label-signin">
+            <label className="block">
                 Password:
-                <input className="form-input-signin" type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <input className="border-2 mt-1 block w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
             </label>
-            <input className="form-button-signin" type="submit" value="Sign in" />
+            <input className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" value="Sign in" />
         </form>
     );
 
     const headerSignup = <h2>Not a member yet?</h2>
     const contentSignup = (
-        <div className="signup-container-1">
+        <div className="flex flex-col items-center justify-center">
             <p>With a WhateverThisWebsiteWillBeCalled account you can:<br />
                - Showcase your football knowledge by participating in the
                predictions for the Euro 2024 tournament. <br />
@@ -66,7 +65,7 @@ export function SigninPage() {
 
     return (
 
-        <div className="signin-container">
+        <div className="flex flex-col items-center justify-center h-screen">
             <Card header={headerSignin} content={contentSignin} maxWidth="600px" />
             <Card header={headerSignup} content={contentSignup} maxWidth="600px" />
         </div>
