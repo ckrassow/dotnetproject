@@ -5,7 +5,7 @@ using EuroPredApi.Data;
 
 namespace EuroPredApi.Controllers
 {
-    [Route("europredapi/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PlayerController : ControllerBase {
 

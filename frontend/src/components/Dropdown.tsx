@@ -1,16 +1,23 @@
 import { FC } from "react";
-import "../styles/Dropdown.css";
 
 interface IDropdownProps {
     options: string[];
     selectedOption: string;
     setSelectedOption: (option: string) => void;
+    defaultOptionLabel: string;
 };
 
-const Dropdown: FC<IDropdownProps> = ({ options, selectedOption, setSelectedOption }) => {
+const Dropdown: FC<IDropdownProps> = props => {
     return (
-        <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-            {options.map((option, index) => (
+        <select value={props.selectedOption} onChange={(e) => {
+            if (e.target.value === props.defaultOptionLabel) {
+                console.log("Hello");
+                return;
+            }
+            console.log(props.selectedOption);
+            props.setSelectedOption(e.target.value)}}>
+            <option value="">{props.defaultOptionLabel}</option>
+            {props.options.map((option, index) => (
                 <option key={index} value={option}>
                     {option}
                 </option>

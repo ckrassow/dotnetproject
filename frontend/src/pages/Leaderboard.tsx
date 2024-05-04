@@ -1,4 +1,3 @@
-import "../styles/Leaderboard.css";
 
 const globalLeaderboard = [
   { name: "Alice", score: 1200 },
@@ -14,10 +13,10 @@ const friendsLeaderboard = [
 
 const LeaderboardPage = () => {
     return (
-      <div className="leaderboard-container">
+      <div className="container mx-auto space-y-8">
         <div>
-          <h2 className="h2-leaderboard">Global Leaderboard</h2>
-          <ul className="ul-leaderboard">
+          <h2 className="text-center font-bold text-xl">Global Leaderboard</h2>
+          <ul className="list-disc list-inside text-lg">
             {globalLeaderboard.map((user, index) => (
               <li key={index}>
                 {user.name} - {user.score}
@@ -27,8 +26,8 @@ const LeaderboardPage = () => {
         </div>
   
         <div>
-          <h2 className="h2-leaderboard">Friends Leaderboard</h2>
-          <ul className="ul-leaderboard">
+          <h2 className="text-center font-bold text-xl">Friends Leaderboard</h2>
+          <ul className="list-disc list-inside text-lg">
             {friendsLeaderboard.map((friend, index) => (
               <li key={index}>
                 {friend.name} - {friend.score}
