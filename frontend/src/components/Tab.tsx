@@ -8,10 +8,9 @@ interface ITabProps {
 }
 
 const Tab: FC<ITabProps> = (props) => {
-  const tabClass = props.isSubTab ? "sub-tab" : "tab";
 
   const tabStyles = `inline-flex items-center justify-center w-24 py-2 font-medium text-center rounded-md ${
-    props.isActive ? "border-b-2 border-indigo-600" : "text-gray-700 bg-white hover:bg-gray-50"
+    props.isActive ? "border-b-2 border-indigo-600 text-gray-700 bg-white" : "hover:bg-gray-50"
   }`;
 
   return (

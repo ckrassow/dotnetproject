@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Card from "../components/Card";
+import axiosInstance from "../utils/Api";
 
 export function SignupPage() {
 
@@ -9,32 +10,23 @@ export function SignupPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+      
         if (password !== repeatPassword) {
-            console.log("Passwords do not match");
-            return;
+          console.log("Passwords do not match");
+          return;
         }
-
-        const response = await fetch("http://localhost:5175/api/user/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                password,
-            }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            console.log("Account created successfully");
-
-        } else {
-
-            console.log(data.message);
-        }
+      
+        try {
+            const response = await axiosInstance.post("/user/register", { username, password });
+            if (response.status === 201) {
+                console.log("User successfully signed up");
+            }
+            else {
+                console.log("User failed to sign up");
+            }
+        } catch (error) {
+          console.error("Error signing in:", error);
+        };
     };
 
     const header = <h2>Sign up</h2>;
@@ -65,7 +57,7 @@ export function SignupPage() {
     return (
 
         <div className="flex flex-col items-center justify-center h-screen">
-            <Card header={header} content={content} height="500px" width="70%" maxWidth="600px" />
+            <Card header={header} content={content} />
         </div>
     );
 }

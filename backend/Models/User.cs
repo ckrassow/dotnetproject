@@ -10,8 +10,9 @@ public class User {
     public string? ProfilePicRef {get; set;}
     public int? NationalTeamId { get; set;}
     public NationalTeam? FavouriteTeam { get; set;}
-    public int? TeamId {get; set;}
-    public string? RefreshToken {get; set;} 
+    public int? TeamId { get; set; }
+    public string? RefreshToken { get; set; } 
+    public DateTime RefreshTokenExpiryTime { get; set; }
     public ICollection<UserPrediction<PlayerPrediction>> UserPlayerPredictions { get; set;}
     public ICollection<UserPrediction<TeamPrediction>> UserTeamPredictions { get; set;}
     public ICollection<UserPrediction<TournamentPrediction>> UserTournamentPredictions { get; set;}  

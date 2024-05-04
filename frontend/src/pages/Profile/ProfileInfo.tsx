@@ -1,15 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import Tab from "../../components/Tab";
 import { UserData } from "../../utils/Types";
-import { AuthContext } from "../../context/AuthContext";
-import { UserProfile } from "../../components/UserProfile";
 
 const childTabs = ["Username", "Settings"];
 
 export function ProfileInfo({ userData }: { userData: UserData }) {
 
     
-    const { isLoggedIn } = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState(childTabs[0]);
     
     return (

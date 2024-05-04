@@ -2,8 +2,7 @@ import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
-
+import axiosInstance from "../utils/Api";
 export function SigninPage() {
 
     const navigate = useNavigate();
@@ -17,17 +16,16 @@ export function SigninPage() {
 
         try {
             console.log(username, password);
-            const response = await axios.post("http://localhost:5175/api/user/login", { username, password });
+            const response = await axiosInstance.post("/user/login", { username, password });
             const data = response.data;
             const token = data.token;
             const refreshToken = data.refreshToken;
             const id = data.userId;
-            console.log(response.data);
             localStorage.setItem("token", token);
             localStorage.setItem("refreshToken", refreshToken);
             localStorage.setItem("userId", id);
             setIsLoggedIn(true);
-            navigate("/profile");
+            navigate("/account");
         } catch (error) {
             console.error("Error signing in", error);
         }
@@ -66,8 +64,8 @@ export function SigninPage() {
     return (
 
         <div className="flex flex-col items-center justify-center h-screen">
-            <Card header={headerSignin} content={contentSignin} maxWidth="600px" />
-            <Card header={headerSignup} content={contentSignup} maxWidth="600px" />
+            <Card header={headerSignin} content={contentSignin} />
+            <Card header={headerSignup} content={contentSignup} />
         </div>
     );
 }

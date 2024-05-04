@@ -1,11 +1,10 @@
-import { useState, useRef, ChangeEvent } from "react";
+import { useState, useRef, useEffect } from "react";
 import Compressor from "compressorjs";
 import Tab from "../../components/Tab"; 
 import Dropdown from "../../components/Dropdown";
 import { NationalTeamData, UserData } from "../../utils/Types";
-import { getImageURL, handleUpload } from "../../utils/imageUpload";
-import axios from "axios";
-import { profile } from "console";
+import { handleUpload } from "../../utils/imageUpload";
+import axiosInstance from "../../utils/Api";
 
 type UserSettingsProps = {
     userData: UserData,
@@ -16,10 +15,23 @@ type UserSettingsProps = {
 export function UserSettings(props: UserSettingsProps) {
   const [activeTab, setActiveTab] = useState("profile");
   const [selectedTeam, setSelectedTeam] = useState("");
-  const [compressedImage, setCompressedImage] = useState<Blob | null>(null);
   const imageFileRef = useRef<Blob | null>(null);
   const [firstName, setFirstName] = useState(props.userData.firstName || "");
   const [lastName, setLastName] = useState(props.userData.lastName || "");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+
+    let timeout: NodeJS.Timeout | null = null;
+    if (successMessage) {
+      timeout = setTimeout(() => setSuccessMessage(""), 3000);
+    }
+    return () => clearTimeout(timeout!);
+  }, [successMessage]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const image = e.target.files?.[0];
@@ -30,7 +42,6 @@ export function UserSettings(props: UserSettingsProps) {
           maxWidth: 200,
           maxHeight: 200,
           success(compressedResult) {
-            setCompressedImage(compressedResult);
             imageFileRef.current = compressedResult;
           },
           error(error) {
@@ -63,12 +74,16 @@ export function UserSettings(props: UserSettingsProps) {
 
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
-      await axios.put(
-        `http://localhost:5175/api/user/${userId}/profile`, formData, {
+      await axiosInstance.put(
+        `/user/${userId}/profile`, formData, {
           headers: {
             Authorization: `Bearer ${token}`
           },
         });
+        
+      setFirstName("");
+      setLastName("");
+      setSuccessMessage("Profile updated successfully!");
 
     } catch(error) {
       console.error("Error updating form data:", error);
@@ -89,10 +104,45 @@ export function UserSettings(props: UserSettingsProps) {
       } catch(error) {
         console.error("Error handling image upload:", error);
       }
-
-     
     }
+
   };
+
+  const handlePasswordChange = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Password must be at least 8 characters long.");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setPasswordError("New password and confirm password do not match.");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      await axiosInstance.put(
+        `/user/${userId}/change-password`,
+        { oldPassword, newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setPasswordError("");
+      setSuccessMessage("Password changed successfully!");
+
+    } catch(error) {
+      console.error("Error changing password:", error);
+    }
+  }
 
   return (
     <div className="bg-gray-800 text-white p-8">
@@ -108,63 +158,108 @@ export function UserSettings(props: UserSettingsProps) {
           onClick={() => setActiveTab("password")}
         />
       </div>
+      <div className="tab-content-container min-h-[300px] md:min-h-[400px]">
+        {successMessage && ( 
+            <div className="bg-green-500 text-white p-4 rounded-lg mt-4">
+              {successMessage}
+            </div>
+          )}
 
-      {activeTab === "profile" && (
-        <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
-          <form onSubmit={handleSubmit}>
-            <label className="block mb-4">
-              First name:
-              <input
-                type="text"
-                className="form-input mt-1 block w-full"
-                placeholder={props.userData.firstName ? props.userData.firstName : "First name"}
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </label>
-            <label className="block mb-4">
-              Last name:
-              <input
-                type="text"
-                className="form-input mt-1 block w-full"
-                placeholder={props.userData.lastName ? props.userData.lastName : "Last name"}
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </label>
-            <label className="block mb-4">
-              Favourite team:
-              <Dropdown
-                options={props.teamData.map((team) => team.name)}
-                selectedOption={selectedTeam}
-                setSelectedOption={setSelectedTeam}
-                defaultOptionLabel="Select a team"
-              />
-            </label>
-            <label className="block mb-4">
-              Profile picture:
-              <input
-                type="file"
-                accept="image/png, image/jpeg"
-                onChange={handleImageUpload}
-                className="form-input mt-1 block w-full"
-              />
-            </label>
-            <button
+        {activeTab === "profile" && (
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
+            <form onSubmit={handleSubmit}>
+              <label className="block mb-4">
+                First name:
+                <input
+                  type="text"
+                  className="form-input mt-1 block w-full text-black"
+                  placeholder={props.userData.firstName ? props.userData.firstName : "First name"}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </label>
+              <label className="block mb-4">
+                Last name:
+                <input
+                  type="text"
+                  className="form-input mt-1 block w-full text-black"
+                  placeholder={props.userData.lastName ? props.userData.lastName : "Last name"}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </label>
+              <label className="block mb-4">
+                Favourite team:
+                <Dropdown
+                  options={props.teamData.map((team) => team.name)}
+                  selectedOption={selectedTeam}
+                  setSelectedOption={setSelectedTeam}
+                  defaultOptionLabel="Select a team"
+                />
+              </label>
+              <label className="block mb-4">
+                Profile picture:
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={handleImageUpload}
+                  className="form-input mt-1 block w-full"
+                />
+              </label>
+              <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                  Save changes
+              </button>
+            </form>
+          </div>
+        )}
+
+        {activeTab === "password" && (
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
+            <form onSubmit={handlePasswordChange}>
+              <label className="block mb-4">
+                Old password:
+                <input
+                  type="password"
+                  className="form-input mt-1 block w-full text-black"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                />
+              </label>
+              <label className="block mb-4">
+                New password:
+                <input
+                  type="password"
+                  className="form-input mt-1 block w-full text-black"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </label>
+              <label className="block mb-4">
+                Confirm new password:
+                <input
+                  type="password"
+                  className="form-input mt-1 block w-full text-black"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </label>
+              {passwordError && (
+                <p className="text-red-500 text-sm">{passwordError}</p>
+              )}
+              <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-                Save changes
-            </button>
-          </form>
-        </div>
-      )}
-
-      {activeTab === "password" && (
-        <div></div>
-        // Add styling for the "Change Password" tab content
-        // You can use a similar structure as above
-      )}
+              >
+                Change Password
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
     </div>
+    
   );
 }

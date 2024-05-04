@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/Api";
 import Tab from "../../components/Tab";
 import { Predictions } from "./Predictions";
 import { UserProfile } from "../../components/UserProfile";
@@ -9,7 +9,6 @@ import { UserSettings } from "./UserSettings";
 
 const parentTabs = ["Profile", "Predictions", "Settings"];
   
-
 export function ProfilePage() {
   
   const [isLoading, setIsLoading] = useState(true);
@@ -24,12 +23,11 @@ export function ProfilePage() {
 
     try {
         const userId = localStorage.getItem("userId");
-        const response = await axios.get(
-            `http://localhost:5175/api/user/${userId}`
+        const response = await axiosInstance.get(
+            `/user/${userId}`
         );
         const data = response.data;
         setUserData({
-            id: data.id,
             username: data.username,
             firstName: data.firstName,
             lastName: data.lastName,
@@ -47,8 +45,8 @@ export function ProfilePage() {
   const fetchTeamData = async () => {
     try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-            `http://localhost:5175/api/nationalteam`, {
+        const response = await axiosInstance.get(
+            `/nationalteam`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -76,8 +74,8 @@ export function ProfilePage() {
 
     try {
         const userId = localStorage.getItem("userId");
-        const response = await axios.get(
-            `http://localhost:5175/api/user/${userId}/playerpredictions`
+        const response = await axiosInstance.get(
+            `/user/${userId}/playerpredictions`
         );
         const data = response.data;
         setPlayerPredictions([...data]);
@@ -91,8 +89,8 @@ export function ProfilePage() {
     
     try {
         const userId = localStorage.getItem("userId");
-        const response = await axios.get(
-            `http://localhost:5175/api/user/${userId}/teampredictions`
+        const response = await axiosInstance.get(
+            `/user/${userId}/teampredictions`
         );
         const data = response.data;
         setTeamPredictions([...data]);
@@ -106,8 +104,8 @@ export function ProfilePage() {
 
     try {
         const userId = localStorage.getItem("userId");
-        const response = await axios.get(
-            `http://localhost:5175/api/user/${userId}/tournamentpredictions`
+        const response = await axiosInstance.get(
+            `/user/${userId}/tournamentpredictions`
         );
         const data = response.data;
         setTournamentPredictions([...data]);

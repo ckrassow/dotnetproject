@@ -7,6 +7,7 @@ using EuroPredApi.DTOs;
 using EuroPredApi.Types;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
+using System.Security.Claims;
 
 namespace EuroPredApi.Controllers
 {
@@ -115,7 +116,20 @@ namespace EuroPredApi.Controllers
         [HttpPut("{id}/playerprediction/{predId}")]
         [Authorize]
         public async Task<ActionResult<List<UserPrediction<PlayerPrediction>>>> UpdatePlayerPrediction(int id, int predId, PlayerPredictionUpdateDTO dto)
-        {
+        {   
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
             var user = await _context.Users.FindAsync(id);
             if (user == null) {
                 
@@ -143,7 +157,21 @@ namespace EuroPredApi.Controllers
         [HttpPut("{id}/teamprediction/{predId}")]
         [Authorize]
         public async Task<ActionResult<List<UserPrediction<TeamPrediction>>>> UpdateTeamPrediction(int id, int predId, NationalTeamPredictionUpdateDTO dto)
-        {
+        {   
+
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
             var user = await _context.Users.FindAsync(id);
             if (user == null) {
                 
@@ -171,7 +199,21 @@ namespace EuroPredApi.Controllers
         [HttpPut("{id}/tournamentprediction/{predId}")]
         [Authorize]
         public async Task<ActionResult<List<UserPrediction<TournamentPrediction>>>> UpdateTournamentPrediction(int id, int predId, TournamentPredictionUpdateDTO dto)
-        {
+        {   
+
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
             var user = await _context.Users.FindAsync(id);
             if (user == null) {
                 
@@ -275,6 +317,7 @@ namespace EuroPredApi.Controllers
             Console.WriteLine($"Username: {user.Id}");
             var token = _tokenService.GenerateToken(user);
             user.RefreshToken = GenerateRefreshToken();
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return Ok(new { token, refreshToken = user.RefreshToken, userId = user.Id });
@@ -285,13 +328,14 @@ namespace EuroPredApi.Controllers
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
 
-            if (user == null) {
+            if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow) {
 
                 return Unauthorized();
             }
 
             var newJwtToken = _tokenService.GenerateToken(user);
             user.RefreshToken = GenerateRefreshToken();
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
@@ -303,6 +347,19 @@ namespace EuroPredApi.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateProfilePicture(int id, UpdateProfilePictureDTO updateData)
         {   
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
             Console.WriteLine(updateData.ProfilePicRef);
             if (updateData == null || string.IsNullOrEmpty(updateData.ProfilePicRef)) 
             {
@@ -324,7 +381,20 @@ namespace EuroPredApi.Controllers
         [HttpPut("{id}/profile")]
         [Authorize]
         public async Task<IActionResult> UpdateProfile(int id, [FromBody] UpdateUserProfileDTO updateData)
-        {
+        {   
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
@@ -344,10 +414,58 @@ namespace EuroPredApi.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePasswordDTO changePasswordDTO)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (!_passwordHasher.VerifyPassword(changePasswordDTO.OldPassword, user.PasswordHash)) 
+            {
+                return Unauthorized();
+            }
+
+            var newPasswordHash = _passwordHasher.HashPassword(changePasswordDTO.NewPassword);
+            user.PasswordHash = newPasswordHash;
+            await _context.SaveChangesAsync();
+
+            return NoContent();       
+        }
+
         [HttpDelete("{id}/profile-picture")]
         [Authorize]
         public async Task<IActionResult> RemoveProfilePicture(int id)
-        {
+        {   
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
@@ -358,6 +476,63 @@ namespace EuroPredApi.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchUsers(string query)
+        {   
+            Console.WriteLine("Search users endpoint");
+            if (string.IsNullOrEmpty(query))
+            {
+                return Ok(new List<UserProfileDTO>()); 
+            }
+
+            query = query.ToLower();
+
+            List<User> users; 
+
+            var exactMatchUser = await _context.Users
+                .Where(u => EF.Functions.ILike(u.Username, query))
+                .FirstOrDefaultAsync();
+
+            if (exactMatchUser != null)
+            {
+                users = new List<User> { exactMatchUser };
+            }
+            else
+            {
+                users = await _context.Users
+                    .Where(u => EF.Functions.ILike(u.Username, $"%{query}%"))
+                    .ToListAsync();
+            }
+
+            var userProfileDTOs = new List<UserProfileDTO>();
+            foreach (var user in users)
+            {
+                var FavouriteTeam = await _context.NationalTeams.FirstOrDefaultAsync(team => team.Id == user.NationalTeamId);
+                string FavouriteTeamName = "";
+                int FavouriteTeamId = 0;
+                if (FavouriteTeam != null)
+                {
+                    FavouriteTeamName = FavouriteTeam.Name;
+                    FavouriteTeamId = FavouriteTeam.Id;
+                } 
+
+                var team = await _context.Teams.FirstOrDefaultAsync(team => team.Id == user.TeamId);
+
+                userProfileDTOs.Add(new UserProfileDTO
+                {
+                    Username = user.Username,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    FavouriteTeam = FavouriteTeamName,
+                    FavouriteTeamId = FavouriteTeamId,
+                    ProfilePicRef = user.ProfilePicRef,
+                    Team = team
+                });
+            }
+
+            return Ok(userProfileDTOs);
         }
 
         private string GenerateRefreshToken() {

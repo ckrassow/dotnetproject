@@ -17,6 +17,11 @@ public class UpdateUserProfileDTO
     public NationalTeam? FavouriteTeam { get; set; } // Assuming team is represented by an integer ID
 }
 
+public class ChangePasswordDTO
+{
+    public string OldPassword { get; set; }
+    public string NewPassword { get; set; }
+}
 public class UpdateProfilePictureDTO
 {
     public string ProfilePicRef { get; set; }

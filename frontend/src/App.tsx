@@ -1,5 +1,5 @@
 import { Navigate, Routes, Route, BrowserRouter } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { HomePage } from './pages/Home';
 import LeaderboardPage from './pages/Leaderboard';
 import { ProfilePage } from './pages/Profile/Profile';
@@ -9,23 +9,17 @@ import { SignupPage } from './pages/Signup';
 import { QuizPage } from './pages/Quiz';
 import SearchResultPage from './pages/SearchResult';
 import { TeamPage } from './pages/Team/Team';
-import { AuthContext } from './context/AuthContext';
+import { AuthContext }  from './context/AuthContext';
+import Wrapper from './components/Wrapper';
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
+  const { isLoggedIn } = useContext(AuthContext);
   return (
       <BrowserRouter>
-        <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+        <Wrapper className="bg-gray-100">
           <Navbar />
-          <div className="px-10 sm:px-20 lg:px-28">
+          <div className="container mx-auto p-3 sm:p-6 lg:p-9">
             <Routes>
               <Route path="/" element={<HomePage/>} />
               <Route path="/leaderboard" element={<LeaderboardPage/>} />
@@ -37,7 +31,7 @@ function App() {
               <Route path="/quiz" element={<QuizPage/>} />
             </Routes>
           </div>
-        </AuthContext.Provider>
+        </Wrapper>
       </BrowserRouter>
   );
 }

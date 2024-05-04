@@ -1,23 +1,16 @@
-import React, { FC } from "react";
+import { FC, ReactNode } from "react";
 
 interface ICardProps {
-    header: React.ReactNode;
-    content: React.ReactNode;
-    height?: number | string;
-    width?: number | string;
-    maxWidth?: number | string;
+    header: ReactNode;
+    content: ReactNode;
+    className?: string;
 };
 
 const Card: FC<ICardProps> = props => {
-
     return (
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{
-            height: props.height,
-            width: props.width,
-            maxWidth: props.maxWidth,
-        }}>
+        <div className={`shadow-md rounded px-4 py-6 mb-4 ${props.className}`}>
             <div className="font-bold text-xl mb-4">{props.header}</div>
-            {props.content}
+            <div className="flex flex-col">{props.content}</div>
         </div>
     );
 }
