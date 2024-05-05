@@ -8,6 +8,13 @@ export type UserData = {
     profilePicRef: string | null;
 };
 
+export type Comment = {
+    author: string;
+    recipient: string;
+    comment: string;
+    timestamp: Date;
+};
+
 export type TeamData = {
     id: number;
     name: string;

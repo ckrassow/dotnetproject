@@ -1,9 +1,11 @@
-import Card from "./Card";
-import { CommentList } from "../pages/Profile/CommentComponents";
-import { UserData } from "../utils/Types";
+import Card from "../../components/Card";
+import { UserData, Comment } from "../../utils/Types";
+import CommentWall from "./CommentWall";
 
 type UserProfileProps = {
   userData: UserData,
+  comments: Comment[],
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>
 };
 
 export function UserProfile(props: UserProfileProps) {
@@ -38,9 +40,7 @@ export function UserProfile(props: UserProfileProps) {
       <Card
         header="Comment wall"
         content={
-          <div className="w-full max-w-md p-4 bg-white rounded shadow-md resize-none">
-            <CommentList username={props.userData.username} />
-          </div>
+          <CommentWall comments={props.comments} setComments={props.setComments} />
         }
       />
     </div>

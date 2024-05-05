@@ -11,6 +11,7 @@ const SignOut: React.FC = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userId");
+    localStorage.removeItem("username");
     signOut(); 
     setShowModal(false);
   };

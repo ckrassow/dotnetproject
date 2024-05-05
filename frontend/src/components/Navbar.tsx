@@ -35,7 +35,7 @@ const Navbar: FC = () => {
                     </form>
                     {isLoggedIn ? (
                         <>
-                            <NavLink className="mx-2" to="/account">Account</NavLink>
+                            <NavLink className="mx-2" to={`/user/${localStorage.getItem("username")}`}>Account</NavLink>
                             {/*<NavLink className="mx-2" to="/quiz">Quiz</NavLink>*/}
                             <NavLink className="mx-2" to="/team">Team</NavLink>
                             <SignOut />

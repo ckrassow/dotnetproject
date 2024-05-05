@@ -15,7 +15,9 @@ public class User {
     public DateTime RefreshTokenExpiryTime { get; set; }
     public ICollection<UserPrediction<PlayerPrediction>> UserPlayerPredictions { get; set;}
     public ICollection<UserPrediction<TeamPrediction>> UserTeamPredictions { get; set;}
-    public ICollection<UserPrediction<TournamentPrediction>> UserTournamentPredictions { get; set;}  
+    public ICollection<UserPrediction<TournamentPrediction>> UserTournamentPredictions { get; set;} 
+    public ICollection<Comment> CommentsWritten { get; set; }
+    public ICollection<Comment> CommentsReceived { get; set; } 
 
 }
 
@@ -55,5 +57,14 @@ public class UserPrediction<T>
     public T Prediction { get; set; }
     public string PredictionTypeString { get; set; }
 
-    
+}
+
+public class Comment {
+    public int Id { get; set; } 
+    public string Text { get; set; }
+    public DateTime Timestamp { get; set; }
+    public int AuthorId { get; set; }
+    public User Author { get; set; }
+    public int RecipientId { get; set; }
+    public User User { get; set; }
 }

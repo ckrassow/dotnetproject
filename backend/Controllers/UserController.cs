@@ -26,11 +26,11 @@ namespace EuroPredApi.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserProfileDTO>> GetUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            Console.WriteLine(user.Id);
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserProfileDTO>> GetUserByUsername(string username)
+        {   
+            Console.WriteLine(username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) {
 
                 return NotFound();
@@ -54,23 +54,57 @@ namespace EuroPredApi.Controllers
                 FavouriteTeam = FavouriteTeamName,
                 FavouriteTeamId = FavouriteTeamId,
                 ProfilePicRef = user.ProfilePicRef,
-                Team = team
+                Team = team,
             };
 
             return userProfileDTO;
         }
 
-        [HttpGet("{id}/playerpredictions")]
-        public async Task<ActionResult<List<PlayerPrediction>>> GetPlayerPrediction(int id)
+        [HttpGet("{username}/comments")]
+        public async Task<IActionResult> GetComments(string username)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(u => u.CommentsReceived)
+                    .ThenInclude(c => c.Author)
+                .FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null) {
+
+                return NotFound();
+            }
+
+            Console.WriteLine(user.Username);
+
+            if (user.CommentsReceived == null) {
+
+                return Ok(new List<CommentsDTO>());
+            }
+
+            var userCommentsReceived = user.CommentsReceived;
+
+            var commentsDto = userCommentsReceived.Select(c => new CommentsDTO 
+            {
+                Author = c.Author.Username,
+                Recipient = c.User.Username,
+                Timestamp = c.Timestamp,
+                Text = c.Text
+            }).ToList();
+
+            Console.WriteLine(commentsDto);
+            
+            return Ok(commentsDto);
+        }
+
+        [HttpGet("{username}/playerpredictions")]
+        public async Task<ActionResult<List<PlayerPrediction>>> GetPlayerPrediction(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) {
 
                 return NotFound();
             }
 
             var userPlayerPreds = _context.UserPlayerPredictions
-                .Where(up => up.UserId == id)
+                .Where(up => up.UserId == user.Id)
                 .Include(up => up.Prediction.Player)
                 .Select(up => up.Prediction)
                 .ToList();
@@ -78,17 +112,17 @@ namespace EuroPredApi.Controllers
             return Ok(userPlayerPreds);
         }
 
-        [HttpGet("{id}/teampredictions")]
-        public async Task<ActionResult<List<TeamPrediction>>> GetTeamPredictions(int id)
+        [HttpGet("{username}/teampredictions")]
+        public async Task<ActionResult<List<TeamPrediction>>> GetTeamPredictions(string username)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) {
 
                 return NotFound();
             }
 
             var userTeamPreds = _context.UserTeamPredictions
-                .Where(up => up.UserId == id)
+                .Where(up => up.UserId == user.Id)
                 .Include(up => up.Prediction.NationalTeam)
                 .Select(up => up.Prediction)
                 .ToList();
@@ -96,17 +130,17 @@ namespace EuroPredApi.Controllers
             return Ok(userTeamPreds);
         }
 
-        [HttpGet("{id}/tournamentpredictions")]
-        public async Task<ActionResult<List<TournamentPrediction>>> GetTournamentPredictions(int id)
+        [HttpGet("{username}/tournamentpredictions")]
+        public async Task<ActionResult<List<TournamentPrediction>>> GetTournamentPredictions(string username)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) {
 
                 return NotFound();
             }
 
             var userTournamentPreds = _context.UserTournamentPredictions
-                .Where(up => up.UserId == id)
+                .Where(up => up.UserId == user.Id)
                 .Select(up => up.Prediction)
                 .ToList();
             
@@ -314,13 +348,13 @@ namespace EuroPredApi.Controllers
                 return NotFound();
             if (!_passwordHasher.VerifyPassword(registerDTO.Password, user.PasswordHash))
                 return Unauthorized();
-            Console.WriteLine($"Username: {user.Id}");
+            Console.WriteLine($"Userid: {user.Id}");
             var token = _tokenService.GenerateToken(user);
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
-            return Ok(new { token, refreshToken = user.RefreshToken, userId = user.Id });
+            return Ok(new { token, refreshToken = user.RefreshToken, userId = user.Id, username = user.Username });
         }
 
         [HttpPost("refresh-token")]
@@ -447,6 +481,68 @@ namespace EuroPredApi.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();       
+        }
+
+        [HttpPost("addcomment")]
+        [Authorize]
+        public async Task<IActionResult> AddComment([FromBody] AddCommentDTO addCommentDTO)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            var user = await _context.Users.FindAsync(addCommentDTO.AuthorId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != user.Id)
+            {
+                return Forbid(); 
+            }
+
+            var recipientUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == addCommentDTO.Recipient);
+            if (recipientUser == null)
+            {
+                return NotFound();
+            }
+            var comment = new Comment 
+            {
+                Text = addCommentDTO.Text,
+                Timestamp = DateTime.UtcNow,
+                AuthorId = addCommentDTO.AuthorId,
+                RecipientId = recipientUser.Id
+            };
+            if (recipientUser.CommentsReceived == null) {
+
+                recipientUser.CommentsReceived = new List<Comment>();
+            }
+
+            recipientUser.CommentsReceived.Add(comment);
+            
+            if (user.CommentsWritten == null) {
+
+                user.CommentsWritten = new List<Comment>();
+            }
+
+            user.CommentsWritten.Add(comment);
+
+            await _context.SaveChangesAsync();
+
+            var commentsDto = recipientUser.CommentsReceived.Select(c => new CommentsDTO
+            {
+                Author = c.Author.Username,
+                Recipient = c.User.Username,
+                Timestamp = c.Timestamp,
+                Text = c.Text
+            }).ToList();
+
+            return Ok(commentsDto);
         }
 
         [HttpDelete("{id}/profile-picture")]

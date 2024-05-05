@@ -8,6 +8,9 @@ const SearchResultPage: FC = () => {
     const [users, setUsers] = useState<UserData[]>([]);
     const location = useLocation();
     const query = new URLSearchParams(location.search).get('query') || '';
+    const accountName = process.env.REACT_APP_AZURE_ACC_NAME;
+    const sasToken = process.env.REACT_APP_SAS_TOKEN;
+    const containerName = process.env.REACT_APP_AZURE_CONTAINER_NAME!;
 
     useEffect(() => {
         console.log("use effect in searchresults");
@@ -28,32 +31,34 @@ const SearchResultPage: FC = () => {
     }, [query]);
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen">
-             <div className="p-4">
+        <div className="bg-gray-800 text-white min-h-screen flex flex-col items-center pt-8 px-4 lg:px-0">
+            <h1 className="text-3xl lg:text-4xl font-bold mb-6">User Search Results:</h1>
+             <div className="w-full max-w-4xl p-4">
                 {users.map(user => (
-                    <Link 
-                        key={user.username} 
-                        to={`/users/${user.username}`}
-                        className="flex items-center space-x-4 hover:bg-gray-800 p-4 rounded-lg mb-4"
-                    >
-                        {user.profilePicRef && (
-                            <img 
-                                src={user.profilePicRef} 
-                                alt={user.username} 
-                                className="w-16 h-16 rounded-full" 
-                            />
-                        )} 
-                        <div>
-                            <p className="text-lg font-medium">
-                                {user.firstName} {user.lastName} (@{user.username})
-                            </p>
-                            {user.favouriteTeam && (
-                                <p className="text-gray-400 text-sm">
-                                    Favourite Team: {user.favouriteTeam}
+                    <div key={user.username} className="bg-gray-700 shadow-lg rounded-lg p-4 mb-4 transition duration-300 ease-in-out hover:bg-gray-600">
+                        <Link 
+                            to={`/user/${user.username}`}
+                            className="flex flex-col lg:flex-row items-center space-x-0 lg:space-x-4 group"
+                        >
+                            {user.profilePicRef && (
+                                <img 
+                                    src={`https://${accountName}.blob.core.windows.net/${containerName}/${user.profilePicRef}?${sasToken}`} 
+                                    alt={user.username} 
+                                    className="w-24 h-24 lg:w-20 lg:h-20 rounded-full border-2 border-gray-500 group-hover:border-gray-400 mb-4 lg:mb-0" 
+                                />
+                            )} 
+                            <div className="text-center lg:text-left">
+                                <p className="text-xl font-semibold">
+                                    {user.firstName} {user.lastName} (@{user.username})
                                 </p>
-                            )}
-                        </div>
-                    </Link>
+                                {user.favouriteTeam && (
+                                    <p className="text-gray-400 text-sm mt-1">
+                                        Favourite Team: {user.favouriteTeam}
+                                    </p>
+                                )}
+                            </div>
+                        </Link>
+                    </div>
                 ))}
             </div>
         </div>

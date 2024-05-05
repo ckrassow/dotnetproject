@@ -23,8 +23,8 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage/>} />
               <Route path="/leaderboard" element={<LeaderboardPage/>} />
-              <Route path="/signin" element={isLoggedIn ? <Navigate to="/account" />: <SigninPage/>} />
-              <Route path="/account" element={isLoggedIn ? <ProfilePage /> : <Navigate to="/signin" /> } />
+              <Route path="/signin" element={isLoggedIn ? <Navigate to={`/user/${localStorage.getItem("username")}`} />: <SigninPage/>} />
+              <Route path="/user/:username" element={<ProfilePage />} />
               <Route path="/signup" element={<SignupPage/>} />
               <Route path="/search/" element={<SearchResultPage/>} />
               <Route path="/team" element={<TeamPage /> } />
