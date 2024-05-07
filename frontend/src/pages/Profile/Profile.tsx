@@ -62,8 +62,8 @@ export function ProfilePage() {
     }
     try {
       const data = await fetchUserComments(username);
-      console.log(data);
-      const comments: Comment[] = data.map((comment: Comment) => {
+      const comments: Comment[] = data.reverse().map((comment: Comment) => {
+        console.log(comment);
         return {
             author: comment.author,
             recipient: comment.recipient,
@@ -140,7 +140,7 @@ export function ProfilePage() {
       try {
         await getUserData();
         await getComments();
-        if (isPrivateView) {
+        if (loggedInUsername === username) {
             await getTeamData();
         }
         
@@ -150,7 +150,7 @@ export function ProfilePage() {
     };
   
     fetchData();
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     const fetchPredictions = async () => {

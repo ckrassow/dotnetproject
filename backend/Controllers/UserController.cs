@@ -86,7 +86,7 @@ namespace EuroPredApi.Controllers
                 Author = c.Author.Username,
                 Recipient = c.User.Username,
                 Timestamp = c.Timestamp,
-                Text = c.Text
+                Comment = c.Text
             }).ToList();
 
             Console.WriteLine(commentsDto);
@@ -534,15 +534,15 @@ namespace EuroPredApi.Controllers
 
             await _context.SaveChangesAsync();
 
-            var commentsDto = recipientUser.CommentsReceived.Select(c => new CommentsDTO
+            var commentDto = new CommentsDTO
             {
-                Author = c.Author.Username,
-                Recipient = c.User.Username,
-                Timestamp = c.Timestamp,
-                Text = c.Text
-            }).ToList();
+                Author = user.Username,
+                Recipient = recipientUser.Username,
+                Timestamp = comment.Timestamp,
+                Comment = comment.Text
+            };
 
-            return Ok(commentsDto);
+            return Ok(commentDto);
         }
 
         [HttpDelete("{id}/profile-picture")]
