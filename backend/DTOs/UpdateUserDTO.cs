@@ -26,6 +26,21 @@ public class UpdateProfilePictureDTO
 {
     public string ProfilePicRef { get; set; }
 }
+
+public class AddCommentDTO
+{
+    public int AuthorId { get; set; }
+    public string Recipient { get; set; }
+    public string Text { get; set; }
+}
+
+public class CommentsDTO
+{
+    public string Author { get; set; }
+    public string Recipient { get; set; }
+    public DateTime Timestamp { get; set;}
+    public string Comment { get; set; }
+}
 /*
 {
     "username": "new_username",

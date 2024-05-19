@@ -15,7 +15,8 @@ type PredictionProps = {
     teamPredictions: TeamPrediction[],
     setTeamPredictions: React.Dispatch<React.SetStateAction<TeamPrediction[]>>,
     tournamentPredictions: TournamentPrediction[],
-    setTournamentPredictions: React.Dispatch<React.SetStateAction<TournamentPrediction[]>>
+    setTournamentPredictions: React.Dispatch<React.SetStateAction<TournamentPrediction[]>>,
+    isPrivateView: boolean;
 };
 
 type Team = "France" | "England" | "Belgium" | "Portugal" | "Scotland" | "Spain" |
@@ -250,11 +251,10 @@ export function Predictions(props: PredictionProps) {
                                           <img src={require("../../assets/default.jpg")} alt="No selection" className="w-32 h-32 object-cover"/>
                                       </>
                                     )}
-                                    <button onClick={() => {
+                                    {props.isPrivateView && (<button onClick={() => {
                                         setIsModalOpen(true);
                                         setCurrentPrediction(prediction);
-                                    }} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600 transition duration-300 ease-in-out">
-                                    Make Prediction</button>
+                                    }} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600 transition duration-300 ease-in-out">Make Prediction</button>)}
   
                                     </div>
                                 )
@@ -287,10 +287,10 @@ export function Predictions(props: PredictionProps) {
                                         <img src={require("../../assets/default.jpg")} alt="No selection" className="w-32 h-32 object-cover"/>
                                     </>
                                   )}
-                                  <button onClick={() => {
-                                    setIsModalOpen(true);
-                                    setCurrentPrediction(prediction);
-                                  }} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600 transition duration-300 ease-in-out">Make Prediction</button>
+                                 {props.isPrivateView && (<button onClick={() => {
+                                        setIsModalOpen(true);
+                                        setCurrentPrediction(prediction);
+                                    }} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600 transition duration-300 ease-in-out">Make Prediction</button>)}
 
                                   </div>
                                 )
@@ -321,11 +321,10 @@ export function Predictions(props: PredictionProps) {
                                           <h3 className="text-lg font-semibold mb-2">Tournament prediction</h3>
                                       </>
                                     )}
-                                    <button onClick={() => {
+                                    {props.isPrivateView && (<button onClick={() => {
                                         setIsModalOpen(true);
                                         setCurrentPrediction(prediction);
-                                    }} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600 transition duration-300 ease-in-out">Make Prediction</button>
-  
+                                    }} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600 transition duration-300 ease-in-out">Make Prediction</button>)}
                                     </div>
                                 )
                               }

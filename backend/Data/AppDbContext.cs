@@ -19,6 +19,7 @@ public class AppDbContext: DbContext {
         public DbSet<UserPrediction<PlayerPrediction>> UserPlayerPredictions { get; set; }
         public DbSet<UserPrediction<TeamPrediction>> UserTeamPredictions { get; set; }
         public DbSet<UserPrediction<TournamentPrediction>> UserTournamentPredictions { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,18 @@ public class AppDbContext: DbContext {
             modelBuilder.Entity<UserPrediction<TournamentPrediction>>()
                 .Property(e => e.PredictionTypeString)
                 .HasConversion<string>();
+            
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Author)
+                .WithMany(u => u.CommentsWritten)
+                .HasForeignKey(c => c.AuthorId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.CommentsReceived)
+                .HasForeignKey(c => c.RecipientId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
 }

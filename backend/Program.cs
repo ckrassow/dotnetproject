@@ -1,7 +1,5 @@
 using EuroPredApi.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using EuroPredApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

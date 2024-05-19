@@ -15,17 +15,14 @@ export function SigninPage() {
         e.preventDefault();
 
         try {
-            console.log(username, password);
             const response = await axiosInstance.post("/user/login", { username, password });
             const data = response.data;
-            const token = data.token;
-            const refreshToken = data.refreshToken;
-            const id = data.userId;
-            localStorage.setItem("token", token);
-            localStorage.setItem("refreshToken", refreshToken);
-            localStorage.setItem("userId", id);
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("refreshToken", data.refreshToken);
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("username", data.username);
             setIsLoggedIn(true);
-            navigate("/account");
+            navigate(`/user/${data.username}`);
         } catch (error) {
             console.error("Error signing in", error);
         }
