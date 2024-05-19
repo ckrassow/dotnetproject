@@ -13,11 +13,9 @@ interface CommentWallProps {
 const CommentWall = ({ comments, setComments }: CommentWallProps) => {
   const [comment, setComment] = useState("");
   const { username } = useParams();
-  console.log(comments);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const oldComments = [...comments];
     
     try {
       const authorId = localStorage.getItem("userId");
@@ -35,9 +33,7 @@ const CommentWall = ({ comments, setComments }: CommentWallProps) => {
           }
         }
       );
-      console.log(response.data);
       setComments([response.data, ...comments]);
-
 
     } catch(error) {
       console.error("Error submitting comment:", error);

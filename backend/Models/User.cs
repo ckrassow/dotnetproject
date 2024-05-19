@@ -7,7 +7,8 @@ public class User {
     public string PasswordHash { get; set;}
     public string? FirstName { get; set;}
     public string? LastName { get; set;}
-    public string? ProfilePicRef {get; set;}
+    public string? ProfilePicRef { get; set;}
+    public int Points { get; set; }
     public int? NationalTeamId { get; set;}
     public NationalTeam? FavouriteTeam { get; set;}
     public int? TeamId { get; set; }
