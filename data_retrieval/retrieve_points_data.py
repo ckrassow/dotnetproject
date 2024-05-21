@@ -9,24 +9,28 @@ from selenium.common.exceptions import StaleElementReferenceException
 import time
 
 tabs = ["goals/", "attempts/", "distribution/", "attacking/", "defending/", "goalkeeping/"]
-base_url = "https://www.uefa.com/european-qualifiers/statistics/teams/"
+base_urls = ["https://www.uefa.com/european-qualifiers/statistics/teams/", "https://www.uefa.com/european-qualifiers/statistics/players/"]
 
 service = Service(executable_path=ChromeDriverManager().install())
 
 op = webdriver.ChromeOptions()
+#op.add_argument('--headless')
+op.add_argument('--window-size=1920x1080')
 op.add_argument('--no-sandbox')
 op.add_argument('--disable-dev-shm-usage')
 op.add_argument('--disable-blink-features=AutomationControlled')
 driver = webdriver.Chrome(service=service, options=op)
 row_ids = {}
-data = {}
+team_data = {}
+player_data = {}
 
-def extract_data(url):
+def extract_data(url, data):
     row_id = 0
     driver.get(url)
-    scroll_down()
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".ag-pinned-left-cols-container")))
+    if not "players" in url:  
+        scroll_down()
 
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".ag-pinned-left-cols-container")))
 
     left_col_container = driver.find_element(By.CSS_SELECTOR, ".ag-pinned-left-cols-container")
     WebDriverWait(left_col_container, 10).until(EC.presence_of_all_elements_located((By.XPATH, ".//div[@role='row']")))
@@ -49,7 +53,6 @@ def extract_data(url):
         for category in categories:
             value = category.find_element(By.CSS_SELECTOR, "span[role='presentation']").text
             category_name = category.get_attribute("col-id")
-            print(row_ids[row_id])
             data[row_ids[row_id]][category_name] = value
         row_id += 1
             
@@ -71,6 +74,7 @@ def scroll_down():
 if __name__ == "__main__":
 
     for tab in tabs:
-
-        extract_data(base_url + tab)
-    print(data)
+        extract_data(base_urls[0] + tab, team_data)
+    for tab in tabs:
+        extract_data(base_urls[1] + tab, player_data)
+    print(player_data)
