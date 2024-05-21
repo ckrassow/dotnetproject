@@ -24,7 +24,6 @@ const Quiz = () => {
   const handleStartQuiz = () => {
     if (selectedTeam && quizCategory) {
       setStartQuiz(true);
-      // dummy data
       setPlayers([
         
 
@@ -47,7 +46,7 @@ const Quiz = () => {
 
     if (isCorrect) {
         console.log("Players:", players);
-        const remainingPlayers = players.filter(p => p !== otherPlayer); // Only remove the losing player
+        const remainingPlayers = players.filter(p => p !== otherPlayer); 
         const newPlayerIndex = Math.floor(Math.random() * remainingPlayers.length);
         const newPlayer = remainingPlayers[newPlayerIndex];
         console.log("Remaining players:", remainingPlayers);
@@ -87,7 +86,6 @@ const Quiz = () => {
           </button>
         </>
       ) : (
-        // Quiz UI goes here
         <div className="flex justify-center items-center space-x-4">
           {players.slice(currentPlayerIndex, currentPlayerIndex + 2).map((player, index) => (
             
