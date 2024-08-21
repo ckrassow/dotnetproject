@@ -6,6 +6,7 @@ export type UserData = {
     favouriteTeamId: number | null;
     team: TeamData | null;
     profilePicRef: string | null;
+    points: number | null;
 };
 
 export type Comment = {
@@ -70,4 +71,36 @@ export type TournamentPrediction = {
     predictionType: number;
     predictionTypeString: string;
     predictionValue?: string;
+};
+
+export type QualifiedTeams = "France" | "England" | "Belgium" | "Portugal" | "Scotland" | "Spain" |
+"Turkey" | "Austria" | "Hungary" | "Slovakia" | "Albania" | "Denmark" |
+"Netherlands" | "Romania" | "Switzerland" | "Serbia" | "Czech Republic" |
+"Italy" | "Slovenia" | "Croatia" | "Georgia" | "Ukraine" | "Poland";
+
+export type Game = {
+    id: number;
+    status: string;
+    utcDate: Date;
+    matchday: number;
+    stage: string;
+    group: string;
+    homeTeam: string;
+    awayTeam: string;
+    winner: string | null;
+    fullTimeScore: { home: number; away: number };
+    halfTimeScore: { home: number; away: number };
+    lastUpdated: Date;
+};
+  
+export type Group = {
+    title: string;
+    games: Game[];
+};
+
+export type GamePrediction = {
+    userId: number;
+    gameId: number;
+    predictedHomeScore: number | null;
+    predictedAwayScore: number | null;
 };

@@ -52,6 +52,167 @@ namespace EuroPredApi.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("EuroPredApi.Models.Competition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Emblem")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Competitions");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.FullTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Away")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Home")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FullTimes");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AwayTeam")
+                        .HasColumnType("text");
+
+                    b.Property<int>("CompetitionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Group")
+                        .HasColumnType("text");
+
+                    b.Property<string>("HomeTeam")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("Matchday")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ScoreId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UtcDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompetitionId");
+
+                    b.HasIndex("ScoreId");
+
+                    b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.GamePrediction", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("PredictedAwayScore")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PredictedHomeScore")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UtcDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("UserId", "GameId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("GamePredictions");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.HalfTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Away")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Home")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HalfTimes");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.Member", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsCaptain")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TeamMemberId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("TeamMemberId");
+
+                    b.ToTable("Members");
+                });
+
             modelBuilder.Entity("EuroPredApi.Models.NationalTeam", b =>
                 {
                     b.Property<int>("Id")
@@ -122,33 +283,7 @@ namespace EuroPredApi.Migrations
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.PlayerPrediction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("PlayerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PredictionType")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("PlayerPredictions");
-                });
-
-            modelBuilder.Entity("EuroPredApi.Models.Team", b =>
+            modelBuilder.Entity("EuroPredApi.Models.PredictionTeam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,10 +297,10 @@ namespace EuroPredApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("PredictionTeams");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction", b =>
+            modelBuilder.Entity("EuroPredApi.Models.Score", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -173,46 +308,129 @@ namespace EuroPredApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("NationalTeamId")
+                    b.Property<int>("FullTimeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PredictionType")
+                    b.Property<int>("HalfTimeId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NationalTeamId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("TeamPredictions");
-                });
-
-            modelBuilder.Entity("EuroPredApi.Models.TournamentPrediction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PredictionType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PredictionValue")
+                    b.Property<string>("Winner")
                         .HasColumnType("text");
 
-                    b.Property<int?>("TeamId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("FullTimeId");
+
+                    b.HasIndex("HalfTimeId");
+
+                    b.ToTable("Scores");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.TeamInvite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SenderId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RecipientId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("TeamInvite");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction<EuroPredApi.Utils.NationalTeamPrediction>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PredictionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PredictionTypeString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PredictionId");
+
                     b.HasIndex("TeamId");
 
-                    b.ToTable("TournamentPredictions");
+                    b.ToTable("TeamPrediction<NationalTeamPrediction>");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction<EuroPredApi.Utils.PlayerPrediction>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PredictionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PredictionTypeString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PredictionId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamPrediction<PlayerPrediction>");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction<EuroPredApi.Utils.TournamentPrediction>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PredictionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PredictionTypeString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PredictionId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamPrediction<TournamentPrediction>");
                 });
 
             modelBuilder.Entity("EuroPredApi.Models.User", b =>
@@ -236,6 +454,9 @@ namespace EuroPredApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Points")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ProfilePicRef")
                         .HasColumnType("text");
 
@@ -245,9 +466,6 @@ namespace EuroPredApi.Migrations
                     b.Property<DateTime>("RefreshTokenExpiryTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("text");
@@ -256,39 +474,10 @@ namespace EuroPredApi.Migrations
 
                     b.HasIndex("NationalTeamId");
 
-                    b.HasIndex("TeamId");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Models.PlayerPrediction>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PredictionId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PredictionTypeString")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PredictionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserPlayerPredictions");
-                });
-
-            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Models.TeamPrediction>", b =>
+            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Utils.NationalTeamPrediction>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -315,7 +504,34 @@ namespace EuroPredApi.Migrations
                     b.ToTable("UserTeamPredictions");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Models.TournamentPrediction>", b =>
+            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Utils.PlayerPrediction>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PredictionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PredictionTypeString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PredictionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserPlayerPredictions");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Utils.TournamentPrediction>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -342,6 +558,67 @@ namespace EuroPredApi.Migrations
                     b.ToTable("UserTournamentPredictions");
                 });
 
+            modelBuilder.Entity("EuroPredApi.Utils.NationalTeamPrediction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("NationalTeamId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PredictionType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NationalTeamId");
+
+                    b.ToTable("TeamPredictions");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Utils.PlayerPrediction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PredictionType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("PlayerPredictions");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Utils.TournamentPrediction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PredictionType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PredictionValue")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TournamentPredictions");
+                });
+
             modelBuilder.Entity("EuroPredApi.Models.Comment", b =>
                 {
                     b.HasOne("EuroPredApi.Models.User", "Author")
@@ -361,6 +638,63 @@ namespace EuroPredApi.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("EuroPredApi.Models.Game", b =>
+                {
+                    b.HasOne("EuroPredApi.Models.Competition", "Competition")
+                        .WithMany()
+                        .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.Score", "Score")
+                        .WithMany()
+                        .HasForeignKey("ScoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Competition");
+
+                    b.Navigation("Score");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.GamePrediction", b =>
+                {
+                    b.HasOne("EuroPredApi.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.Member", b =>
+                {
+                    b.HasOne("EuroPredApi.Models.PredictionTeam", "Team")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.User", "TeamMember")
+                        .WithMany()
+                        .HasForeignKey("TeamMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
+
+                    b.Navigation("TeamMember");
+                });
+
             modelBuilder.Entity("EuroPredApi.Models.Player", b =>
                 {
                     b.HasOne("EuroPredApi.Models.NationalTeam", null)
@@ -370,37 +704,99 @@ namespace EuroPredApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.PlayerPrediction", b =>
+            modelBuilder.Entity("EuroPredApi.Models.Score", b =>
                 {
-                    b.HasOne("EuroPredApi.Models.Player", "Player")
+                    b.HasOne("EuroPredApi.Models.FullTime", "FullTime")
                         .WithMany()
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("FullTimeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("EuroPredApi.Models.Team", null)
-                        .WithMany("PlayerPredictions")
-                        .HasForeignKey("TeamId");
+                    b.HasOne("EuroPredApi.Models.HalfTime", "HalfTime")
+                        .WithMany()
+                        .HasForeignKey("HalfTimeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Player");
+                    b.Navigation("FullTime");
+
+                    b.Navigation("HalfTime");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction", b =>
+            modelBuilder.Entity("EuroPredApi.Models.TeamInvite", b =>
                 {
-                    b.HasOne("EuroPredApi.Models.NationalTeam", "NationalTeam")
+                    b.HasOne("EuroPredApi.Models.User", "Recipient")
+                        .WithMany("TeamInvites")
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.PredictionTeam", "Sender")
                         .WithMany()
-                        .HasForeignKey("NationalTeamId");
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("EuroPredApi.Models.Team", null)
-                        .WithMany("TeamPredictions")
-                        .HasForeignKey("TeamId");
+                    b.Navigation("Recipient");
 
-                    b.Navigation("NationalTeam");
+                    b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.TournamentPrediction", b =>
+            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction<EuroPredApi.Utils.NationalTeamPrediction>", b =>
                 {
-                    b.HasOne("EuroPredApi.Models.Team", null)
-                        .WithMany("TournamentPredictions")
-                        .HasForeignKey("TeamId");
+                    b.HasOne("EuroPredApi.Utils.NationalTeamPrediction", "Prediction")
+                        .WithMany()
+                        .HasForeignKey("PredictionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.PredictionTeam", "Team")
+                        .WithMany("TeamNationalTeamPredictions")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Prediction");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction<EuroPredApi.Utils.PlayerPrediction>", b =>
+                {
+                    b.HasOne("EuroPredApi.Utils.PlayerPrediction", "Prediction")
+                        .WithMany()
+                        .HasForeignKey("PredictionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.PredictionTeam", "Team")
+                        .WithMany("TeamPlayerPredictions")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Prediction");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.TeamPrediction<EuroPredApi.Utils.TournamentPrediction>", b =>
+                {
+                    b.HasOne("EuroPredApi.Utils.TournamentPrediction", "Prediction")
+                        .WithMany()
+                        .HasForeignKey("PredictionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.PredictionTeam", "Team")
+                        .WithMany("TeamTournamentPredictions")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Prediction");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("EuroPredApi.Models.User", b =>
@@ -409,16 +805,31 @@ namespace EuroPredApi.Migrations
                         .WithMany()
                         .HasForeignKey("NationalTeamId");
 
-                    b.HasOne("EuroPredApi.Models.Team", null)
-                        .WithMany("Members")
-                        .HasForeignKey("TeamId");
-
                     b.Navigation("FavouriteTeam");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Models.PlayerPrediction>", b =>
+            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Utils.NationalTeamPrediction>", b =>
                 {
-                    b.HasOne("EuroPredApi.Models.PlayerPrediction", "Prediction")
+                    b.HasOne("EuroPredApi.Utils.NationalTeamPrediction", "Prediction")
+                        .WithMany()
+                        .HasForeignKey("PredictionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EuroPredApi.Models.User", "User")
+                        .WithMany("UserNationalTeamPredictions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Prediction");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Utils.PlayerPrediction>", b =>
+                {
+                    b.HasOne("EuroPredApi.Utils.PlayerPrediction", "Prediction")
                         .WithMany()
                         .HasForeignKey("PredictionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -435,28 +846,9 @@ namespace EuroPredApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Models.TeamPrediction>", b =>
+            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Utils.TournamentPrediction>", b =>
                 {
-                    b.HasOne("EuroPredApi.Models.TeamPrediction", "Prediction")
-                        .WithMany()
-                        .HasForeignKey("PredictionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EuroPredApi.Models.User", "User")
-                        .WithMany("UserTeamPredictions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Prediction");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EuroPredApi.Models.UserPrediction<EuroPredApi.Models.TournamentPrediction>", b =>
-                {
-                    b.HasOne("EuroPredApi.Models.TournamentPrediction", "Prediction")
+                    b.HasOne("EuroPredApi.Utils.TournamentPrediction", "Prediction")
                         .WithMany()
                         .HasForeignKey("PredictionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -473,20 +865,38 @@ namespace EuroPredApi.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("EuroPredApi.Utils.NationalTeamPrediction", b =>
+                {
+                    b.HasOne("EuroPredApi.Models.NationalTeam", "NationalTeam")
+                        .WithMany()
+                        .HasForeignKey("NationalTeamId");
+
+                    b.Navigation("NationalTeam");
+                });
+
+            modelBuilder.Entity("EuroPredApi.Utils.PlayerPrediction", b =>
+                {
+                    b.HasOne("EuroPredApi.Models.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("EuroPredApi.Models.NationalTeam", b =>
                 {
                     b.Navigation("Players");
                 });
 
-            modelBuilder.Entity("EuroPredApi.Models.Team", b =>
+            modelBuilder.Entity("EuroPredApi.Models.PredictionTeam", b =>
                 {
                     b.Navigation("Members");
 
-                    b.Navigation("PlayerPredictions");
+                    b.Navigation("TeamNationalTeamPredictions");
 
-                    b.Navigation("TeamPredictions");
+                    b.Navigation("TeamPlayerPredictions");
 
-                    b.Navigation("TournamentPredictions");
+                    b.Navigation("TeamTournamentPredictions");
                 });
 
             modelBuilder.Entity("EuroPredApi.Models.User", b =>
@@ -495,9 +905,11 @@ namespace EuroPredApi.Migrations
 
                     b.Navigation("CommentsWritten");
 
-                    b.Navigation("UserPlayerPredictions");
+                    b.Navigation("TeamInvites");
 
-                    b.Navigation("UserTeamPredictions");
+                    b.Navigation("UserNationalTeamPredictions");
+
+                    b.Navigation("UserPlayerPredictions");
 
                     b.Navigation("UserTournamentPredictions");
                 });

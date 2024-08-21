@@ -1,5 +1,6 @@
+using EuroPredApi.Utils;
+
 namespace EuroPredApi.Models;
-using EuroPredApi.Types;
 
 public class User {
     public int Id { get; set;}
@@ -8,44 +9,17 @@ public class User {
     public string? FirstName { get; set;}
     public string? LastName { get; set;}
     public string? ProfilePicRef { get; set;}
-    public int Points { get; set; }
+    public int Points { get; set; } = 0;
     public int? NationalTeamId { get; set;}
     public NationalTeam? FavouriteTeam { get; set;}
-    public int? TeamId { get; set; }
     public string? RefreshToken { get; set; } 
     public DateTime RefreshTokenExpiryTime { get; set; }
     public ICollection<UserPrediction<PlayerPrediction>> UserPlayerPredictions { get; set;}
-    public ICollection<UserPrediction<TeamPrediction>> UserTeamPredictions { get; set;}
+    public ICollection<UserPrediction<NationalTeamPrediction>> UserNationalTeamPredictions { get; set;}
     public ICollection<UserPrediction<TournamentPrediction>> UserTournamentPredictions { get; set;} 
     public ICollection<Comment> CommentsWritten { get; set; }
-    public ICollection<Comment> CommentsReceived { get; set; } 
-
-}
-
-public class PlayerPrediction
-{
-    public int Id { get; set; }
-    public PlayerPredictionType PredictionType { get; set; }
-    public int? PlayerId { get; set; }
-    public Player? Player { get; set; }
-    public string PredictionTypeString => PredictionType.ToString();
-}
-
-public class TeamPrediction
-{
-    public int Id { get; set; }
-    public TeamPredictionType PredictionType { get; set; }
-    public int? NationalTeamId { get; set; }
-    public NationalTeam? NationalTeam { get; set; }
-    public string PredictionTypeString => PredictionType.ToString();
-}
-
-public class TournamentPrediction
-{
-    public int Id { get; set; }
-    public TournamentPredictionType PredictionType { get; set; }
-    public string? PredictionValue { get; set; }
-    public string PredictionTypeString => PredictionType.ToString();
+    public ICollection<Comment> CommentsReceived { get; set; }
+    public ICollection<TeamInvite> TeamInvites { get; set; } 
 }
 
 public class UserPrediction<T>
@@ -68,4 +42,13 @@ public class Comment {
     public User Author { get; set; }
     public int RecipientId { get; set; }
     public User User { get; set; }
+}
+
+public class TeamInvite {
+    public int Id { get; set;}
+    public int SenderId { get; set; } 
+    public PredictionTeam Sender {get; set; }
+    public int RecipientId { get; set; }
+    public User Recipient { get; set; }
+    public Boolean Accepted { get; set; }
 }

@@ -1,4 +1,4 @@
-import { FC, useState, useContext, useEffect } from 'react';
+import { FC, useState, useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
@@ -15,17 +15,15 @@ const Navbar: FC = () => {
         navigate(`/search?query=${input}`);
     };
 
-    console.log(isLoggedIn);
     return (
         <div className="w-full bg-gray-800 px-4 sm:px-6 lg:px-8">
-            <nav className="text-white py-2 px-4 flex items-center w-full">
+            <nav className="text-white py-2 px-4 flex items-center w-full space-x-4">
                 
                 <Link to="/" className="logo">
-                    Some name
+                    Home
                 </Link>
                 <div className="flex flex-grow items-center justify-between">
-                    <NavLink className="mx-2" to="/leaderboard">Leaderboard</NavLink>
-                    <form onSubmit={handleSearch}>
+                    <form onSubmit={handleSearch} className="space-x-2">
                         <div className="flex items-center bg-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2">
                             <FaSearch id="search-icon" />
                             <input className="flex-grow ml-2 text-black" placeholder="Find user..."
@@ -35,6 +33,7 @@ const Navbar: FC = () => {
                     </form>
                     {isLoggedIn ? (
                         <>
+                            <NavLink className="mx-2" to="/games">Games</NavLink>
                             <NavLink className="mx-2" to={`/user/${localStorage.getItem("username")}`}>Account</NavLink>
                             {/*<NavLink className="mx-2" to="/quiz">Quiz</NavLink>*/}
                             <NavLink className="mx-2" to="/team">Team</NavLink>

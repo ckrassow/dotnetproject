@@ -16,7 +16,6 @@ export async function handleUpload(file: Blob, user: UserData): Promise<string |
     const userId = localStorage.getItem("userId");
 
     try {
-        console.log("Handle Upload running");
 
         const response = await axios.put(
             `http://localhost:5175/api/user/${userId}/profile-picture`,
@@ -27,7 +26,7 @@ export async function handleUpload(file: Blob, user: UserData): Promise<string |
                 },
             }
         );
-        console.log(response.status);
+
         if (response.status === 204) {
 
             //const blobClient = containerClient.getBlockBlobClient(blobName);
@@ -55,7 +54,6 @@ export async function handleUpload(file: Blob, user: UserData): Promise<string |
                 `http://localhost:5175/api/user/${userId}/profile-picture`, {
                     headers: { Authorization: `Bearer ${token}`},
                 });
-            console.log("Profile picture reference removed after upload error");
             return null;
 
         } catch(cleanUpError) {

@@ -14,7 +14,7 @@ public class UpdateUserProfileDTO
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public NationalTeam? FavouriteTeam { get; set; } // Assuming team is represented by an integer ID
+    public NationalTeam? FavouriteTeam { get; set; }
 }
 
 public class ChangePasswordDTO
@@ -41,21 +41,10 @@ public class CommentsDTO
     public DateTime Timestamp { get; set;}
     public string Comment { get; set; }
 }
-/*
+
+public class SendInviteDTO
 {
-    "username": "new_username",
-    "favouriteTeam": "new_favourite_team",
-    "tournamentPredictions": {
-        "predictionType": "Winner",
-        "predictionValue": "Team A"
-    },
-    "playerPredictions": {
-        "playerId": 1,
-        "predictionType": "Top Scorer"
-    },
-    "teamPredictions": {
-        "nationalTeamId": 1,
-        "predictionType": "Finalist"
-    }
+    public int TeamId { get; set; }
+    public string Recipient { get; set; }
+
 }
-*/

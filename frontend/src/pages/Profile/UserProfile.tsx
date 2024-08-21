@@ -32,6 +32,7 @@ export function UserProfile(props: UserProfileProps) {
             <p className="text-lg font-semibold">First name: <span className="font-light italic">{props.userData.firstName}</span></p>
             <p className="text-lg font-semibold">Last name: <span className="font-light italic">{props.userData.lastName}</span></p>
             <p className="text-lg font-semibold">Favourite team: <span className="font-light italic">{props.userData.favouriteTeam}</span></p>
+            <p className="text-lg font-semibold">Points: <span className="font-light italic">{props.userData.points}</span></p>
           </div>
         </div>
         <div className="bg-gradient-to-br from-gray-800 to-blue-900 shadow-lg rounded-lg px-8 py-12 flex-grow md:w-1/2 md:max-w-lg">

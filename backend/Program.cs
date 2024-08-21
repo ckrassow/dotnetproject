@@ -6,14 +6,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var config = builder.Configuration;
+
+var connectionString = config.GetConnectionString("EuroPredDb");
+
+config.AddEnvironmentVariables();
+
 builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseNpgsql(config.GetConnectionString("EuroPredDb")));
+    options.UseNpgsql(connectionString));
 
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,10 +48,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddScoped<PasswordHasher>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddSingleton<ApiKeyService>();
+
+builder.Services.AddHttpClient();
+builder.Services.AddHostedService<BgService>();
+builder.Services.AddHostedService<DailyJob>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -58,12 +63,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
-
-

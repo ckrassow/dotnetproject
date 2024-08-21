@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { UserData } from '../utils/Types';
-import axiosInstance from '../utils/Api';
+import { fetchUsers } from '../utils/ApiCalls';
 
 const SearchResultPage: FC = () => {
     const [users, setUsers] = useState<UserData[]>([]);
@@ -12,22 +12,17 @@ const SearchResultPage: FC = () => {
     const sasToken = process.env.REACT_APP_SAS_TOKEN;
     const containerName = process.env.REACT_APP_AZURE_CONTAINER_NAME!;
 
-    useEffect(() => {
-        console.log("use effect in searchresults");
-        const fetchUsers = async () => {
-            try {
-                const response = await axiosInstance.get(
-                    `/user/search?query=${query}`
-                );
-                console.log(response.data);
-                setUsers(response.data);
-    
-            } catch(error) {
-                console.error("Error searching users:", error);
-            }
-        };
+    const getUsers = async () => {
+        try {
+            const data = await fetchUsers(query);
+            setUsers(data);
+        } catch (error) {
+            console.error("Error when fetching user search results");
+        }
+    };
 
-        fetchUsers();
+    useEffect(() => {
+        getUsers();
     }, [query]);
 
     return (

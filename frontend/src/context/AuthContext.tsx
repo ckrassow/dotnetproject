@@ -20,6 +20,9 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const signOut = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("username");
+        localStorage.removeItem("teamId");
         setIsLoggedIn(false); 
     };
 

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using EuroPredApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +35,6 @@ namespace EuroPredApi.Controllers
         [HttpGet("{teamName}")]
         public async Task<ActionResult<NationalTeam>> GetTeamByName(string teamName)
         {   
-            Console.WriteLine(teamName);
             var nationalTeam = await _context.NationalTeams
                 .Include(nt => nt.Players)
                 .FirstOrDefaultAsync(nt => nt.Name == teamName);
@@ -54,7 +51,6 @@ namespace EuroPredApi.Controllers
         [Authorize]
         public async Task<ActionResult<IEnumerable<PlayerDTO>>> GetPlayersByTeam(string teamName)
         {   
-            Console.WriteLine(teamName);
             var nationalTeam = await _context.NationalTeams
                 .Include(nt => nt.Players)
                 .FirstOrDefaultAsync(nt => nt.Name == teamName);

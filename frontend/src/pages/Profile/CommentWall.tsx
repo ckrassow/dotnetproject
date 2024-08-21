@@ -34,6 +34,7 @@ const CommentWall = ({ comments, setComments }: CommentWallProps) => {
         }
       );
       setComments([response.data, ...comments]);
+      setComment("");
 
     } catch(error) {
       console.error("Error submitting comment:", error);

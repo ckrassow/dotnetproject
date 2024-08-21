@@ -7,8 +7,6 @@ import { UserProfile } from "./UserProfile";
 import { UserData, NationalTeamData, PlayerPrediction, TeamPrediction, TournamentPrediction, Comment } from "../../utils/Types";
 import { UserSettings } from "./UserSettings";
 
-
-  
 export function ProfilePage() {
   
   const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +44,12 @@ export function ProfilePage() {
             favouriteTeamId: data.favouriteTeamid,
             profilePicRef: data.profilePicRef,
             team: data.team,
+            points: data.points
         });
+
+        if (data.team) {
+          localStorage.setItem("teamId", data.team.id);
+        };
 
     } catch (error) {
         console.error("Error fetching user", error);
@@ -63,7 +66,6 @@ export function ProfilePage() {
     try {
       const data = await fetchUserComments(username);
       const comments: Comment[] = data.reverse().map((comment: Comment) => {
-        console.log(comment);
         return {
             author: comment.author,
             recipient: comment.recipient,

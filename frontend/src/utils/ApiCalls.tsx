@@ -64,3 +64,25 @@ export const fetchTournamentPredictions = async (username: string) => {
       throw error; 
     }
 };
+
+export const fetchUsers = async (query: string) => {
+  try {
+      const response = await axiosInstance.get(
+          `/user/search?query=${query}`
+      );
+      return response.data;
+  } catch(error) {
+      console.error("Error searching users:", error);
+      throw error;
+  }
+};
+
+export const fetchGames = async () => {
+  try {
+    const response = await axiosInstance.get("/livegame");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching live games", error);
+    throw error;
+  }
+};

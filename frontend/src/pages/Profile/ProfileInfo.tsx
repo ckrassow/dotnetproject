@@ -4,7 +4,7 @@ import { UserData } from "../../utils/Types";
 
 const childTabs = ["Username", "Settings"];
 
-export function ProfileInfo({ userData }: { userData: UserData }) {
+export function ProfileInfo({  }: { userData: UserData }) {
 
     
     const [activeTab, setActiveTab] = useState(childTabs[0]);

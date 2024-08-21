@@ -12,6 +12,7 @@ const SignOut: React.FC = () => {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
+    localStorage.removeItem("teamId");
     signOut(); 
     setShowModal(false);
   };
@@ -21,10 +22,10 @@ const SignOut: React.FC = () => {
       <button className="mx-2" onClick={() => setShowModal(true)}>
         Sign Out
       </button>
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Modal className="bg-gray-900" isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="flex flex-col items-center space-y-4 p-8"> 
           <h2 className="text-xl font-bold">Confirm Sign Out</h2>
-          <p className="text-gray-700">Are you sure you want to sign out?</p>
+          <p className="text-gray-300">Are you sure you want to sign out?</p>
           <div className="flex space-x-4"> 
             <button 
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

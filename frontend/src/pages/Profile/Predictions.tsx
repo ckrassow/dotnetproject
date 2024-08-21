@@ -4,9 +4,10 @@ import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import Dropdown from "../../components/Dropdown";
 import axiosInstance from "../../utils/Api";
-import { PlayerData, TournamentPrediction, PlayerPrediction, TeamPrediction, NationalTeamData } from "../../utils/Types";
+import { convertToSpaceSeparated } from "../../utils/HelperFunctions";
+import { PlayerData, TournamentPrediction, PlayerPrediction, TeamPrediction, NationalTeamData, QualifiedTeams } from "../../utils/Types";
 
-const childTabs = ["Players", "Teams", "Tournament"];
+const childTabs = ["Players", "Teams"];
 
 type PredictionProps = {
     teamData: NationalTeamData[],
@@ -19,11 +20,6 @@ type PredictionProps = {
     isPrivateView: boolean;
 };
 
-type Team = "France" | "England" | "Belgium" | "Portugal" | "Scotland" | "Spain" |
-            "Turkey" | "Austria" | "Hungary" | "Slovakia" | "Albania" | "Denmark" |
-            "Netherlands" | "Romania" | "Switzerland" | "Serbia" | "Czech Republic" |
-            "Italy" | "Slovenia" | "Croatia" | "Georgia" | "Ukraine" | "Poland";
-
 export function Predictions(props: PredictionProps) {
 
     const [activeTab, setActiveTab] = useState(childTabs[0]);
@@ -31,9 +27,10 @@ export function Predictions(props: PredictionProps) {
     const [dropDownTeam, setDropDownTeam] = useState("");
     const [currentPrediction, setCurrentPrediction] = useState<PlayerPrediction | TeamPrediction | TournamentPrediction>({} as PlayerPrediction);
     const [selectedPlayers, setSelectedPlayers] = useState<PlayerData[]>([]);
-    
-    
-    const teams: Team[] = ["France", "England", "Belgium", "Portugal", "Scotland",
+    const [errorMessage, setErrorMessage] = useState(""); 
+    const [showError, setShowError] = useState(false); 
+
+    const teams: QualifiedTeams[] = ["France", "England", "Belgium", "Portugal", "Scotland",
                            "Spain", "Turkey", "Austria", "Hungary", "Slovakia",
                            "Albania", "Denmark", "Netherlands", "Romania",
                            "Switzerland", "Serbia", "Czech Republic", "Italy",
@@ -45,7 +42,7 @@ export function Predictions(props: PredictionProps) {
         "Option B",
         "Option C",
         "Option D",
-      ];
+    ];
         
     const handleShowPlayers = async (teamName: string) => {
         try {
@@ -85,7 +82,6 @@ export function Predictions(props: PredictionProps) {
     const handleNewPlayerPrediction = async (player: PlayerData) => {
 
         const oldPlayerPred = [...props.playerPredictions];
-        console.log(player);
 
         const updatedPlayerPreds = props.playerPredictions.map(prediction => {
             if (prediction.id === currentPrediction.id) {
@@ -116,9 +112,17 @@ export function Predictions(props: PredictionProps) {
                 }
             );
 
-        } catch (error) {
+            setIsModalOpen(false);
+        } catch (error: any) {
             console.error("Error handling new player prediction", error);
             props.setPlayerPredictions(oldPlayerPred);
+
+            if (error.response && error.response.status === 400) {
+                setErrorMessage("Can't make new prediction, deadline has passed");
+            } else {
+                setErrorMessage("An error occurred while making your prediction.");
+            }
+            setShowError(true); 
         }
     };
 
@@ -142,7 +146,6 @@ export function Predictions(props: PredictionProps) {
         try {
             const token = localStorage.getItem("token");
             const userId = localStorage.getItem("userId");
-            console.log(currentPrediction);
 
             await axiosInstance.put(
                 `/user/${userId}/teamprediction/${currentPrediction.id}`,
@@ -156,9 +159,17 @@ export function Predictions(props: PredictionProps) {
                 }
             );
 
-        } catch (error) {
+            setIsModalOpen(false);
+        } catch (error: any) {
             console.error("Error handling new team prediction", error);
             props.setTeamPredictions(oldTeamPred);
+
+            if (error.response && error.response.status === 400) {
+                setErrorMessage("Can't make new prediction, deadline has passed");
+            } else {
+                setErrorMessage("An error occurred while making your prediction.");
+            }
+            setShowError(true); 
         }
     };
 
@@ -194,25 +205,19 @@ export function Predictions(props: PredictionProps) {
                 }
             );
 
-        } catch (error) {
+            setIsModalOpen(false);
+        } catch (error: any) {
             console.error("Error handling new tournament prediction", error);
             props.setTournamentPredictions(oldTourPred);
+
+            if (error.response && error.response.status === 400) {
+                setErrorMessage("Can't make new prediction, deadline has passed");
+            } else {
+                setErrorMessage("An error occurred while making your prediction.");
+            }
+            setShowError(true); 
         }
     };
-
-    function convertToSpaceSeparated(input: string): string {
-        let result = "";
-        for (let i = 0; i < input.length; i++) {
-            const char = input[i];
-
-            if (i > 0 && char === char.toUpperCase() && input[i - 1] !== ' ') {
-                result += ' ';
-            }
-            
-            result += char;
-        }
-        return result;
-    }
 
     return (
         <div>
@@ -300,7 +305,7 @@ export function Predictions(props: PredictionProps) {
                 </div>
             )}
 
-            {activeTab === "Tournament" && (
+            {/* {activeTab === "Tournament" && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {props.tournamentPredictions?.map(prediction => (
                         <Card
@@ -331,7 +336,7 @@ export function Predictions(props: PredictionProps) {
                         />
                     ))}
                 </div>
-            )}
+            )} */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} className="bg-gray-900 w-4/5 h-4/5">
                 {activeTab === "Players" && (
                     <>
@@ -421,6 +426,11 @@ export function Predictions(props: PredictionProps) {
                     </div>
                 )}
                 
+            </Modal>
+
+            <Modal isOpen={showError} onClose={() => setShowError(false)} className="bg-red-500 text-white rounded-md p-4">
+                <p>{errorMessage}</p>
+                <button onClick={() => setShowError(false)} className="bg-white text-red-500 px-4 py-2 rounded mt-2 hover:bg-gray-200">Close</button>
             </Modal>
 
         </div>

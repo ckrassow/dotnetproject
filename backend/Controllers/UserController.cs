@@ -5,6 +5,7 @@ using EuroPredApi.Data;
 using EuroPredApi.Services;
 using EuroPredApi.DTOs;
 using EuroPredApi.Types;
+using EuroPredApi.Utils;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
 using System.Security.Claims;
@@ -29,7 +30,6 @@ namespace EuroPredApi.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<UserProfileDTO>> GetUserByUsername(string username)
         {   
-            Console.WriteLine(username);
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) {
 
@@ -45,7 +45,10 @@ namespace EuroPredApi.Controllers
                 FavouriteTeamId = FavouriteTeam.Id;
             } 
 
-            var team = await _context.Teams.FirstOrDefaultAsync(team => team.Id == user.TeamId);
+            var team = await _context.Members
+                .Where(m => m.TeamMemberId == user.Id)
+                .Select(m => m.Team)
+                .FirstOrDefaultAsync();
 
             var userProfileDTO = new UserProfileDTO {
                 Username = user.Username,
@@ -55,6 +58,7 @@ namespace EuroPredApi.Controllers
                 FavouriteTeamId = FavouriteTeamId,
                 ProfilePicRef = user.ProfilePicRef,
                 Team = team,
+                Points = user.Points
             };
 
             return userProfileDTO;
@@ -72,8 +76,6 @@ namespace EuroPredApi.Controllers
                 return NotFound();
             }
 
-            Console.WriteLine(user.Username);
-
             if (user.CommentsReceived == null) {
 
                 return Ok(new List<CommentsDTO>());
@@ -88,8 +90,6 @@ namespace EuroPredApi.Controllers
                 Timestamp = c.Timestamp,
                 Comment = c.Text
             }).ToList();
-
-            Console.WriteLine(commentsDto);
             
             return Ok(commentsDto);
         }
@@ -113,7 +113,7 @@ namespace EuroPredApi.Controllers
         }
 
         [HttpGet("{username}/teampredictions")]
-        public async Task<ActionResult<List<TeamPrediction>>> GetTeamPredictions(string username)
+        public async Task<ActionResult<List<NationalTeamPrediction>>> GetTeamPredictions(string username)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) {
@@ -132,7 +132,7 @@ namespace EuroPredApi.Controllers
 
         [HttpGet("{username}/tournamentpredictions")]
         public async Task<ActionResult<List<TournamentPrediction>>> GetTournamentPredictions(string username)
-        {
+        {   
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) {
 
@@ -151,6 +151,12 @@ namespace EuroPredApi.Controllers
         [Authorize]
         public async Task<ActionResult<List<UserPrediction<PlayerPrediction>>>> UpdatePlayerPrediction(int id, int predId, PlayerPredictionUpdateDTO dto)
         {   
+            DateTime date = new DateTime(2024, 06, 14);
+            if (date < DateTime.Now)
+            {
+                return BadRequest("Passed deadline");
+            }
+
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
             {
@@ -190,8 +196,13 @@ namespace EuroPredApi.Controllers
 
         [HttpPut("{id}/teamprediction/{predId}")]
         [Authorize]
-        public async Task<ActionResult<List<UserPrediction<TeamPrediction>>>> UpdateTeamPrediction(int id, int predId, NationalTeamPredictionUpdateDTO dto)
+        public async Task<ActionResult<List<UserPrediction<NationalTeamPrediction>>>> UpdateTeamPrediction(int id, int predId, NationalTeamPredictionUpdateDTO dto)
         {   
+            // DateTime date = new DateTime(2024, 06, 14);
+            // if (date < DateTime.Now)
+            // {
+            //     return BadRequest("Passed deadline");
+            // }
 
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
@@ -234,6 +245,11 @@ namespace EuroPredApi.Controllers
         [Authorize]
         public async Task<ActionResult<List<UserPrediction<TournamentPrediction>>>> UpdateTournamentPrediction(int id, int predId, TournamentPredictionUpdateDTO dto)
         {   
+            DateTime date = new DateTime(2024, 06, 14);
+            if (date < DateTime.Now)
+            {
+                return BadRequest("Passed deadline");
+            }
 
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
@@ -268,7 +284,6 @@ namespace EuroPredApi.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(RegisterDTO registerDTO)
         {   
-            Console.WriteLine($"Received username: {registerDTO.Username}");
             if (string.IsNullOrEmpty(registerDTO.Username)) {
                 
                 return BadRequest("Username is required");
@@ -290,7 +305,7 @@ namespace EuroPredApi.Controllers
                 Username = registerDTO.Username,
                 PasswordHash = _passwordHasher.HashPassword(registerDTO.Password),
                 UserPlayerPredictions = new List<UserPrediction<PlayerPrediction>>(),
-                UserTeamPredictions = new List<UserPrediction<TeamPrediction>>(),
+                UserNationalTeamPredictions = new List<UserPrediction<NationalTeamPrediction>>(),
                 UserTournamentPredictions = new List<UserPrediction<TournamentPrediction>>()
             };
 
@@ -306,10 +321,10 @@ namespace EuroPredApi.Controllers
 
             foreach (TeamPredictionType predictionType in Enum.GetValues(typeof(TeamPredictionType)))
             {
-                user.UserTeamPredictions.Add(new UserPrediction<TeamPrediction>
+                user.UserNationalTeamPredictions.Add(new UserPrediction<NationalTeamPrediction>
                 {
                     User = user,
-                    Prediction = new TeamPrediction { PredictionType = predictionType },
+                    Prediction = new NationalTeamPrediction { PredictionType = predictionType },
                     PredictionTypeString = predictionType.ToString()
                 });
             }
@@ -342,18 +357,20 @@ namespace EuroPredApi.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login(RegisterDTO registerDTO)
         {   
-            Console.WriteLine($"Received username: {registerDTO.Username}");
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == registerDTO.Username);
             if (user == null)
                 return NotFound();
+
             if (!_passwordHasher.VerifyPassword(registerDTO.Password, user.PasswordHash))
                 return Unauthorized();
-            Console.WriteLine($"Userid: {user.Id}");
+
             var token = _tokenService.GenerateToken(user);
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
+
             return Ok(new { token, refreshToken = user.RefreshToken, userId = user.Id, username = user.Username });
         }
 
@@ -363,18 +380,18 @@ namespace EuroPredApi.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
 
             if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow) {
-
                 return Unauthorized();
             }
 
             var newJwtToken = _tokenService.GenerateToken(user);
-            user.RefreshToken = GenerateRefreshToken();
+            var newRefreshToken = GenerateRefreshToken();
+            user.RefreshToken = newRefreshToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
-            return Ok(new { token = newJwtToken, refreshToken = user.RefreshToken});
+            return Ok(new { token = newJwtToken, refreshToken = newRefreshToken});
         }
 
         [HttpPut("{id}/profile-picture")]
@@ -394,7 +411,6 @@ namespace EuroPredApi.Controllers
                 return Forbid(); 
             }
 
-            Console.WriteLine(updateData.ProfilePicRef);
             if (updateData == null || string.IsNullOrEmpty(updateData.ProfilePicRef)) 
             {
                 return BadRequest("Invalid profile picture data.");
@@ -577,7 +593,6 @@ namespace EuroPredApi.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> SearchUsers(string query)
         {   
-            Console.WriteLine("Search users endpoint");
             if (string.IsNullOrEmpty(query))
             {
                 return Ok(new List<UserProfileDTO>()); 
@@ -614,7 +629,10 @@ namespace EuroPredApi.Controllers
                     FavouriteTeamId = FavouriteTeam.Id;
                 } 
 
-                var team = await _context.Teams.FirstOrDefaultAsync(team => team.Id == user.TeamId);
+                var team = await _context.Members
+                    .Where(m => m.TeamMemberId == user.Id)
+                    .Select(m => m.Team)
+                    .FirstOrDefaultAsync();
 
                 userProfileDTOs.Add(new UserProfileDTO
                 {
@@ -629,6 +647,200 @@ namespace EuroPredApi.Controllers
             }
 
             return Ok(userProfileDTOs);
+        }
+
+        [HttpPost("sendinvite")]
+        [Authorize]
+        public async Task<IActionResult> SendInvite(SendInviteDTO sendInviteDTO)
+        {   
+            DateTime date = new DateTime(2024, 06, 14);
+            if (date < DateTime.Now)
+            {
+                return BadRequest("Passed deadline");
+            }
+
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            var team = await _context.PredictionTeams.FindAsync(sendInviteDTO.TeamId);
+
+            if (team == null)
+            {
+                return NotFound("Team not found");
+            }
+            var isCaptain = await _context.Members
+                .AnyAsync(m => m.TeamId == team.Id && m.TeamMemberId == userIdFromToken && m.IsCaptain);
+
+            if (!isCaptain)
+            {
+                return Forbid("Only captain is allowed to send invites"); 
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == sendInviteDTO.Recipient);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var pendingInvite = user.TeamInvites.Any(invite =>
+                invite.SenderId == team.Id &&
+                !invite.Accepted);
+            
+            if (pendingInvite)
+            {
+                return Conflict("User already has a pending invite from this team");
+            }
+
+            var invite = new TeamInvite {
+                Sender = team,
+                SenderId = team.Id,
+                Recipient = user,
+                RecipientId = user.Id,
+                Accepted = false
+            };
+
+            user.TeamInvites.Add(invite);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpGet("{id}/gameprediction")]
+        [Authorize]
+        public async Task<IActionResult> GetPredictionsFromUser(int id)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
+            var user = await _context.Users.FindAsync(userIdFromToken);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var predictions = await _context.GamePredictions
+                .Where(gp => gp.UserId == userIdFromToken)
+                .Select(gp => new PredictGameDTO
+                {
+                    GameId = gp.GameId,
+                    HomeScore = gp.PredictedHomeScore ?? 0,
+                    AwayScore = gp.PredictedAwayScore ?? 0
+                })
+                .ToListAsync();
+            
+            return Ok(predictions);
+        }
+
+        [HttpPost("{id}/gameprediction")]
+        [Authorize]
+        public async Task<IActionResult> CreateGamePrediction(int id, PredictGameDTO DTO)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
+            var user = await _context.Users.FindAsync(userIdFromToken);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var game = await _context.Games.FindAsync(DTO.GameId);
+            if (game == null)
+            {
+                return NotFound("Game not found");
+            }
+
+            DateTime now = DateTime.UtcNow;
+            int comparison = now.CompareTo(game.UtcDate);
+            if (comparison > 0)
+            {
+                return Forbid("Deadline for prediction has already passed");
+            }
+
+            var existingPrediction = await _context.GamePredictions.FindAsync(userIdFromToken, DTO.GameId);
+            if (existingPrediction != null)
+            {
+                return BadRequest("A prediction for this game and user already exists");
+            }
+
+            var newPrediction = new GamePrediction
+            {
+                UserId = userIdFromToken,
+                GameId = DTO.GameId,
+                PredictedHomeScore = DTO.HomeScore,
+                PredictedAwayScore = DTO.AwayScore,
+                UtcDate = game.UtcDate,
+                Completed = false
+            };
+
+            _context.GamePredictions.Add(newPrediction);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}/gameprediction")]
+        [Authorize]
+        public async Task<IActionResult> UpdateGamePrediction(int id, PredictGameDTO DTO)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Invalid user ID in token.");
+            }
+
+            int userIdFromToken = int.Parse(userIdClaim.Value);
+
+            if (userIdFromToken != id)
+            {
+                return Forbid(); 
+            }
+
+            var existingPrediction = await _context.GamePredictions.FindAsync(userIdFromToken, DTO.GameId);
+            if (existingPrediction == null)
+            {
+                return NotFound("Prediction not found.");
+            }
+
+            DateTime now = DateTime.UtcNow;
+            int comparison = now.CompareTo(existingPrediction.UtcDate);
+            if (comparison > 0)
+            {
+                return Forbid("Deadline for prediction has already passed");
+            }
+
+            existingPrediction.PredictedHomeScore = DTO.HomeScore;
+            existingPrediction.PredictedAwayScore = DTO.AwayScore;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent(); 
         }
 
         private string GenerateRefreshToken() {

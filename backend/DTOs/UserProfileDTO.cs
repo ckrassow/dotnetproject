@@ -10,6 +10,7 @@ public class UserProfileDTO {
     public string? ProfilePicRef {get; set;}
     public string? FavouriteTeam {get; set;}
     public int? FavouriteTeamId {get; set;}
-    public Team? Team {get; set;}
+    public PredictionTeam? Team {get; set;}
+    public int? Points { get; set; }
 
 }

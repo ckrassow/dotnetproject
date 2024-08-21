@@ -1,6 +1,7 @@
 import { Navigate, Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useContext } from 'react';
-import { HomePage } from './pages/Home';
+import HomePage from "./pages/HomePage";
+import Games from './pages/Games';
 import LeaderboardPage from './pages/Leaderboard';
 import { ProfilePage } from './pages/Profile/Profile';
 import { SigninPage } from './pages/Signin';
@@ -15,6 +16,7 @@ import Wrapper from './components/Wrapper';
 function App() {
 
   const { isLoggedIn } = useContext(AuthContext);
+  //const isLoggedIn = localStorage.getItem("userId") !== null;
   return (
       <BrowserRouter>
         <Wrapper className="bg-gray-100">
@@ -22,11 +24,12 @@ function App() {
           <div className="container mx-auto p-3 sm:p-6 lg:p-9">
             <Routes>
               <Route path="/" element={<HomePage/>} />
+              <Route path="/games" element={isLoggedIn ? <Games/> : <Navigate to="/" replace />} /> 
               <Route path="/leaderboard" element={<LeaderboardPage/>} />
-              <Route path="/signin" element={isLoggedIn ? <Navigate to={`/user/${localStorage.getItem("username")}`} />: <SigninPage/>} />
+              <Route path="/signin" element={isLoggedIn ? <Navigate to={`/user/${localStorage.getItem("username")}`} replace /> : <SigninPage/>} />
               <Route path="/user/:username" element={<ProfilePage />} />
               <Route path="/signup" element={<SignupPage/>} />
-              <Route path="/search/" element={<SearchResultPage/>} />
+              <Route path="/search" element={<SearchResultPage/>} />
               <Route path="/team" element={<TeamPage /> } />
               <Route path="/quiz" element={<QuizPage/>} />
             </Routes>

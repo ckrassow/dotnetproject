@@ -1,6 +1,3 @@
-//using BCrypt.Net;
-
-
 namespace EuroPredApi.Services;
 
 public class PasswordHasher {

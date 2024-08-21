@@ -33,10 +33,8 @@ const Quiz = () => {
 
   const handlePlayerSelection = (selectedPlayer: Player) => {
     const otherPlayer = players.find(p => p.name !== selectedPlayer.name);
-    console.log("Other player:", otherPlayer);
 
     if (!otherPlayer) {
-        console.log("Could not find other player");
         return;
     }
 
@@ -45,12 +43,9 @@ const Quiz = () => {
         (quizCategory === "Most goals" && selectedPlayer.goals > otherPlayer.goals);
 
     if (isCorrect) {
-        console.log("Players:", players);
         const remainingPlayers = players.filter(p => p !== otherPlayer); 
         const newPlayerIndex = Math.floor(Math.random() * remainingPlayers.length);
         const newPlayer = remainingPlayers[newPlayerIndex];
-        console.log("Remaining players:", remainingPlayers);
-        console.log("New player:", newPlayer);
 
         setPlayers([...remainingPlayers]);
         setCurrentPlayerIndex(0);

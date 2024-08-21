@@ -44,7 +44,6 @@ const CreateTeam: FC = () => {
     
     const handleSearchSubmit = (e: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent) => {
         e.preventDefault();
-        console.log("handleSearchSubmit");
         setShowDropdown(true);
     };
 
@@ -65,7 +64,6 @@ const CreateTeam: FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(formState);
     };
     
     return (

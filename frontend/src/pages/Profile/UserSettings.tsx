@@ -3,7 +3,7 @@ import Compressor from "compressorjs";
 import Tab from "../../components/Tab"; 
 import Dropdown from "../../components/Dropdown";
 import { NationalTeamData, UserData } from "../../utils/Types";
-import { handleUpload } from "../../utils/imageUpload";
+import { handleUpload } from "../../utils/ImageUpload";
 import axiosInstance from "../../utils/Api";
 
 type UserSettingsProps = {
@@ -94,12 +94,10 @@ export function UserSettings(props: UserSettingsProps) {
       try {
         
         const blobName = await handleUpload(imageFile, props.userData);
-        console.log(blobName);
         props.setUserData((prevUserData) => ({
           ...prevUserData,
           ...(blobName && { profilePicRef: blobName}),
         }));
-        console.log(props.userData);
         
       } catch(error) {
         console.error("Error handling image upload:", error);
@@ -145,17 +143,19 @@ export function UserSettings(props: UserSettingsProps) {
   }
 
   return (
-    <div className="bg-gray-800 text-white p-8">
+    <div className="bg-gray-800 text-white p-8 rounded-lg shadow-xl"> 
       <div className="tabs-container flex space-x-4 mb-6">
         <Tab
           title="Profile Settings"
           isActive={activeTab === "profile"}
           onClick={() => setActiveTab("profile")}
+          className="bg-gray-900 rounded-lg shadow-md px-4 py-2 text-center hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <Tab
           title="Change Password"
           isActive={activeTab === "password"}
           onClick={() => setActiveTab("password")}
+          className="bg-gray-900 rounded-lg shadow-md px-4 py-2 text-center hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
       </div>
       <div className="tab-content-container min-h-[300px] md:min-h-[400px]">
@@ -195,6 +195,7 @@ export function UserSettings(props: UserSettingsProps) {
                   selectedOption={selectedTeam}
                   setSelectedOption={setSelectedTeam}
                   defaultOptionLabel="Select a team"
+                  className="bg-gray-800 text-white border border-gray-700 focus:ring-indigo-500 focus:border-indigo-500" 
                 />
               </label>
               <label className="block mb-4">
@@ -208,7 +209,7 @@ export function UserSettings(props: UserSettingsProps) {
               </label>
               <button
                   type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                   Save changes
               </button>
@@ -260,6 +261,5 @@ export function UserSettings(props: UserSettingsProps) {
         )}
       </div>
     </div>
-    
   );
 }

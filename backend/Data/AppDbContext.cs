@@ -1,4 +1,5 @@
 using EuroPredApi.Models;
+using EuroPredApi.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace EuroPredApi.Data;
@@ -13,13 +14,20 @@ public class AppDbContext: DbContext {
         public DbSet<NationalTeam> NationalTeams { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<PlayerPrediction> PlayerPredictions { get; set; }
-        public DbSet<TeamPrediction> TeamPredictions { get; set; }
+        public DbSet<NationalTeamPrediction> TeamPredictions { get; set; }
         public DbSet<TournamentPrediction> TournamentPredictions { get; set;}
-        public DbSet<Team> Teams { get; set; }
+        public DbSet<PredictionTeam> PredictionTeams { get; set; }
+        public DbSet<Member> Members { get; set; }
         public DbSet<UserPrediction<PlayerPrediction>> UserPlayerPredictions { get; set; }
-        public DbSet<UserPrediction<TeamPrediction>> UserTeamPredictions { get; set; }
+        public DbSet<UserPrediction<NationalTeamPrediction>> UserTeamPredictions { get; set; }
         public DbSet<UserPrediction<TournamentPrediction>> UserTournamentPredictions { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<Competition> Competitions { get; set; }
+        public DbSet<Score> Scores { get; set; }
+        public DbSet<FullTime> FullTimes { get; set; }
+        public DbSet<HalfTime> HalfTimes { get; set; }
+        public DbSet<GamePrediction> GamePredictions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +36,7 @@ public class AppDbContext: DbContext {
                 .Property(e => e.PredictionTypeString)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<UserPrediction<TeamPrediction>>()
+            modelBuilder.Entity<UserPrediction<NationalTeamPrediction>>()
                 .Property(e => e.PredictionTypeString)
                 .HasConversion<string>();
 
@@ -47,6 +55,9 @@ public class AppDbContext: DbContext {
                 .WithMany(u => u.CommentsReceived)
                 .HasForeignKey(c => c.RecipientId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<GamePrediction>()
+                .HasKey(gp => new { gp.UserId, gp.GameId });
         }
 
 }
